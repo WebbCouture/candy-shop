@@ -9,35 +9,51 @@
 </head>
 <body>
 
-<!-- Top Bar -->
-<div class="top-bar">
-  <div class="top-bar-container">
-    <div class="top-bar-left">
-      <form action="/search/" method="get" role="search" aria-label="Search products">
+<header>
+  <!-- Main Navigation Bar -->
+  <nav class="main-nav">
+    <div class="main-nav-container">
+      <div class="logo">
+        <a href="/">Candy Shop</a>
+      </div>
+      <ul class="nav-links">
+        <li><a href="/">Home</a></li>
+        <li><a href="/products/">Products</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Secondary Navigation Bar -->
+  <nav class="secondary-nav">
+    <div class="secondary-nav-container">
+      <ul class="icon-links">
+        <li>
+          <a href="/gift-certificates/">
+            <span class="icon" aria-hidden="true">🎁</span><br />
+            Gift Certificates
+          </a>
+        </li>
+        <li>
+          <a href="/account/login/">
+            <span class="icon" aria-hidden="true">👤</span><br />
+            Account
+          </a>
+        </li>
+        <li>
+          <a href="/cart/">
+            <span class="icon" aria-hidden="true">🛒</span><br />
+            Cart (0)
+          </a>
+        </li>
+      </ul>
+      <form action="/search/" method="get" role="search" aria-label="Search products" class="secondary-search">
         <input type="search" name="q" placeholder="Search products..." required />
         <button type="submit" aria-label="Search">🔍</button>
       </form>
     </div>
-    <div class="top-bar-right">
-      <a href="/gift-certificates/" class="top-link">Gift Certificates</a>
-      <a href="/account/login/" class="top-link">Account</a>
-      <a href="/cart/" class="top-link">Cart (0)</a>
-    </div>
-  </div>
-</div>
-
-<header>
-    <nav>
-        <div class="logo">
-            <a href="/">Candy Shop</a>
-        </div>
-        <ul class="nav-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/products/">Products</a></li>
-            <li><a href="/about/">About</a></li>
-            <li><a href="/contact/">Contact</a></li>
-        </ul>
-    </nav>
+  </nav>
 </header>
 
 <main>
