@@ -1,8 +1,35 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Home - Candy Shop{% endblock %}
 
 {% block content %}
-<h1>Welcome to Candy Shop!</h1>
-<p>This is your homepage.</p>
+<section class="hero">
+  <div class="hero-content">
+    <h1>Sweeten Your Day with Our Candies</h1>
+    <p>Discover delicious handmade candies made fresh daily.</p>
+    <a href="#products" class="btn-primary">Shop Now</a>
+  </div>
+</section>
+
+<section id="products" class="products">
+  <h2>Our Best Sellers</h2>
+  <div class="product-list">
+    <div class="product-card">
+      <img src="{% static 'images/candy1.jpg' %}" alt="Candy 1">
+      <h3>Cherry Delight</h3>
+      <p>Sweet cherry flavored candy, perfect for any occasion.</p>
+    </div>
+    <div class="product-card">
+      <img src="{% static 'images/candy2.jpg' %}" alt="Candy 2">
+      <h3>Chocolate Bliss</h3>
+      <p>Rich chocolate candy made with premium cocoa.</p>
+    </div>
+    <div class="product-card">
+      <img src="{% static 'images/candy3.jpg' %}" alt="Candy 3">
+      <h3>Fruit Punch</h3>
+      <p>Refreshing fruity candy bursting with flavor.</p>
+    </div>
+  </div>
+</section>
 {% endblock %}
