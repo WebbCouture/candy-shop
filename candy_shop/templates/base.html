@@ -9,6 +9,23 @@
 </head>
 <body>
 
+<!-- Top Bar -->
+<div class="top-bar">
+  <div class="top-bar-container">
+    <div class="top-bar-left">
+      <form action="/search/" method="get" role="search" aria-label="Search products">
+        <input type="search" name="q" placeholder="Search products..." required />
+        <button type="submit" aria-label="Search">🔍</button>
+      </form>
+    </div>
+    <div class="top-bar-right">
+      <a href="/gift-certificates/" class="top-link">Gift Certificates</a>
+      <a href="/account/login/" class="top-link">Account</a>
+      <a href="/cart/" class="top-link">Cart (0)</a>
+    </div>
+  </div>
+</div>
+
 <header>
     <nav>
         <div class="logo">
@@ -82,7 +99,6 @@
     </div>
   </div>
 </footer>
-
 
 </body>
 </html>
