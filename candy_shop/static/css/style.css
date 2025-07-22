@@ -53,11 +53,13 @@ header {
 .nav-links li a {
   color: white;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
+  font-family: "Gloria Hallelujah", cursive;
+  font-weight: 400;
+  font-size: 1.7rem; 
   border-bottom: 2px solid transparent;
   transition: all 0.3s ease;
 }
+
 
 .nav-links li a:hover {
   border-bottom: 2px solid #ffd0da;
@@ -295,7 +297,7 @@ header {
 
 /* === Footer === */
 .site-footer {
-  background-color: #ffe3ec;
+  background-color: #f0bdcd;
   color: #7f1d30;
   padding: 3rem 1rem;
   font-size: 0.9rem;
