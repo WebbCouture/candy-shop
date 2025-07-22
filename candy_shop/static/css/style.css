@@ -108,7 +108,7 @@ header {
 
 /* Icon above text */
 .icon-links li a .icon {
-  display: block;
+  display: inline-block
   font-size: 1.4rem;
   margin-bottom: 0.1rem;
   user-select: none;
@@ -395,5 +395,20 @@ header {
   }
 }
 
-/* Remove old .top-bar styles */
-/* (No longer needed because .top-bar div removed) */
+.secondary-nav-container {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Push search form to left */
+.secondary-search {
+  order: -1; /* move search form before icon-links */
+  margin-right: auto; /* push icon-links right */
+}
+
+.nav-links {
+  margin-left: auto;
+  margin-right: auto;
+}
