@@ -402,10 +402,10 @@ header {
   gap: 0.5rem;
 }
 
-/* Push search form to left */
 .secondary-search {
-  order: -1; /* move search form before icon-links */
-  margin-right: auto; /* push icon-links right */
+  order: -1; /* keep it before icon-links */
+  margin-right: auto; /* keep icon-links pushed right */
+  margin-left: 80px; /* add left margin to nudge search form right */
 }
 
 .nav-links {
