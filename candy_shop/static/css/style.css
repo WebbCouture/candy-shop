@@ -424,3 +424,145 @@ header {
   letter-spacing: 1px;
   text-shadow: 1px 1px 3px rgba(0,0,0,0.3); /* soft shadow */
 }
+
+/* Hide the toggle button by default */
+.menu-toggle {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+/* Responsive styling for screens smaller than 768px */
+@media (max-width: 868px) {
+  .main-nav-container {
+    width: 100%;
+    max-width: 100%;
+    padding: 0.8rem 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+   .secondary-search {
+    margin-left: 0 !important;
+  }
+
+  .menu-toggle {
+    display: block;
+    margin-left: auto;
+    margin-right: 1rem;
+  }
+
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 1rem;
+    width: 80%;
+    background-color: #ffb6c1;
+    padding: 1rem;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+  }
+
+  .nav-links.active {
+    display: flex;
+  }
+
+  .nav-links li {
+    margin-bottom: 0.5rem;
+  }
+
+  .nav-links li a {
+    font-size: 1.2rem;
+  }
+  .main-nav-container {
+  max-width: 95vw;
+}
+}
+@media (max-width: 400px) {
+  .main-nav-container,
+  .secondary-nav-container,
+  .hero,
+  .products,
+  .product-list,
+  .footer-container {
+    width: 100%;
+    padding: 0 1rem;
+    box-sizing: border-box;
+  }
+
+  .logo a {
+    font-size: 2.2rem; /* scale down logo on tiny screens */
+  }
+
+  .hero-content h1 {
+    font-size: 2rem;
+  }
+
+  .hero-content p {
+    font-size: 1rem;
+  }
+
+  .product-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .product-card {
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+
+  .secondary-search input[type="search"] {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .newsletter-form {
+    flex-direction: column;
+  }
+
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100%;
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 400px) {
+  body {
+    overflow-x: hidden;
+  }
+
+  .main-nav-container,
+  .secondary-nav-container,
+  .hero,
+  .products,
+  .product-list,
+  .footer-container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .product-card {
+    width: 100%;
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .nav-links {
+    width: 90%;
+    right: 0.5rem;
+  }
+}

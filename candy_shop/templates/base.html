@@ -23,6 +23,7 @@
   <div class="logo">
   <a href="/">Candy Shop</a>
 </div>
+      <button class="menu-toggle" aria-label="Toggle navigation">&#9776;</button>
       <ul class="nav-links">
         <li><a href="/">Home</a></li>
         <li><a href="/products/">Products</a></li>
@@ -122,6 +123,13 @@
     </div>
   </div>
 </footer>
+<script>
+  const toggle = document.querySelector('.menu-toggle');
+  const nav = document.querySelector('.nav-links');
 
+  toggle.addEventListener('click', () => {
+    nav.classList.toggle('active');
+  });
+</script>
 </body>
 </html>
