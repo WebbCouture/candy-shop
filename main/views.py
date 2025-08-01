@@ -23,22 +23,17 @@ def product_list(request):
     ]
 
     query = request.GET.get('q', '').strip().lower()
-    filtered_products = []
-
     if query:
-        for product in products:
-            if query in product['name'].lower():
-                filtered_products.append(product)
+        filtered_products = [product for product in products if query in product['name'].lower()]
     else:
         filtered_products = products
 
     no_results = query and not filtered_products
 
     context = {
-        'products': products,
-        'filtered_products': filtered_products,
+        'products': filtered_products,  # ✅ only filtered products are passed
+        'search_query': request.GET.get('q', ''),  # original search string for display
         'no_results': no_results,
-        'search_query': query,
     }
 
     return render(request, 'main/product_list.html', context)
