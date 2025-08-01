@@ -1,11 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.conf import settings
 from .forms import ContactForm
 from django.contrib import messages  # For the messages framework
 
 def home(request):
-    return render(request, 'main/home.html')
+    cart = request.session.get('cart', [])
+    cart_count = len(cart)
+    return render(request, 'main/home.html', {'cart_count': cart_count})
 
 def product_list(request):
     products = [
@@ -80,3 +82,39 @@ def contact(request):
         form = ContactForm()
 
     return render(request, 'main/contact.html', {'form': form})
+
+# --- New add to cart view ---
+def add_to_cart(request):
+    if request.method == "POST":
+        product_name = request.POST.get("product_name")
+        product_image = request.POST.get("product_image")
+
+        if not product_name:
+            messages.error(request, "Invalid product.")
+            return redirect("product_list")
+
+        # Initialize cart in session if not exists
+        cart = request.session.get("cart", [])
+
+        # Add product to cart as dict
+        cart.append({
+            "name": product_name,
+            "image_url": product_image,
+        })
+
+        # Save back to session
+        request.session["cart"] = cart
+
+        messages.success(request, f'"{product_name}" added to your cart.')
+        return redirect("product_list")
+
+    # If GET or other method, redirect to products
+    return redirect("product_list")
+
+# --- New cart view ---
+def cart_view(request):
+    cart = request.session.get('cart', [])
+    context = {
+        'cart': cart,
+    }
+    return render(request, 'main/cart.html', context)
