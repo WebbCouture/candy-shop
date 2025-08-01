@@ -6,6 +6,13 @@ urlpatterns = [
     path('products/', views.product_list, name='product_list'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
-    path('add-to-cart/', views.add_to_cart, name='add_to_cart'),  # Added for cart functionality
-    path('cart/', views.cart_view, name='cart'),  # New cart page route
+
+    # Cart related URLs
+    path('add-to-cart/', views.add_to_cart, name='add_to_cart'),
+    path('cart/', views.cart_view, name='cart'),
+
+    # Cart item quantity management URLs
+    path('cart/increase/<int:item_id>/', views.cart_increase, name='cart_increase'),
+    path('cart/decrease/<int:item_id>/', views.cart_decrease, name='cart_decrease'),
+    path('cart/delete/<int:item_id>/', views.cart_delete, name='cart_delete'),
 ]

@@ -589,4 +589,87 @@ main {
   margin-right: auto;
   box-shadow: 0 4px 10px rgba(40, 167, 69, 0.25);
 }
+/* Cart Page Styling */
+.cart-page {
+  max-width: 480px;             /* readable width */
+  margin: 2rem auto 4rem;       /* vertical spacing and centered */
+  background-color: #fff;       /* clean white */
+  box-shadow: 0 4px 15px rgba(255, 77, 109, 0.15);
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.cart-page h2 {
+  color: #ff4d6d;               /* consistent pink */
+  font-weight: 700;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  letter-spacing: 0.5px;
+}
+
+.cart-page ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+  border-top: 2px solid #ffb3c6;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cart-page ul li {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem 0;
+  border-bottom: 1px solid #eee;
+  font-weight: 600;
+  color: #222;
+  font-size: 1.1rem;
+  transition: background-color 0.2s ease;
+}
+
+.cart-page ul li:hover {
+  background-color: #fff0f6;
+}
+
+.cart-page ul li:last-child {
+  border-bottom: none;
+}
+
+.cart-page ul li span:last-child {
+  color: #ff4d6d;
+  font-weight: 700;
+}
+
+.cart-page p.empty-cart-message {
+  text-align: center;
+  color: #999;
+  font-style: italic;
+  font-size: 1.2rem;
+  margin-top: 3rem;
+  font-weight: 400;
+}
+
+/* Button styling inside cart page (if needed) */
+.cart-page .btn-primary {
+  display: block;
+  width: 100%;
+  margin-top: 2rem;
+  padding: 1rem 0;
+  font-size: 1.2rem;
+  border-radius: 50px;
+  text-align: center;
+  text-decoration: none;
+  color: #7f1d30;
+  background-color: #ffb3c6;
+  box-shadow: 0 4px 10px rgba(255, 179, 198, 0.6);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.cart-page .btn-primary:hover {
+  background-color: #ff7b94;
+  box-shadow: 0 6px 15px rgba(255, 123, 148, 0.8);
+}
 }
