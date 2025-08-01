@@ -20,9 +20,9 @@
   <!-- Main Navigation Bar -->
   <nav class="main-nav">
     <div class="main-nav-container">
-  <div class="logo">
-  <a href="/">Candy Shop</a>
-</div>
+      <div class="logo">
+        <a href="/">Candy Shop</a>
+      </div>
       <button class="menu-toggle" aria-label="Toggle navigation">&#9776;</button>
       <ul class="nav-links">
         <li><a href="/">Home</a></li>
@@ -56,8 +56,9 @@
           </a>
         </li>
       </ul>
-      <form action="/search/" method="get" role="search" aria-label="Search products" class="secondary-search">
-        <input type="search" name="q" placeholder="Search products..." required />
+      <!-- ✅ Only this form was changed: remove JS submit handler and just submit normally -->
+      <form id="product-search-form" action="/products/" method="get" role="search" aria-label="Search products" class="secondary-search">
+        <input type="search" id="search-query" name="q" placeholder="Search products..." required />
         <button type="submit" aria-label="Search">🔍</button>
       </form>
     </div>
@@ -65,9 +66,9 @@
 </header>
 
 <main>
-    {% block content %}
-    <!-- Page-specific content will go here -->
-    {% endblock %}
+  {% block content %}
+  <!-- Page-specific content will go here -->
+  {% endblock %}
 </main>
 
 <footer class="site-footer">
@@ -123,6 +124,7 @@
     </div>
   </div>
 </footer>
+
 <script>
   const toggle = document.querySelector('.menu-toggle');
   const nav = document.querySelector('.nav-links');

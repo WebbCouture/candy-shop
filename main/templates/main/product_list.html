@@ -6,30 +6,24 @@
 {% block content %}
 <section class="products-page">
   <h1 class="text-center text-3xl font-bold my-8">Our Full Product Range</h1>
-  <div class="product-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
 
-    <!-- Product 1 -->
-    <div class="product-card bg-white shadow-lg rounded-lg p-4 text-center">
-      <img src="https://images.unsplash.com/photo-1603202902092-3eb7a76ecf5f?q=80&w=687&auto=format&fit=crop" alt="Cherry Delight" class="w-full h-48 object-cover rounded">
-      <h3 class="mt-4 text-xl font-semibold">Cherry Delight</h3>
-      <p class="text-gray-600 text-sm">Sweet cherry flavored candy, perfect for any occasion.</p>
-    </div>
+  {% if search_query %}
+    {% if products|length == 0 %}
+      <p class="text-center text-red-600 mb-4">No products found for "{{ search_query }}". Showing all products instead.</p>
+    {% else %}
+      <p class="text-center mb-4">Showing results for "{{ search_query }}":</p>
+    {% endif %}
+  {% endif %}
 
-    <!-- Product 2 -->
-    <div class="product-card bg-white shadow-lg rounded-lg p-4 text-center">
-      <img src="https://images.unsplash.com/photo-1534119139482-b530a7f9a98b?q=80&w=735&auto=format&fit=crop" alt="Chocolate Bliss" class="w-full h-48 object-cover rounded">
-      <h3 class="mt-4 text-xl font-semibold">Chocolate Bliss</h3>
-      <p class="text-gray-600 text-sm">Rich chocolate candy made with premium cocoa.</p>
-    </div>
+  <div id="product-list" class="product-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
 
-    <!-- Product 3 -->
-    <div class="product-card bg-white shadow-lg rounded-lg p-4 text-center">
-      <img src="https://images.unsplash.com/photo-1600359746315-119f1360d663?q=80&w=688&auto=format&fit=crop" alt="Fruit Punch" class="w-full h-48 object-cover rounded">
-      <h3 class="mt-4 text-xl font-semibold">Fruit Punch</h3>
-      <p class="text-gray-600 text-sm">Refreshing fruity candy bursting with flavor.</p>
-    </div>
-
-    <!-- Add more cards here if you want -->
+    {% for product in products %}
+      <div class="product-card bg-white shadow-lg rounded-lg p-4 text-center" data-name="{{ product.name|lower }}">
+        <img src="{{ product.image_url }}" alt="{{ product.name }}" class="w-full h-48 object-cover rounded" />
+        <h3 class="mt-4 text-xl font-semibold">{{ product.name }}</h3>
+        <p class="text-gray-600 text-sm">{{ product.description }}</p>
+      </div>
+    {% endfor %}
 
   </div>
 </section>
