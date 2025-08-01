@@ -565,4 +565,13 @@ header {
     width: 90%;
     right: 0.5rem;
   }
+/* === Page spacing === */
+main {
+  padding-top: 60px;
+  padding-bottom: 60px;
+}
+.py-10 {
+  padding-top: 2.5rem;    /* 40px */
+  padding-bottom: 2.5rem; /* 40px */
+}
 }

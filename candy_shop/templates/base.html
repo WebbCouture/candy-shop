@@ -56,7 +56,6 @@
           </a>
         </li>
       </ul>
-      <!-- ✅ Only this form was changed: remove JS submit handler and just submit normally -->
       <form id="product-search-form" action="/products/" method="get" role="search" aria-label="Search products" class="secondary-search">
         <input type="search" id="search-query" name="q" placeholder="Search products..." required />
         <button type="submit" aria-label="Search">🔍</button>
@@ -65,7 +64,7 @@
   </nav>
 </header>
 
-<main>
+<main class="py-10">
   {% block content %}
   <!-- Page-specific content will go here -->
   {% endblock %}
