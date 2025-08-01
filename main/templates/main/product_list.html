@@ -5,11 +5,10 @@
 
 {% block content %}
 <section class="products-page">
-  <h1 class="text-center text-3xl font-bold my-8">Our Full Product Range</h1>
 
   {% if search_query %}
     {% if products|length == 0 %}
-      <p class="text-center text-red-600 mb-4">No products found for "{{ search_query }}". Showing all products instead.</p>
+      <p class="text-center text-red-600 mb-4">No products found for "{{ search_query }}".</p>
     {% else %}
       <p class="text-center mb-4">Showing results for "{{ search_query }}":</p>
     {% endif %}
