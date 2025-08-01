@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load static %}
 {% block content %}
 <main class="py-10">
   <section class="contact-section" style="max-width: 900px; margin: 0 auto; text-align: center; padding: 0 1.5rem;">
@@ -25,18 +26,43 @@
 
     <!-- Contact Form -->
     <h2 style="font-size: 2rem; color: #ff7a8a; font-weight: 600; margin-top: 3rem; margin-bottom: 1rem;">Send Us a Message</h2>
-    <form action="#" method="POST" style="max-width: 600px; margin: 0 auto; text-align: left;">
+
+    {% if messages %}
+      {% for message in messages %}
+        <p style="color: green; font-weight: 600; margin-bottom: 1rem;">{{ message }}</p>
+      {% endfor %}
+    {% endif %}
+
+    <form action="" method="POST" style="max-width: 600px; margin: 0 auto; text-align: left;">
+      {% csrf_token %}
       <div style="margin-bottom: 1rem;">
-        <label for="name" style="display: block; font-weight: 600;">Your Name</label>
-        <input type="text" id="name" name="name" required style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ccc;">
+        {{ form.name.label_tag }}<br>
+        {{ form.name }}
+        {% if form.name.errors %}
+          <p style="color: red;">{{ form.name.errors.0 }}</p>
+        {% endif %}
       </div>
       <div style="margin-bottom: 1rem;">
-        <label for="email" style="display: block; font-weight: 600;">Your Email</label>
-        <input type="email" id="email" name="email" required style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ccc;">
+        {{ form.email.label_tag }}<br>
+        {{ form.email }}
+        {% if form.email.errors %}
+          <p style="color: red;">{{ form.email.errors.0 }}</p>
+        {% endif %}
+      </div>
+      <!-- ✅ Subject field added below -->
+      <div style="margin-bottom: 1rem;">
+        {{ form.subject.label_tag }}<br>
+        {{ form.subject }}
+        {% if form.subject.errors %}
+          <p style="color: red;">{{ form.subject.errors.0 }}</p>
+        {% endif %}
       </div>
       <div style="margin-bottom: 1rem;">
-        <label for="message" style="display: block; font-weight: 600;">Message</label>
-        <textarea id="message" name="message" rows="5" required style="width: 100%; padding: 10px; border-radius: 10px; border: 1px solid #ccc;"></textarea>
+        {{ form.message.label_tag }}<br>
+        {{ form.message }}
+        {% if form.message.errors %}
+          <p style="color: red;">{{ form.message.errors.0 }}</p>
+        {% endif %}
       </div>
       <button type="submit" class="btn-primary" style="margin-top: 1rem;">Send Message</button>
     </form>

@@ -1,4 +1,8 @@
 from django.shortcuts import render
+from django.core.mail import send_mail
+from django.conf import settings
+from .forms import ContactForm
+from django.contrib import messages  # For the messages framework
 
 def home(request):
     return render(request, 'main/home.html')
@@ -31,8 +35,8 @@ def product_list(request):
     no_results = query and not filtered_products
 
     context = {
-        'products': filtered_products,  # ✅ only filtered products are passed
-        'search_query': request.GET.get('q', ''),  # original search string for display
+        'products': filtered_products,
+        'search_query': request.GET.get('q', ''),
         'no_results': no_results,
     }
 
@@ -42,4 +46,37 @@ def about(request):
     return render(request, 'main/about.html')
 
 def contact(request):
-    return render(request, 'main/contact.html')
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            subject = form.cleaned_data['subject']
+            message = form.cleaned_data['message']
+
+            # Send email to site owner
+            send_mail(
+                f'New contact form submission: {subject}',
+                f'From: {name} <{email}>\n\n{message}',
+                settings.DEFAULT_FROM_EMAIL,
+                [settings.DEFAULT_FROM_EMAIL],
+                fail_silently=False,  # So errors are raised during development
+            )
+
+            # Confirmation email to user
+            send_mail(
+                'Thank you for contacting us',
+                f'Hi {name},\n\nThank you for your message. We will get back to you shortly.',
+                settings.DEFAULT_FROM_EMAIL,
+                [email],
+                fail_silently=False,
+            )
+
+            messages.success(request, "Thank you for your message! We'll get back to you soon.")
+            form = ContactForm()  # Reset the form after successful submission
+        else:
+            messages.error(request, "Please correct the errors below.")
+    else:
+        form = ContactForm()
+
+    return render(request, 'main/contact.html', {'form': form})
