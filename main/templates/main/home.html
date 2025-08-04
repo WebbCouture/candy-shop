@@ -15,21 +15,15 @@
 <section id="products" class="products">
   <h2>Our Best Sellers</h2>
   <div class="product-list">
-    <div class="product-card">
-      <img src="https://images.unsplash.com/photo-1603202902092-3eb7a76ecf5f?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Cherry Delight">
-      <h3>Cherry Delight</h3>
-      <p>Sweet cherry flavored candy, perfect for any occasion.</p>
-    </div>
-    <div class="product-card">
-      <img src="https://images.unsplash.com/photo-1534119139482-b530a7f9a98b?q=80&w=735&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Chocolate Bliss">
-      <h3>Chocolate Bliss</h3>
-      <p>Rich chocolate candy made with premium cocoa.</p>
-    </div>
-    <div class="product-card">
-      <img src="https://images.unsplash.com/photo-1600359746315-119f1360d663?q=80&w=688&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Fruit Punch">
-      <h3>Fruit Punch</h3>
-      <p>Refreshing fruity candy bursting with flavor.</p>
-    </div>
+    {% for product in latest_products %}
+      <div class="product-card">
+        <img src="{{ product.image_url }}" alt="{{ product.name }}">
+        <h3>{{ product.name }}</h3>
+        <p>{{ product.description }}</p>
+      </div>
+    {% empty %}
+      <p>No best-selling products available at the moment.</p>
+    {% endfor %}
   </div>
 </section>
 {% endblock %}

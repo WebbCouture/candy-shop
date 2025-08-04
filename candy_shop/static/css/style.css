@@ -672,4 +672,7 @@ main {
   background-color: #ff7b94;
   box-shadow: 0 6px 15px rgba(255, 123, 148, 0.8);
 }
+html {
+  scroll-behavior: smooth;
+}
 }
