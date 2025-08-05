@@ -15,4 +15,10 @@ urlpatterns = [
     path('cart/increase/<int:item_id>/', views.cart_increase, name='cart_increase'),
     path('cart/decrease/<int:item_id>/', views.cart_decrease, name='cart_decrease'),
     path('cart/delete/<int:item_id>/', views.cart_delete, name='cart_delete'),
+
+    # Account page URL
+    path('account/', views.account, name='account'),
+
+    # Signup page URL
+    path('signup/', views.signup, name='signup'),
 ]

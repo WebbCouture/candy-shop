@@ -22,7 +22,7 @@
   <nav class="main-nav">
     <div class="main-nav-container">
       <div class="logo">
-        <a href="/">Candy Shop</a>
+        <a href="{% url 'home' %}">Candy Shop</a>
       </div>
       <button
         class="menu-toggle"
@@ -33,10 +33,10 @@
         &#9776;
       </button>
       <ul class="nav-links" id="main-nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/products/">Products</a></li>
-        <li><a href="/about/">About</a></li>
-        <li><a href="/contact/">Contact</a></li>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'product_list' %}">Products</a></li>
+        <li><a href="{% url 'about' %}">About</a></li>
+        <li><a href="{% url 'contact' %}">Contact</a></li>
       </ul>
     </div>
   </nav>
@@ -52,13 +52,20 @@
           </a>
         </li>
         <li>
-          <a href="/account/login/">
-            <span class="icon" aria-hidden="true">👤</span><br />
-            Account
-          </a>
+          {% if user.is_authenticated %}
+            <a href="{% url 'account' %}">
+              <span class="icon" aria-hidden="true">👤</span><br />
+              Account
+            </a>
+          {% else %}
+            <a href="{% url 'login' %}">
+              <span class="icon" aria-hidden="true">👤</span><br />
+              Login
+            </a>
+          {% endif %}
         </li>
         <li>
-          <a href="/cart/">
+          <a href="{% url 'cart' %}">
             <span class="icon" aria-hidden="true">🛒</span><br />
             Cart ({{ cart_item_count|default:"0" }})
           </a>
@@ -66,7 +73,7 @@
       </ul>
       <form
         id="product-search-form"
-        action="/products/"
+        action="{% url 'product_list' %}"
         method="get"
         role="search"
         aria-label="Search products"
@@ -107,9 +114,9 @@
       <div class="footer-col">
         <h4>Candy Shop</h4>
         <ul>
-          <li><a href="/about/">About Us</a></li>
-          <li><a href="/contact/">Contact Us</a></li>
-          <li><a href="/products/">Products</a></li>
+          <li><a href="{% url 'about' %}">About Us</a></li>
+          <li><a href="{% url 'contact' %}">Contact Us</a></li>
+          <li><a href="{% url 'product_list' %}">Products</a></li>
           <li><a href="/privacy/">Privacy Policy</a></li>
         </ul>
       </div>

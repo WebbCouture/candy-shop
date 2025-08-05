@@ -26,4 +26,41 @@
     </p>
   </section>
 </main>
+
+<script>
+// JavaScript styling for About page
+document.addEventListener("DOMContentLoaded", function () {
+  const section = document.querySelector(".about-section");
+  const title = document.querySelector(".about-title");
+  const intro = document.querySelector(".about-intro");
+  const subtitles = document.querySelectorAll(".about-subtitle");
+  const texts = document.querySelectorAll(".about-text");
+
+  section.style.maxWidth = "800px";
+  section.style.margin = "0 auto";
+  section.style.padding = "2rem";
+
+  title.style.fontFamily = "'Dancing Script', cursive";
+  title.style.fontSize = "2.5rem";
+  title.style.marginBottom = "1rem";
+  title.style.color = "#C0392B";
+
+  intro.style.fontSize = "1.2rem";
+  intro.style.marginBottom = "2rem";
+  intro.style.lineHeight = "1.6";
+
+  subtitles.forEach(sub => {
+    sub.style.fontSize = "1.6rem";
+    sub.style.marginTop = "1.5rem";
+    sub.style.color = "#8E44AD";
+  });
+
+  texts.forEach(p => {
+    p.style.fontSize = "1rem";
+    p.style.marginTop = "1rem";
+    p.style.lineHeight = "1.5";
+    p.style.color = "#333";
+  });
+});
+</script>
 {% endblock %}

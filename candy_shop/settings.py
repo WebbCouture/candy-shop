@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'main',
 ]
 
@@ -59,7 +60,7 @@ ROOT_URLCONF = 'candy_shop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'candy_shop' / 'templates'],  # your templates folder
+        'DIRS': [BASE_DIR / 'candy_shop' / 'templates'],  # <-- added this line
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
