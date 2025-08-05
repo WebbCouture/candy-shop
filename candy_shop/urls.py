@@ -10,6 +10,6 @@ from django.urls import path, include  # include is used to include other URLcon
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('main.urls')),  # Includes your main app's URLs
-    path('accounts/', include('django.contrib.auth.urls')),  # Enables Django's built-in login/logout/password views
+    path('', include('main.urls')),  # Includes your main app's URLs at the root
+    path('accounts/', include('django.contrib.auth.urls')),  # Enables Django's built-in auth URLs (login, logout, password management)
 ]

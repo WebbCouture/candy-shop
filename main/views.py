@@ -2,11 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required  # Added import
 
-from .forms import ContactForm
+from .forms import ContactForm, CustomUserCreationForm  # Import your custom form
 from .models import Product
 
 # Home page - shows latest products
@@ -146,14 +145,24 @@ def account(request):
 # User signup view for registration
 def signup(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = CustomUserCreationForm(request.POST)  # Use your custom form here
         if form.is_valid():
             user = form.save()
             login(request, user)  # Log in user immediately
+
+            # Send welcome email automatically
+            send_mail(
+                'Welcome to Candy Shop!',
+                f"Hi {user.first_name},\n\nThanks for signing up! We're glad to have you 🎉",
+                settings.DEFAULT_FROM_EMAIL,
+                [user.email],
+                fail_silently=False,
+            )
+
             messages.success(request, "Registration successful. Welcome!")
             return redirect('home')
         else:
             messages.error(request, "Please correct the errors below.")
     else:
-        form = UserCreationForm()
+        form = CustomUserCreationForm()
     return render(request, 'registration/signup.html', {'form': form})
