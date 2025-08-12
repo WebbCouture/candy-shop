@@ -13,9 +13,36 @@
         <li class="cart-item">
           <span class="item-name">{{ item.name }}</span>
           <span class="item-quantity">Quantity: {{ item.quantity }}</span>
+
+          <!-- Cart Item Controls (Increase, Decrease, Delete) -->
+          <div class="item-controls">
+            <form action="{% url 'cart_increase' item_id=product_id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="control-btn">+</button>
+            </form>
+            <form action="{% url 'cart_decrease' item_id=product_id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="control-btn">-</button>
+            </form>
+            <form action="{% url 'cart_delete' item_id=product_id %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" class="control-btn delete-btn">Remove</button>
+            </form>
+          </div>
         </li>
       {% endfor %}
     </ul>
+
+    <!-- Cart Total (Optional - Add prices if available) -->
+    <div class="cart-total">
+      <p>Total: <strong>{{ cart_total }}</strong></p>  <!-- Assuming you pass a 'cart_total' context -->
+    </div>
+
+    <!-- Checkout Button -->
+    <div class="checkout-btn">
+      <a href="{% url 'checkout' %}" class="btn">Proceed to Checkout</a>
+    </div>
+
   {% else %}
     <p class="empty-cart-msg">Your cart is empty.</p>
   {% endif %}
