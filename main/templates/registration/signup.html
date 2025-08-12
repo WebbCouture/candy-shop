@@ -9,81 +9,9 @@
 
     <form method="POST" action="{% url 'signup' %}">
       {% csrf_token %}
-
-      <!-- Render all form fields dynamically with error handling -->
-      <div class="form-group">
-        <label for="username">Username</label>
-        {{ form.username }}
-        {% if form.username.errors %}
-          <ul class="errors">
-            {% for error in form.username.errors %}
-              <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      </div>
-
-      <div class="form-group">
-        <label for="email">Email</label>
-        {{ form.email }}
-        {% if form.email.errors %}
-          <ul class="errors">
-            {% for error in form.email.errors %}
-              <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      </div>
-
-      <div class="form-group">
-        <label for="phone_number">Phone Number</label>
-        {{ form.phone_number }}
-        {% if form.phone_number.errors %}
-          <ul class="errors">
-            {% for error in form.phone_number.errors %}
-              <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      </div>
-
-      <div class="form-group">
-        <label for="password1">Password</label>
-        {{ form.password1 }}
-        {% if form.password1.errors %}
-          <ul class="errors">
-            {% for error in form.password1.errors %}
-              <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      </div>
-
-      <div class="form-group">
-        <label for="password2">Confirm Password</label>
-        {{ form.password2 }}
-        {% if form.password2.errors %}
-          <ul class="errors">
-            {% for error in form.password2.errors %}
-              <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      </div>
-
-      <div class="form-group">
-        <label for="subscribed">
-          <input type="checkbox" name="subscribed" {% if form.subscribed.value %}checked{% endif %}>
-          Subscribe for Specials
-        </label>
-        {% if form.subscribed.errors %}
-          <ul class="errors">
-            {% for error in form.subscribed.errors %}
-              <li>{{ error }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      </div>
+      
+      <!-- Display form fields dynamically -->
+      {{ form.as_p }} <!-- This will render the form fields -->
 
       <button type="submit">Register</button>
     </form>
