@@ -24,7 +24,7 @@ SECRET_KEY = os.environ.get(
     'django-insecure-wxs3%36rv84(791g@%v-+o8lt6w_n*6hy(jdbver@ft0(_0b)c'
 )
 
-DEBUG = os.environ.get('DEBUG', 'True') == 'True'
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
     'candyshop-demo-bf556706b864.herokuapp.com',
