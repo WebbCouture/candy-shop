@@ -12,6 +12,7 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
     path('privacy/', views.privacy, name='privacy'),
+    path('shipping/', views.shipping, name='shipping'),
 
     # Cart-related URLs
     path('add-to-cart/', views.add_to_cart, name='add_to_cart'),

@@ -83,6 +83,10 @@ def contact(request):
 def privacy(request):
     return render(request, 'main/privacy.html')
 
+# --- NEW: Shipping page ---
+def shipping(request):
+    return render(request, 'main/shipping.html')
+
 # --- Cart Views ---
 def add_to_cart(request):
     if request.method == "POST":
