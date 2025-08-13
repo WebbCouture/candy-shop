@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block title %}Customer Reviews - Candy Shop{% endblock %}
+
+{% block content %}
+<section class="reviews-page">
+  <h2>Customer Reviews</h2>
+
+  <p>We love hearing from you! Here are a few recent comments from our sweet-toothed customers.</p>
+
+  <ul class="review-list">
+    <li>
+      <strong>Alex</strong> — ★★★★★<br>
+      “Best gummies I’ve had in years. Fast delivery too!”
+    </li>
+    <li>
+      <strong>Maya</strong> — ★★★★☆<br>
+      “Chocolate bundle was amazing. Will order again.”
+    </li>
+  </ul>
+
+  <hr>
+  <p>Want to leave a review? Reach us via the <a href="{% url 'contact' %}">contact form</a> for now.</p>
+</section>
+{% endblock %}

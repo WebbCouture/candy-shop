@@ -15,6 +15,7 @@ urlpatterns = [
     path('shipping/', views.shipping, name='shipping'),
     path('terms/', views.terms, name='terms'),
     path('coupons/', views.coupons, name='coupons'),
+    path('reviews/', views.reviews, name='reviews'),
 
     # Cart-related URLs
     path('add-to-cart/', views.add_to_cart, name='add_to_cart'),

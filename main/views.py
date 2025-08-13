@@ -117,6 +117,10 @@ def coupons(request):
     current = request.session.get("promo")
     return render(request, "main/coupons.html", {"current_promo": current})
 
+# --- NEW: Reviews page ---
+def reviews(request):
+    return render(request, 'main/reviews.html')
+
 # --- Cart Views ---
 def add_to_cart(request):
     if request.method == "POST":
