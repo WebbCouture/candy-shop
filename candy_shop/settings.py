@@ -13,7 +13,7 @@ SECRET_KEY = os.environ.get(
 )
 
 # Set DEBUG to False for production
-DEBUG = False  # Change this to False
+DEBUG = False  # Change this to True for local dev if needed
 
 # Ensure the hosts are correct for production
 ALLOWED_HOSTS = [
@@ -118,8 +118,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 
-# Login URL
-LOGIN_URL = '/account/login/'
-
-# Static files handling when DEBUG is False (added for production)
-# Remove this from settings.py and add it to urls.py instead.
+# Login URLs (use names instead of hardcoded paths to avoid typos)
+LOGIN_URL = 'login'                # was '/account/login/' — fixed
+LOGIN_REDIRECT_URL = 'home'        # redirect after login
+LOGOUT_REDIRECT_URL = 'home'       # redirect after logout

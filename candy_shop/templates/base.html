@@ -50,12 +50,15 @@
             Gift Certificates
           </a>
         </li>
+
+        <!-- Account/Login: updated to point to /accounts/ combined page -->
         <li>
-          <a href="/account/login/">
+          <a href="{% url 'account' %}">
             <span class="icon" aria-hidden="true">👤</span><br />
             Account
           </a>
         </li>
+
         <li>
           <a href="/cart/">
             <span class="icon" aria-hidden="true">🛒</span><br />
@@ -63,6 +66,7 @@
           </a>
         </li>
       </ul>
+
       <form
         id="product-search-form"
         action="/products/"

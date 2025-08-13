@@ -1,25 +1,105 @@
-<!-- templates/registration/account.html -->
 {% extends 'base.html' %}
 
 {% block content %}
   <h2>Account</h2>
 
   <div>
-    <h3>Login</h3>
-    <form method="post">
-      {% csrf_token %}
-      {{ login_form.as_p }}
-      <button type="submit" name="login">Login</button>
-    </form>
+    <!-- Login Form -->
+    <div id="login-form" class="account-form">
+      <h3>Login</h3>
+      <form method="post">
+        {% csrf_token %}
+        {{ login_form.as_p }}
+        {% if login_form.errors %}
+          <div class="error">
+            <ul>
+              {% for field in login_form %}
+                {% for error in field.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        <button type="submit" name="login" class="btn btn-primary">Login</button>
+      </form>
+      <p>Don't have an account? <a href="#" id="show-register">Sign up here</a></p>
+      <p><a href="#" id="show-forgot-password">Forgot your password?</a></p>
+    </div>
+
+    <!-- Sign Up Form -->
+    <div id="signup-form" class="account-form" style="display:none;">
+      <h3>Sign Up</h3>
+      <form method="post">
+        {% csrf_token %}
+        {{ signup_form.as_p }}
+        {% if signup_form.errors %}
+          <div class="error">
+            <ul>
+              {% for field in signup_form %}
+                {% for error in field.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        <button type="submit" name="signup" class="btn btn-primary">Sign Up</button>
+      </form>
+      <p>Already have an account? <a href="#" id="show-login">Login here</a></p>
+    </div>
+
+    <!-- Forgot Password Form -->
+    <div id="forgot-password-form" class="account-form" style="display:none;">
+      <h3>Forgot Password</h3>
+      <form method="post">
+        {% csrf_token %}
+        {{ forgot_password_form.as_p }}
+        {% if forgot_password_form.errors %}
+          <div class="error">
+            <ul>
+              {% for field in forgot_password_form %}
+                {% for error in field.errors %}
+                  <li>{{ error }}</li>
+                {% endfor %}
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
+        <button type="submit" name="forgot-password" class="btn btn-primary">Reset Password</button>
+      </form>
+      <p><a href="#" id="show-login-again">Back to login</a></p>
+    </div>
   </div>
 
-  <div>
-    <h3>Sign Up</h3>
-    <form method="post">
-      {% csrf_token %}
-      {{ signup_form.as_p }}
-      <button type="submit" name="signup">Sign Up</button>
-    </form>
-  </div>
+  <script>
+    // JS to toggle between login, signup, and forgot password forms
+    document.getElementById("show-register").addEventListener("click", function(event){
+      event.preventDefault();
+      document.getElementById("login-form").style.display = "none";
+      document.getElementById("signup-form").style.display = "block";
+      document.getElementById("forgot-password-form").style.display = "none";  // Hide forgot password form
+    });
+
+    document.getElementById("show-login").addEventListener("click", function(event){
+      event.preventDefault();
+      document.getElementById("signup-form").style.display = "none";
+      document.getElementById("login-form").style.display = "block";
+      document.getElementById("forgot-password-form").style.display = "none";  // Hide forgot password form
+    });
+
+    document.getElementById("show-forgot-password").addEventListener("click", function(event){
+      event.preventDefault();
+      document.getElementById("login-form").style.display = "none";
+      document.getElementById("signup-form").style.display = "none";
+      document.getElementById("forgot-password-form").style.display = "block";  // Show forgot password form
+    });
+
+    document.getElementById("show-login-again").addEventListener("click", function(event){
+      event.preventDefault();
+      document.getElementById("forgot-password-form").style.display = "none";
+      document.getElementById("login-form").style.display = "block";
+    });
+  </script>
 
 {% endblock %}

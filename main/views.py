@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 from django.conf import settings
-from .forms import ContactForm
+from .forms import ContactForm, RegistrationForm
 from .models import Product
 from django.contrib import messages
+from django.contrib.auth import login
+from django.contrib.auth.forms import AuthenticationForm
 
 # Home page - shows latest products
 def home(request):
@@ -16,7 +18,6 @@ def home(request):
         'cart_count': cart_count,
         'latest_products': latest_products,
     })
-
 
 # Product list + search
 def product_list(request):
@@ -34,10 +35,8 @@ def product_list(request):
         'no_results': no_results,
     })
 
-
 def about(request):
     return render(request, 'main/about.html')
-
 
 def contact(request):
     if request.method == 'POST':
@@ -48,6 +47,7 @@ def contact(request):
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
 
+            # Send notification to admin
             send_mail(
                 f'New contact form submission: {subject}',
                 f'From: {name} <{email}>\n\n{message}',
@@ -56,6 +56,7 @@ def contact(request):
                 fail_silently=False,
             )
 
+            # Send confirmation to the user
             send_mail(
                 'Thank you for contacting us',
                 f'Hi {name},\n\nThank you for your message. We will get back to you shortly.',
@@ -65,7 +66,7 @@ def contact(request):
             )
 
             messages.success(request, "Thank you for your message! We'll get back to you soon.")
-            form = ContactForm()
+            return redirect('contact')  # Redirect to clear the form after success
         else:
             messages.error(request, "Please correct the errors below.")
     else:
@@ -73,9 +74,7 @@ def contact(request):
 
     return render(request, 'main/contact.html', {'form': form})
 
-
 # --- Cart Views ---
-
 def add_to_cart(request):
     if request.method == "POST":
         product_id = request.POST.get("product_id")
@@ -99,11 +98,9 @@ def add_to_cart(request):
 
     return redirect("product_list")
 
-
 def cart_view(request):
     cart = request.session.get('cart', {})
     return render(request, 'main/cart.html', {'cart': cart})
-
 
 def cart_increase(request, item_id):
     cart = request.session.get('cart', {})
@@ -113,7 +110,6 @@ def cart_increase(request, item_id):
         request.session['cart'] = cart
         messages.success(request, f"Increased quantity of {cart[item_id]['name']}.")
     return redirect('cart')
-
 
 def cart_decrease(request, item_id):
     cart = request.session.get('cart', {})
@@ -129,7 +125,6 @@ def cart_decrease(request, item_id):
         request.session['cart'] = cart
     return redirect('cart')
 
-
 def cart_delete(request, item_id):
     cart = request.session.get('cart', {})
     item_id = str(item_id)
@@ -139,3 +134,37 @@ def cart_delete(request, item_id):
         request.session['cart'] = cart
         messages.success(request, f"Removed {name} from cart.")
     return redirect('cart')
+
+# --- Account View (Login and Register) ---
+def account(request):
+    if request.method == 'POST':
+        # Handle login
+        if 'login' in request.POST:
+            login_form = AuthenticationForm(request, data=request.POST)
+            if login_form.is_valid():
+                user = login_form.get_user()
+                login(request, user)
+                messages.success(request, "Login successful!")
+                return redirect('home')
+            else:
+                messages.error(request, "Invalid credentials, please try again.")
+
+        # Handle sign-up
+        elif 'signup' in request.POST:
+            signup_form = RegistrationForm(request.POST)
+            if signup_form.is_valid():
+                user = signup_form.save()
+                login(request, user)  # Log the user in after registration
+                messages.success(request, "Registration successful! You are now logged in.")
+                return redirect('home')
+            else:
+                messages.error(request, "There were errors in the registration form.")
+
+    else:
+        login_form = AuthenticationForm()
+        signup_form = RegistrationForm()
+
+    return render(request, 'registration/account.html', {
+        'login_form': login_form,
+        'signup_form': signup_form,
+    })
