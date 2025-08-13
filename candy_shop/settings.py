@@ -22,6 +22,13 @@ ALLOWED_HOSTS = [
     '127.0.0.1'   # Localhost IP
 ]
 
+# Trust these origins for CSRF (needed for password reset and other POST forms)
+CSRF_TRUSTED_ORIGINS = [
+    'https://candyshop-demo-bf556706b864.herokuapp.com',
+    'http://localhost',
+    'http://127.0.0.1',
+]
+
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
