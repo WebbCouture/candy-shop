@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Videos - Candy Shop{% endblock %}
+
+{% block content %}
+<section class="videos-page">
+  <h2>Our Sweet Video Collection</h2>
+  <p>Watch our candy-making process, product highlights, and fun behind-the-scenes clips.</p>
+
+  <div class="video-list">
+    <div class="video-item">
+      <h3>Making Chocolate Fudge</h3>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+              title="YouTube video" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="video-item">
+      <h3>Tour of Our Candy Factory</h3>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/3GwjfUFyY6M" 
+              title="YouTube video" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+</section>
+{% endblock %}

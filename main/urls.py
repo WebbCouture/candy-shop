@@ -17,6 +17,7 @@ urlpatterns = [
     path('coupons/', views.coupons, name='coupons'),
     path('reviews/', views.reviews, name='reviews'),
     path('blog/', views.blog, name='blog'),
+    path('videos/', views.videos, name='videos'),
 
     # Cart-related URLs
     path('add-to-cart/', views.add_to_cart, name='add_to_cart'),
