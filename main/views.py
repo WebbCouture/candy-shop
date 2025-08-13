@@ -1,11 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 from django.conf import settings
-from .forms import ContactForm, RegistrationForm
-from .models import Product
 from django.contrib import messages
 from django.contrib.auth import login
 from django.contrib.auth.forms import AuthenticationForm
+
+from .forms import ContactForm, RegistrationForm
+from .models import Product, Order
+
 
 # Home page - shows latest products
 def home(request):
@@ -19,25 +21,26 @@ def home(request):
         'latest_products': latest_products,
     })
 
+
 # Product list + search
 def product_list(request):
-    query = request.GET.get('q', '').strip().lower()
-    if query:
-        products = Product.objects.filter(name__icontains=query)
-    else:
-        products = Product.objects.all()
-
-    no_results = query and not products.exists()
+    query = request.GET.get('q', '').strip()
+    products = Product.objects.filter(name__icontains=query) if query else Product.objects.all()
+    no_results = bool(query) and not products.exists()
 
     return render(request, 'main/product_list.html', {
         'products': products,
-        'search_query': request.GET.get('q', ''),
+        'search_query': query,
         'no_results': no_results,
     })
 
+
+# About page
 def about(request):
     return render(request, 'main/about.html')
 
+
+# Contact form
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
@@ -66,13 +69,14 @@ def contact(request):
             )
 
             messages.success(request, "Thank you for your message! We'll get back to you soon.")
-            return redirect('contact')  # Redirect to clear the form after success
+            return redirect('contact')
         else:
             messages.error(request, "Please correct the errors below.")
     else:
         form = ContactForm()
 
     return render(request, 'main/contact.html', {'form': form})
+
 
 # --- Cart Views ---
 def add_to_cart(request):
@@ -94,13 +98,13 @@ def add_to_cart(request):
 
         request.session["cart"] = cart
         messages.success(request, f'"{product.name}" added to your cart.')
-        return redirect("product_list")
-
     return redirect("product_list")
+
 
 def cart_view(request):
     cart = request.session.get('cart', {})
     return render(request, 'main/cart.html', {'cart': cart})
+
 
 def cart_increase(request, item_id):
     cart = request.session.get('cart', {})
@@ -110,6 +114,7 @@ def cart_increase(request, item_id):
         request.session['cart'] = cart
         messages.success(request, f"Increased quantity of {cart[item_id]['name']}.")
     return redirect('cart')
+
 
 def cart_decrease(request, item_id):
     cart = request.session.get('cart', {})
@@ -125,6 +130,7 @@ def cart_decrease(request, item_id):
         request.session['cart'] = cart
     return redirect('cart')
 
+
 def cart_delete(request, item_id):
     cart = request.session.get('cart', {})
     item_id = str(item_id)
@@ -135,28 +141,38 @@ def cart_delete(request, item_id):
         messages.success(request, f"Removed {name} from cart.")
     return redirect('cart')
 
-# --- Account View (Login and Register) ---
+
+# --- Account View (Login, Register, Dashboard) ---
 def account(request):
+    if request.user.is_authenticated:
+        # Fetch purchase history for logged-in user
+        orders = Order.objects.filter(user=request.user).prefetch_related('items__product')
+
+        return render(request, 'registration/account.html', {
+            'dashboard': True,
+            'orders': orders
+        })
+
     if request.method == 'POST':
-        # Handle login
         if 'login' in request.POST:
             login_form = AuthenticationForm(request, data=request.POST)
+            signup_form = RegistrationForm()
             if login_form.is_valid():
                 user = login_form.get_user()
                 login(request, user)
                 messages.success(request, "Login successful!")
-                return redirect('home')
+                return redirect('account')
             else:
                 messages.error(request, "Invalid credentials, please try again.")
 
-        # Handle sign-up
         elif 'signup' in request.POST:
             signup_form = RegistrationForm(request.POST)
+            login_form = AuthenticationForm()
             if signup_form.is_valid():
                 user = signup_form.save()
-                login(request, user)  # Log the user in after registration
+                login(request, user)
                 messages.success(request, "Registration successful! You are now logged in.")
-                return redirect('home')
+                return redirect('account')
             else:
                 messages.error(request, "There were errors in the registration form.")
 
@@ -167,4 +183,5 @@ def account(request):
     return render(request, 'registration/account.html', {
         'login_form': login_form,
         'signup_form': signup_form,
+        'dashboard': False
     })
