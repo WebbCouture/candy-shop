@@ -2,7 +2,7 @@ from django.contrib.auth.views import LoginView  # optional; fine to keep
 from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
-from django.views.generic import RedirectView   # ← add this import
+from django.views.generic import RedirectView
 from . import views
 
 urlpatterns = [
@@ -23,6 +23,9 @@ urlpatterns = [
 
     # Accounts-related URL (Login + Registration combined page)
     path('accounts/', views.account, name='account'),
+
+    # ✅ Custom logout route
+    path('logout/', views.logout_view, name='logout'),
 
     # ✅ Redirect any visit to /accounts/login/ to your combined /accounts/ page
     path('accounts/login/', RedirectView.as_view(pattern_name='account', permanent=False)),

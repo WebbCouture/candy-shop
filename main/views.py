@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import login
+from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 
 from .forms import ContactForm, RegistrationForm
@@ -142,21 +142,28 @@ def cart_delete(request, item_id):
     return redirect('cart')
 
 
+# --- Custom Logout View ---
+def logout_view(request):
+    logout(request)
+    messages.success(request, "You have been logged out successfully.")
+    return redirect('account')
+
+
 # --- Account View (Login, Register, Dashboard) ---
 def account(request):
     if request.user.is_authenticated:
-        # Fetch purchase history for logged-in user
         orders = Order.objects.filter(user=request.user).prefetch_related('items__product')
-
         return render(request, 'registration/account.html', {
             'dashboard': True,
             'orders': orders
         })
 
+    login_form = AuthenticationForm()
+    signup_form = RegistrationForm()
+
     if request.method == 'POST':
         if 'login' in request.POST:
             login_form = AuthenticationForm(request, data=request.POST)
-            signup_form = RegistrationForm()
             if login_form.is_valid():
                 user = login_form.get_user()
                 login(request, user)
@@ -167,7 +174,6 @@ def account(request):
 
         elif 'signup' in request.POST:
             signup_form = RegistrationForm(request.POST)
-            login_form = AuthenticationForm()
             if signup_form.is_valid():
                 user = signup_form.save()
                 login(request, user)
@@ -175,10 +181,6 @@ def account(request):
                 return redirect('account')
             else:
                 messages.error(request, "There were errors in the registration form.")
-
-    else:
-        login_form = AuthenticationForm()
-        signup_form = RegistrationForm()
 
     return render(request, 'registration/account.html', {
         'login_form': login_form,

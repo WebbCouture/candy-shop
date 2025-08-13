@@ -136,7 +136,61 @@
   </style>
 
 {% else %}
-  <!-- (Login/Signup forms remain unchanged) -->
-  {{ block.super }}
+  <!-- Login & Sign Up -->
+  <div id="login-form" class="account-form">
+    <h3>Login</h3>
+    <form method="post">
+      {% csrf_token %}
+      {{ login_form.as_p }}
+      {% if login_form.errors %}
+        <div class="alert alert-danger mt-2">
+          <ul class="mb-0">
+            {% for field in login_form %}
+              {% for error in field.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      <button type="submit" name="login" class="btn btn-primary">Login</button>
+    </form>
+    <p>Don't have an account? <a href="#" id="show-register">Sign up here</a></p>
+    <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
+  </div>
+
+  <div id="signup-form" class="account-form" style="display:none;">
+    <h3>Sign Up</h3>
+    <form method="post">
+      {% csrf_token %}
+      {{ signup_form.as_p }}
+      {% if signup_form.errors %}
+        <div class="alert alert-danger mt-2">
+          <ul class="mb-0">
+            {% for field in signup_form %}
+              {% for error in field.errors %}
+                <li>{{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+      <button type="submit" name="signup" class="btn btn-primary">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="#" id="show-login">Login here</a></p>
+  </div>
+
+  <script>
+    document.getElementById("show-register").addEventListener("click", function(e){
+      e.preventDefault();
+      document.getElementById("login-form").style.display = "none";
+      document.getElementById("signup-form").style.display = "block";
+    });
+    document.getElementById("show-login").addEventListener("click", function(e){
+      e.preventDefault();
+      document.getElementById("signup-form").style.display = "none";
+      document.getElementById("login-form").style.display = "block";
+    });
+  </script>
 {% endif %}
 {% endblock %}
