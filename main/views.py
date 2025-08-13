@@ -4,13 +4,15 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
 
 from .forms import ContactForm, RegistrationForm
 from .models import Product, Order
 
 from decimal import Decimal
 import time
-
+import stripe  # Stripe for payment
 
 # Home page - shows latest products
 def home(request):
@@ -24,7 +26,6 @@ def home(request):
         'latest_products': latest_products,
     })
 
-
 # Product list + search
 def product_list(request):
     query = request.GET.get('q', '').strip()
@@ -37,11 +38,9 @@ def product_list(request):
         'no_results': no_results,
     })
 
-
 # About page
 def about(request):
     return render(request, 'main/about.html')
-
 
 # Contact form
 def contact(request):
@@ -80,6 +79,9 @@ def contact(request):
 
     return render(request, 'main/contact.html', {'form': form})
 
+# --- NEW: Privacy page ---
+def privacy(request):
+    return render(request, 'main/privacy.html')
 
 # --- Cart Views ---
 def add_to_cart(request):
@@ -103,11 +105,87 @@ def add_to_cart(request):
         messages.success(request, f'"{product.name}" added to your cart.')
     return redirect("product_list")
 
-
 def cart_view(request):
     cart = request.session.get('cart', {})
-    return render(request, 'main/cart.html', {'cart': cart})
+    return render(request, 'main/cart.html', {
+        'cart': cart,
+        'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY,  # Stripe public key
+    })
 
+@require_POST
+def create_checkout_session(request):
+    """
+    Creates a Stripe Checkout session for everything in the cart
+    and redirects the browser to Stripe (no JS needed).
+    """
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+
+    cart = request.session.get('cart', {})
+    if not cart:
+        return redirect('cart')
+
+    line_items = []
+    currency = "usd"
+
+    for key, item in cart.items():
+        # Gift certificates
+        if str(key).startswith("gift:") or item.get("type") == "gift_certificate":
+            try:
+                amt_cents = int(float(item.get("amount", "0")) * 100)
+            except Exception:
+                amt_cents = 0
+            if amt_cents <= 0:
+                continue
+            line_items.append({
+                "price_data": {
+                    "currency": currency,
+                    "product_data": {"name": item.get("name", "Gift Certificate")},
+                    "unit_amount": amt_cents,
+                },
+                "quantity": 1,
+            })
+        else:
+            # Regular product
+            try:
+                product = Product.objects.get(id=int(key))
+            except (ValueError, Product.DoesNotExist):
+                continue
+
+            qty = int(item.get("quantity", 1))
+            unit_price = getattr(product, "price", 0)
+            try:
+                unit_cents = int(float(unit_price) * 100)
+            except Exception:
+                unit_cents = 0
+            if unit_cents <= 0 or qty <= 0:
+                continue
+
+            line_items.append({
+                "price_data": {
+                    "currency": currency,
+                    "product_data": {"name": product.name},
+                    "unit_amount": unit_cents,
+                },
+                "quantity": qty,
+            })
+
+    if not line_items:
+        return redirect('cart')
+
+    try:
+        session = stripe.checkout.Session.create(
+            payment_method_types=["card"],
+            line_items=line_items,
+            mode="payment",
+            success_url=request.build_absolute_uri("/cart/?success=1"),
+            cancel_url=request.build_absolute_uri("/cart/?canceled=1"),
+        )
+    except Exception as e:
+        messages.error(request, f"Payment error: {e}")
+        return redirect('cart')
+
+    # Redirect the user to Stripe Checkout
+    return redirect(session.url, code=303)
 
 def cart_increase(request, item_id):
     cart = request.session.get('cart', {})
@@ -117,7 +195,6 @@ def cart_increase(request, item_id):
         request.session['cart'] = cart
         messages.success(request, f"Increased quantity of {cart[item_id]['name']}.")
     return redirect('cart')
-
 
 def cart_decrease(request, item_id):
     cart = request.session.get('cart', {})
@@ -133,7 +210,6 @@ def cart_decrease(request, item_id):
         request.session['cart'] = cart
     return redirect('cart')
 
-
 def cart_delete(request, item_id):
     cart = request.session.get('cart', {})
     item_id = str(item_id)
@@ -144,13 +220,11 @@ def cart_delete(request, item_id):
         messages.success(request, f"Removed {name} from cart.")
     return redirect('cart')
 
-
 # --- Custom Logout View ---
 def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out successfully.")
     return redirect('account')
-
 
 # --- Account View (Login, Register, Dashboard) ---
 def account(request):
@@ -191,13 +265,8 @@ def account(request):
         'dashboard': False
     })
 
-
 # --- Gift Certificates Page ---
 def gift_certificates(request):
-    """
-    Buy form now adds a Gift Certificate to the cart.
-    Check form validates TEST codes (demo only).
-    """
     TEST_CODES = {
         "12345": {"balance": "50.00", "expires": "2026-12-31"},
         "00000": {"balance": "0.00",  "expires": "2026-12-31"},
@@ -205,7 +274,6 @@ def gift_certificates(request):
     }
 
     if request.method == 'POST':
-        # Handle "check balance" mini-form
         if "code" in request.POST:
             code = (request.POST.get("code") or "").strip()
             if not code.isdigit():
@@ -222,7 +290,6 @@ def gift_certificates(request):
                 messages.error(request, f"❌ Code {code} is invalid or not found (demo).")
             return redirect('gift_certificates')
 
-        # Handle "buy" form → add to cart
         name = (request.POST.get('name') or '').strip()
         email = (request.POST.get('email') or '').strip()
         amount_str = (request.POST.get('amount') or '').strip()

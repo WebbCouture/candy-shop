@@ -16,6 +16,23 @@
         </li>
       {% endfor %}
     </ul>
+
+    <!-- Pay with Card Button -->
+    <form action="{% url 'create_checkout_session' %}" method="POST">
+      {% csrf_token %}
+      <button type="submit" class="btn-pay-card" style="
+        background-color: #6772e5;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+      ">
+        💳 Pay with Card
+      </button>
+    </form>
+
   {% else %}
     <p class="empty-cart-msg">Your cart is empty.</p>
   {% endif %}

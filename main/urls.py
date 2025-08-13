@@ -11,6 +11,7 @@ urlpatterns = [
     path('products/', views.product_list, name='product_list'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
+    path('privacy/', views.privacy, name='privacy'),
 
     # Cart-related URLs
     path('add-to-cart/', views.add_to_cart, name='add_to_cart'),
@@ -24,13 +25,13 @@ urlpatterns = [
     # Accounts-related URL (Login + Registration combined page)
     path('accounts/', views.account, name='account'),
 
-    # ✅ Custom logout route
+    # Custom logout route
     path('logout/', views.logout_view, name='logout'),
 
-    # ✅ Redirect any visit to /accounts/login/ to your combined /accounts/ page
+    # Redirect any visit to /accounts/login/ to your combined /accounts/ page
     path('accounts/login/', RedirectView.as_view(pattern_name='account', permanent=False)),
 
-    # ✅ Gift Certificates page
+    # Gift Certificates page
     path('gift-certificates/', views.gift_certificates, name='gift_certificates'),
 ]
 

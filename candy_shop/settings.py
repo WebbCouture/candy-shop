@@ -15,6 +15,10 @@ SECRET_KEY = os.environ.get(
 # Set DEBUG to False for production
 DEBUG = False  # Change this to True for local dev if needed
 
+# Override with env variable if present
+if "DJANGO_DEBUG" in os.environ:
+    DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
+
 # Ensure the hosts are correct for production
 ALLOWED_HOSTS = [
     'candyshop-demo-bf556706b864.herokuapp.com',  # Heroku domain
