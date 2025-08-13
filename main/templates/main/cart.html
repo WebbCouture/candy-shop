@@ -4,37 +4,68 @@
 {% block title %}Your Cart - Candy Shop{% endblock %}
 
 {% block content %}
-<section class="cart-page custom-cart">
-  <h2 class="cart-title">Your Shopping Cart</h2>
+<section class="cart-page cart-theme-dark">
+  <h1 class="cart-title">🛒 Your Shopping Cart</h1>
+  <p class="cart-intro">
+    Here’s a quick overview of the treats you’ve picked. You can adjust quantities, remove items, or head to checkout.
+    All candies are freshly packed just for you!
+  </p>
 
   {% if cart %}
-    <ul class="cart-list">
-      {% for product_id, item in cart.items %}
-        <li class="cart-item">
-          <span class="item-name">{{ item.name }}</span>
-          <span class="item-quantity">Quantity: {{ item.quantity }}</span>
-        </li>
-      {% endfor %}
-    </ul>
+    <div class="cart-grid">
+      <!-- Cart items -->
+      <ul class="cart-list" role="list">
+        {% for product_id, item in cart.items %}
+          <li class="cart-item">
+            <div class="item-info">
+              <span class="item-name">{{ item.name }}</span>
+              {% if item.description %}
+                <p class="item-description">{{ item.description }}</p>
+              {% else %}
+                <p class="item-description">Delicious and carefully selected sweets to brighten your day.</p>
+              {% endif %}
+              <span class="item-quantity">Quantity: {{ item.quantity }}</span>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
 
-    <!-- Pay with Card Button -->
-    <form action="{% url 'create_checkout_session' %}" method="POST">
-      {% csrf_token %}
-      <button type="submit" class="btn-pay-card" style="
-        background-color: #6772e5;
-        color: white;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 4px;
-        font-size: 1rem;
-        cursor: pointer;
-      ">
-        💳 Pay with Card
-      </button>
-    </form>
+      <!-- Summary -->
+      <aside class="cart-summary" aria-labelledby="summary-title">
+        <h2 id="summary-title">Order Summary</h2>
+        <p class="summary-text">Review your order before you proceed to checkout. We promise a smooth and secure payment process.</p>
+        
+        <p class="summary-line"><span>Total Items</span><span>{{ cart|length }}</span></p>
+
+        <form action="{% url 'create_checkout_session' %}" method="POST" class="checkout-form">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-primary btn-pay-card">💳 Pay with Card</button>
+        </form>
+
+        <a href="{% url 'product_list' %}" class="btn btn-ghost btn-full">⬅ Continue Shopping</a>
+
+        <p class="summary-note">Shipping calculated at checkout. Free shipping on orders over $50.</p>
+      </aside>
+    </div>
+
+    <div class="cart-extra-info">
+      <h3>Why shop with us?</h3>
+      <ul>
+        <li>✔ Fresh candy made daily</li>
+        <li>✔ Secure payment with encryption</li>
+        <li>✔ 30-day happiness guarantee</li>
+        <li>✔ Worldwide delivery</li>
+      </ul>
+      <p class="cart-tips">Tip: Adding more items may unlock special discounts!</p>
+    </div>
 
   {% else %}
-    <p class="empty-cart-msg">Your cart is empty.</p>
+    <div class="empty-cart">
+      <div class="empty-emoji" aria-hidden="true">🧺</div>
+      <h2>Your cart is empty</h2>
+      <p>Looks like you haven’t added anything yet. Why not browse our delicious collection?</p>
+      <a class="btn btn-primary" href="{% url 'product_list' %}">Browse Candies</a>
+    </div>
   {% endif %}
 </section>
 {% endblock %}

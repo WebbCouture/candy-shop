@@ -10,9 +10,20 @@ from django.views.decorators.http import require_POST
 from .forms import ContactForm, RegistrationForm
 from .models import Product, Order
 
-from decimal import Decimal
+from decimal import Decimal, ROUND_HALF_UP
 import time
 import stripe  # Stripe for payment
+
+# Configure Stripe once using settings
+stripe.api_key = settings.STRIPE_SECRET_KEY
+
+def to_cents(amount) -> int:
+    """
+    Convert a Decimal/str/float to integer minor units (cents/öre).
+    Example: Decimal('12.34') -> 1234
+    """
+    d = Decimal(str(amount)).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
+    return int((d * 100).to_integral_value())
 
 # Home page - shows latest products
 def home(request):
@@ -154,6 +165,19 @@ def add_to_cart(request):
 def cart_view(request):
     cart = request.session.get('cart', {})
     public_key = getattr(settings, 'STRIPE_PUBLIC_KEY', '')  # safe if not set
+
+    # Handle Stripe return flags
+    if request.GET.get('success') == '1':
+        if 'cart' in request.session:
+            del request.session['cart']
+            request.session.modified = True
+        messages.success(request, "🎉 Payment successful! Your order is confirmed.")
+        return redirect('cart')
+
+    if request.GET.get('canceled') == '1':
+        messages.warning(request, "Payment canceled. Your items are still in the cart.")
+        return redirect('cart')
+
     return render(request, 'main/cart.html', {
         'cart': cart,
         'STRIPE_PUBLIC_KEY': public_key,
@@ -165,20 +189,18 @@ def create_checkout_session(request):
     Creates a Stripe Checkout session for everything in the cart
     and redirects the browser to Stripe (no JS needed).
     """
-    stripe.api_key = settings.STRIPE_SECRET_KEY
-
     cart = request.session.get('cart', {})
     if not cart:
         return redirect('cart')
 
     line_items = []
-    currency = "usd"
+    currency = getattr(settings, "STRIPE_CURRENCY", "sek")
 
     for key, item in cart.items():
         # Gift certificates
         if str(key).startswith("gift:") or item.get("type") == "gift_certificate":
             try:
-                amt_cents = int(float(item.get("amount", "0")) * 100)
+                amt_cents = to_cents(item.get("amount", "0"))
             except Exception:
                 amt_cents = 0
             if amt_cents <= 0:
@@ -201,7 +223,7 @@ def create_checkout_session(request):
             qty = int(item.get("quantity", 1))
             unit_price = getattr(product, "price", 0)
             try:
-                unit_cents = int(float(unit_price) * 100)
+                unit_cents = to_cents(unit_price)
             except Exception:
                 unit_cents = 0
             if unit_cents <= 0 or qty <= 0:
@@ -221,11 +243,11 @@ def create_checkout_session(request):
 
     try:
         session = stripe.checkout.Session.create(
-            payment_method_types=["card"],
-            line_items=line_items,
             mode="payment",
+            line_items=line_items,
             success_url=request.build_absolute_uri("/cart/?success=1"),
             cancel_url=request.build_absolute_uri("/cart/?canceled=1"),
+            # You can add metadata or shipping options here if needed
         )
     except Exception as e:
         messages.error(request, f"Payment error: {e}")

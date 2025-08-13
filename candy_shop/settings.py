@@ -6,6 +6,10 @@ import dj_database_url  # for Heroku Postgres support
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+from dotenv import load_dotenv
+load_dotenv(BASE_DIR / ".env")
+# Load environment variables from .env file
+
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = os.environ.get(
     'DJANGO_SECRET_KEY',
@@ -133,3 +137,12 @@ DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 LOGIN_URL = 'login'                # was '/account/login/' — fixed
 LOGIN_REDIRECT_URL = 'home'        # redirect after login
 LOGOUT_REDIRECT_URL = 'home'       # redirect after logout
+
+# ============================
+# Stripe / payments (added)
+# ============================
+STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY", "")
+STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "")
+STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "")  # fill after `stripe listen`
+STRIPE_CURRENCY = os.getenv("STRIPE_CURRENCY", "sek")  # e.g., "sek" or "usd"
+DOMAIN = os.getenv("DOMAIN", "http://127.0.0.1:8000")  # set to your prod domain in production
