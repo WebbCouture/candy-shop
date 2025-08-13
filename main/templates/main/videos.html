@@ -1,24 +1,53 @@
 {% extends 'base.html' %}
-{% load static %}
-
-{% block title %}Videos - Candy Shop{% endblock %}
+{% block title %}How To Videos - Candy Shop{% endblock %}
 
 {% block content %}
 <section class="videos-page">
-  <h2>Our Sweet Video Collection</h2>
-  <p>Watch our candy-making process, product highlights, and fun behind-the-scenes clips.</p>
+  <h2>How To Videos</h2>
+  <p>Short, sweet clips from our kitchen and shop floor. Some videos won’t allow embedding; we’ve picked embeddable examples so you can watch right here.</p>
 
   <div class="video-list">
     <div class="video-item">
-      <h3>Making Chocolate Fudge</h3>
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-              title="YouTube video" frameborder="0" allowfullscreen></iframe>
+      <h3>Tempering Chocolate at Home</h3>
+      <iframe width="560" height="315"
+              src="https://www.youtube-nocookie.com/embed/M7lc1UVf-VE"
+              title="YouTube video"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+      <p class="caption">Learn the basics of tempering for glossy, snappy bars.</p>
     </div>
+
     <div class="video-item">
-      <h3>Tour of Our Candy Factory</h3>
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/3GwjfUFyY6M" 
-              title="YouTube video" frameborder="0" allowfullscreen></iframe>
+      <h3>Gummy Science: Bloom & Texture</h3>
+      <iframe width="560" height="315"
+              src="https://www.youtube-nocookie.com/embed/ysz5S6PUM-U"
+              title="YouTube video"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+      <p class="caption">How gelatin ratios change chewiness — and how we test it.</p>
+    </div>
+
+    <div class="video-item">
+      <h3>Behind the Scenes: Packing & Shipping</h3>
+      <iframe width="560" height="315"
+              src="https://www.youtube-nocookie.com/embed/aqz-KE-bpKQ"
+              title="YouTube video"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+      <p class="caption">See how your order stays safe, fresh, and gift-ready.</p>
     </div>
   </div>
+
+  <h3>Troubleshooting Embeds</h3>
+  <ul>
+    <li>If a video shows “Watch on YouTube”, the owner disabled embedding — try another clip.</li>
+    <li>Using ad-blockers? Some block iframes — test in a private window.</li>
+    <li>Always use <code>https://www.youtube-nocookie.com/embed/VIDEO_ID</code> or <code>youtube.com/embed/</code> (not watch links).</li>
+  </ul>
+
+  <p>Want to see a specific tutorial? Tell us via the <a href="{% url 'contact' %}">contact form</a>!</p>
 </section>
 {% endblock %}

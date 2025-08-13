@@ -4,21 +4,45 @@
 {% block content %}
 <section class="reviews-page">
   <h2>Customer Reviews</h2>
+  <p>We’re all about sharing the sweetness. Here’s what our customers are saying about Candy Shop.</p>
 
-  <p>We love hearing from you! Here are a few recent comments from our sweet-toothed customers.</p>
-
+  <h3>⭐ Recent Highlights</h3>
   <ul class="review-list">
     <li>
-      <strong>Alex</strong> — ★★★★★<br>
-      “Best gummies I’ve had in years. Fast delivery too!”
+      <strong>Alex P.</strong> — ★★★★★<br>
+      “Best gummies I’ve had in years! Fresh, chewy, and the sour ones are perfect.”
     </li>
     <li>
-      <strong>Maya</strong> — ★★★★☆<br>
-      “Chocolate bundle was amazing. Will order again.”
+      <strong>Maya R.</strong> — ★★★★☆<br>
+      “The chocolate bundle was amazing. Shipping was fast and well packed.”
+    </li>
+    <li>
+      <strong>Jonas L.</strong> — ★★★★★<br>
+      “Peppermint bark is a 10/10. Ordered extra for gifts.”
     </li>
   </ul>
 
-  <hr>
-  <p>Want to leave a review? Reach us via the <a href="{% url 'contact' %}">contact form</a> for now.</p>
+  <h3>What Makes a Great Review?</h3>
+  <ul>
+    <li>Your favorite product (and why)</li>
+    <li>Flavor/texture notes (crunchy, chewy, creamy)</li>
+    <li>Delivery/packaging experience</li>
+    <li>Photos (optional, but fun!)</li>
+  </ul>
+
+  <h3>Share Your Sweet Story</h3>
+  <p>
+    We’re not collecting reviews through the site yet, but we’d love to hear from you!
+    Send your review via our <a href="{% url 'contact' %}">contact form</a> and we may feature it here.
+  </p>
+
+  <details>
+    <summary>Review Guidelines</summary>
+    <ul>
+      <li>Be honest and specific (both pros and cons are welcome).</li>
+      <li>No personal info (addresses, phone numbers, order numbers).</li>
+      <li>Keep it friendly — we’re a candy store, after all 🍬</li>
+    </ul>
+  </details>
 </section>
 {% endblock %}

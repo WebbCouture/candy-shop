@@ -1,31 +1,52 @@
 {% extends 'base.html' %}
+{% block title %}Blog - Candy Shop{% endblock %}
+
 {% block content %}
-<h1>Candy Shop Blog</h1>
-<p>Welcome to the Candy Shop Blog — your go-to place for all things sweet! Whether you’re a lifelong candy lover or just looking for a little sugar-spiration, you’ll find plenty of tasty reads here.</p>
+<section class="blog-page">
+  <h2>Candy Shop Blog</h2>
+  <p>News, tips, and behind-the-scenes from our kitchen. Grab a treat and enjoy!</p>
 
-<hr>
+  <article class="post">
+    <h3>🍭 The Art of Hand-Poured Lollipops</h3>
+    <p class="meta">Published: Aug 1, 2025 • 4 min read</p>
+    <p>
+      Our rainbow lollipops start with premium cane sugar and real fruit flavors.
+      Each batch is poured by hand, which means no two lollies are exactly alike.
+      That uniqueness is our signature — a tiny edible work of art.
+    </p>
+    <ul>
+      <li>Natural flavors where possible</li>
+      <li>Small-batch pouring for consistency</li>
+      <li>Slow-cool for shine and snap</li>
+    </ul>
+  </article>
 
-<h2>🍭 Behind the Scenes</h2>
-<p>Ever wondered how we make our famous rainbow lollipops? It’s a mix of art, science, and a lot of love! We carefully heat premium sugar, add natural fruit flavors, and hand-pour each lollipop into custom molds. No two lollies are exactly alike — which means every piece is unique, just like you!</p>
+  <article class="post">
+    <h3>🍫 Choosing the Right Chocolate</h3>
+    <p class="meta">Published: Jul 20, 2025 • 3 min read</p>
+    <p>
+      Cocoa percentage isn’t everything. For truffles, we prioritize smooth melt
+      and balanced bitterness. For bark and bars, we layer crunchy add-ins for contrast.
+    </p>
+    <blockquote>
+      Tip: Store chocolate in a cool, dry place (15–18°C). Avoid the fridge unless it’s a heatwave.
+    </blockquote>
+  </article>
 
-<h2>🍫 Chocolate Corner</h2>
-<p>From rich Belgian truffles to creamy milk chocolate bars, our selection is crafted with only the finest cocoa beans. We believe chocolate should be an experience — one that starts with a heavenly aroma and ends with a melt-in-your-mouth moment you won’t forget.</p>
+  <article class="post">
+    <h3>🎉 Seasonal Drops You Won’t Want to Miss</h3>
+    <p class="meta">Published: Jun 28, 2025 • 2 min read</p>
+    <ul>
+      <li>Spring: Pastel marshmallows & strawberry creams</li>
+      <li>Summer: Tropical sour mix (pineapple, mango, passionfruit)</li>
+      <li>Autumn: Pumpkin spice caramels</li>
+      <li>Winter: Peppermint bark & hot cocoa toppers</li>
+    </ul>
+  </article>
 
-<h2>🍬 Seasonal Treats</h2>
-<p>We love celebrating the seasons! In spring, you’ll find pastel-colored marshmallow chicks. In summer, it’s all about sour gummies shaped like tropical fruits. Fall brings our famous pumpkin spice caramels, and winter wouldn’t be complete without our peppermint bark.</p>
+  <hr>
 
-<h2>🎉 Candy Tips & Tricks</h2>
-<ul>
-    <li>Store chocolate in a cool, dry place — never in the fridge, unless it’s extremely hot!</li>
-    <li>Gummies last longer in airtight containers.</li>
-    <li>To keep hard candy shiny, avoid humid environments.</li>
-</ul>
-
-<h2>📅 Upcoming Events</h2>
-<p>Mark your calendars! We’ll be at the Annual Sweet Fest downtown next month, offering free samples and fun candy-making demos. Stop by and say hi!</p>
-
-<h2>💌 Share Your Sweet Story</h2>
-<p>Have a favorite candy memory or recipe? Send it to us via our <a href="{% url 'contact' %}">contact form</a> — we might feature it in our next blog post!</p>
-
-<p>Thanks for visiting the Candy Shop Blog. Stay sweet, and check back often for more sugary updates!</p>
+  <h3>Got a topic you want us to cover?</h3>
+  <p>Send ideas via the <a href="{% url 'contact' %}">contact form</a> — recipe requests, candy science, gift guides, you name it.</p>
+</section>
 {% endblock %}
