@@ -29,6 +29,9 @@ urlpatterns = [
 
     # ✅ Redirect any visit to /accounts/login/ to your combined /accounts/ page
     path('accounts/login/', RedirectView.as_view(pattern_name='account', permanent=False)),
+
+    # ✅ Gift Certificates page
+    path('gift-certificates/', views.gift_certificates, name='gift_certificates'),
 ]
 
 # Static files handling when DEBUG is False

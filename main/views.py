@@ -187,3 +187,27 @@ def account(request):
         'signup_form': signup_form,
         'dashboard': False
     })
+
+
+# --- Gift Certificates Page ---
+def gift_certificates(request):
+    """
+    Displays a form where users can 'buy' a gift certificate (dummy form for now)
+    and optionally check their balance.
+    """
+    if request.method == 'POST':
+        # Dummy form handling – you could expand this later
+        name = request.POST.get('name', '').strip()
+        email = request.POST.get('email', '').strip()
+        amount = request.POST.get('amount', '').strip()
+
+        if not name or not email or not amount:
+            messages.error(request, "Please fill out all fields before submitting.")
+        else:
+            messages.success(
+                request,
+                f"Gift certificate for {name} (${amount}) has been 'purchased'."
+            )
+            return redirect('gift_certificates')
+
+    return render(request, 'main/gift_certificates.html')
