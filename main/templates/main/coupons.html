@@ -6,27 +6,41 @@
   <h2>Coupons & Promotions</h2>
 
   {% if current_promo %}
-    <p><strong>Current promotion:</strong> {{ current_promo.label }} (code {{ current_promo.code }})</p>
-    <p>This discount will be applied at checkout / cart total.</p>
+    <p><strong>Current promotion:</strong> {{ current_promo.label }} (code <strong>{{ current_promo.code }}</strong>)</p>
+    <p>This discount will be automatically applied to your cart total at checkout. Make sure to complete your purchase before the promotion expires!</p>
   {% else %}
-    <p>You can apply a coupon code to get discounts on your order.</p>
+    <p>We love giving our customers sweet deals! You can apply a coupon code during checkout to save money, get free gifts, or enjoy free shipping.</p>
+    <p>Check back regularly — new promotions are added every month, and some are exclusive to newsletter subscribers!</p>
   {% endif %}
 
   <form method="post" action="{% url 'coupons' %}">
     {% csrf_token %}
-    <label for="code">Enter coupon code</label>
+    <label for="code">Enter your coupon code</label>
     <input id="code" name="code" type="text" placeholder="e.g., CANDY10" required>
-    <button type="submit">Apply</button>
+    <button type="submit">Apply Coupon</button>
   </form>
 
   <hr>
+
+  <h3>How It Works</h3>
+  <ul>
+    <li>Enter your coupon code exactly as provided (codes are case-sensitive).</li>
+    <li>Click "Apply Coupon" to see your discount reflected in your cart.</li>
+    <li>Only one coupon can be used per order unless stated otherwise.</li>
+    <li>Coupons cannot be applied to previous purchases.</li>
+  </ul>
+
   <details>
     <summary>Example codes (demo)</summary>
     <ul>
-      <li><code>CANDY10</code> – 10% off</li>
-      <li><code>SAVE5</code> – $5 off</li>
-      <li><code>FREESHIP</code> – Free shipping</li>
+      <li><code>CANDY10</code> – 10% off your total order.</li>
+      <li><code>SAVE5</code> – $5 off any purchase over $25.</li>
+      <li><code>FREESHIP</code> – Free standard shipping on all orders.</li>
     </ul>
   </details>
+
+  <h3>Tips for Getting the Best Deals</h3>
+  <p>Join our mailing list to get exclusive offers before they’re posted on the site. Follow us on social media for flash sales and limited-time discounts!</p>
+  <p>Some seasonal events include multiple promo codes — experiment and see which one gives you the best savings.</p>
 </section>
 {% endblock %}
