@@ -121,6 +121,10 @@ def coupons(request):
 def reviews(request):
     return render(request, 'main/reviews.html')
 
+# --- NEW: Blog page ---
+def blog(request):
+    return render(request, 'main/blog.html')
+
 # --- Cart Views ---
 def add_to_cart(request):
     if request.method == "POST":
@@ -152,10 +156,6 @@ def cart_view(request):
 
 @require_POST
 def create_checkout_session(request):
-    """
-    Creates a Stripe Checkout session for everything in the cart
-    and redirects the browser to Stripe (no JS needed).
-    """
     stripe.api_key = settings.STRIPE_SECRET_KEY
 
     cart = request.session.get('cart', {})
@@ -166,7 +166,6 @@ def create_checkout_session(request):
     currency = "usd"
 
     for key, item in cart.items():
-        # Gift certificates
         if str(key).startswith("gift:") or item.get("type") == "gift_certificate":
             try:
                 amt_cents = int(float(item.get("amount", "0")) * 100)
@@ -183,7 +182,6 @@ def create_checkout_session(request):
                 "quantity": 1,
             })
         else:
-            # Regular product
             try:
                 product = Product.objects.get(id=int(key))
             except (ValueError, Product.DoesNotExist):
@@ -222,7 +220,6 @@ def create_checkout_session(request):
         messages.error(request, f"Payment error: {e}")
         return redirect('cart')
 
-    # Redirect the user to Stripe Checkout
     return redirect(session.url, code=303)
 
 def cart_increase(request, item_id):
