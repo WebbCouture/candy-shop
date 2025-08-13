@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Terms & Conditions - Candy Shop{% endblock %}
+{% block content %}
+<section class="terms-page">
+    <h2>Terms & Conditions</h2>
+    <p>These Terms & Conditions apply to all purchases and use of the Candy Shop website. By accessing or ordering from our store, you agree to these terms.</p>
+
+    <h3>1. General</h3>
+    <p>We aim to provide accurate product descriptions and prices. However, we reserve the right to correct errors and update product information at any time without notice.</p>
+
+    <h3>2. Orders</h3>
+    <p>All orders are subject to acceptance and availability. We may refuse or cancel any order at our discretion.</p>
+
+    <h3>3. Payment</h3>
+    <p>We accept secure payments via Stripe. Payment must be completed before we process and ship your order.</p>
+
+    <h3>4. Shipping & Returns</h3>
+    <p>Delivery times are estimates and may vary. Please see our <a href="{% url 'shipping' %}">Shipping & Returns</a> page for full details.</p>
+
+    <h3>5. Liability</h3>
+    <p>We are not responsible for delays or losses caused by events outside our control, including postal service issues or customs delays.</p>
+
+    <h3>6. Changes to Terms</h3>
+    <p>We may update these Terms & Conditions at any time. Continued use of our website means you accept the updated terms.</p>
+</section>
+{% endblock %}

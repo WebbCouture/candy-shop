@@ -87,6 +87,10 @@ def privacy(request):
 def shipping(request):
     return render(request, 'main/shipping.html')
 
+# --- NEW: Terms & Conditions page ---
+def terms(request):
+    return render(request, 'main/terms.html')
+
 # --- Cart Views ---
 def add_to_cart(request):
     if request.method == "POST":
