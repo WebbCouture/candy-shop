@@ -153,9 +153,10 @@ def add_to_cart(request):
 
 def cart_view(request):
     cart = request.session.get('cart', {})
+    public_key = getattr(settings, 'STRIPE_PUBLIC_KEY', '')  # safe if not set
     return render(request, 'main/cart.html', {
         'cart': cart,
-        'STRIPE_PUBLIC_KEY': settings.STRIPE_PUBLIC_KEY,  # Stripe public key
+        'STRIPE_PUBLIC_KEY': public_key,
     })
 
 @require_POST

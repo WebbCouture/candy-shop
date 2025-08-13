@@ -22,6 +22,7 @@ urlpatterns = [
     # Cart-related URLs
     path('add-to-cart/', views.add_to_cart, name='add_to_cart'),
     path('cart/', views.cart_view, name='cart'),
+    path('create-checkout-session/', views.create_checkout_session, name='create_checkout_session'),
 
     # Cart item quantity management URLs
     path('cart/increase/<int:item_id>/', views.cart_increase, name='cart_increase'),
