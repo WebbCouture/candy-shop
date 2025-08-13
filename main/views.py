@@ -193,10 +193,34 @@ def account(request):
 def gift_certificates(request):
     """
     Displays a form where users can 'buy' a gift certificate (dummy form for now)
-    and optionally check their balance.
+    and optionally check their balance using TEST codes (demo only).
     """
+    # Demo test codes
+    TEST_CODES = {
+        "12345": {"balance": "50.00", "expires": "2026-12-31"},
+        "00000": {"balance": "0.00",  "expires": "2026-12-31"},
+        "777777": {"balance": "25.00", "expires": "2026-06-30"},
+    }
+
     if request.method == 'POST':
-        # Dummy form handling – you could expand this later
+        # Handle "check balance" mini-form
+        if "code" in request.POST:
+            code = (request.POST.get("code") or "").strip()
+            if not code.isdigit():
+                messages.error(request, "Please enter numbers only.")
+                return redirect('gift_certificates')
+
+            info = TEST_CODES.get(code)
+            if info:
+                messages.success(
+                    request,
+                    f"✅ Code {code} is valid. Balance: ${info['balance']} — Expires: {info['expires']} (demo)"
+                )
+            else:
+                messages.error(request, f"❌ Code {code} is invalid or not found (demo).")
+            return redirect('gift_certificates')
+
+        # Dummy purchase form handling
         name = request.POST.get('name', '').strip()
         email = request.POST.get('email', '').strip()
         amount = request.POST.get('amount', '').strip()

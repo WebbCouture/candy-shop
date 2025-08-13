@@ -7,12 +7,17 @@
   <h1>🎁 Gift Certificates</h1>
   <p>Buy a gift certificate for your friends and family!</p>
 
-  {% if message %}
-    <div style="padding: 10px; background-color: #d4edda; color: #155724; border-radius: 5px;">
-      {{ message }}
-    </div>
+  {% if messages %}
+    {% for message in messages %}
+      <div style="padding: 10px; background-color: {% if message.tags == 'success' %}#d4edda{% else %}#f8d7da{% endif %};
+                  color: {% if message.tags == 'success' %}#155724{% else %}#721c24{% endif %};
+                  border-radius: 5px; margin-bottom: 10px;">
+        {{ message }}
+      </div>
+    {% endfor %}
   {% endif %}
 
+  <!-- Buy Gift Certificate Form -->
   <form method="POST" style="margin-top: 20px;">
     {% csrf_token %}
     <label for="name">Recipient Name</label>
@@ -29,11 +34,17 @@
 
   <hr>
 
+  <!-- Check Gift Certificate Balance Form -->
   <h2>Check Gift Certificate Balance</h2>
-  <form method="GET">
+  <form method="POST">
+    {% csrf_token %}
     <label for="code">Certificate Code</label>
-    <input type="text" id="code" name="code" placeholder="Enter code to check balance" required>
+    <input type="text" id="code" name="code" placeholder="Enter code to check balance"
+           inputmode="numeric" pattern="[0-9]*" required>
     <button type="submit">Check Balance</button>
   </form>
+  <p style="font-size: 0.9em; color: #555; margin-top: 6px;">
+    Try these test codes: <strong>12345</strong>, <strong>00000</strong>, <strong>777777</strong>
+  </p>
 </div>
 {% endblock %}
