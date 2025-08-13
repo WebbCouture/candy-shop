@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block title %}Coupons & Promotions - Candy Shop{% endblock %}
+
+{% block content %}
+<section class="coupons-page">
+  <h2>Coupons & Promotions</h2>
+
+  {% if current_promo %}
+    <p><strong>Current promotion:</strong> {{ current_promo.label }} (code {{ current_promo.code }})</p>
+    <p>This discount will be applied at checkout / cart total.</p>
+  {% else %}
+    <p>You can apply a coupon code to get discounts on your order.</p>
+  {% endif %}
+
+  <form method="post" action="{% url 'coupons' %}">
+    {% csrf_token %}
+    <label for="code">Enter coupon code</label>
+    <input id="code" name="code" type="text" placeholder="e.g., CANDY10" required>
+    <button type="submit">Apply</button>
+  </form>
+
+  <hr>
+  <details>
+    <summary>Example codes (demo)</summary>
+    <ul>
+      <li><code>CANDY10</code> – 10% off</li>
+      <li><code>SAVE5</code> – $5 off</li>
+      <li><code>FREESHIP</code> – Free shipping</li>
+    </ul>
+  </details>
+</section>
+{% endblock %}

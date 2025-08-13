@@ -91,6 +91,32 @@ def shipping(request):
 def terms(request):
     return render(request, 'main/terms.html')
 
+# --- NEW: Coupons & Promotions page ---
+def coupons(request):
+    COUPONS = {
+        "CANDY10": {"type": "percent", "value": 10, "label": "10% off"},
+        "SAVE5": {"type": "amount", "value": 5.00, "label": "$5 off"},
+        "FREESHIP": {"type": "freeship", "value": 0, "label": "Free shipping"},
+    }
+
+    if request.method == "POST":
+        code = (request.POST.get("code") or "").strip().upper()
+        promo = COUPONS.get(code)
+        if not code:
+            messages.error(request, "Please enter a code.")
+            return redirect("coupons")
+        if not promo:
+            messages.error(request, f"Code '{code}' is invalid or expired.")
+            return redirect("coupons")
+
+        request.session["promo"] = {"code": code, **promo}
+        request.session.modified = True
+        messages.success(request, f"Applied: {promo['label']} (code {code}).")
+        return redirect("cart")
+
+    current = request.session.get("promo")
+    return render(request, "main/coupons.html", {"current_promo": current})
+
 # --- Cart Views ---
 def add_to_cart(request):
     if request.method == "POST":
