@@ -8,6 +8,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from .forms import ContactForm, RegistrationForm
 from .models import Product, Order
 
+from decimal import Decimal
+import time
+
 
 # Home page - shows latest products
 def home(request):
@@ -192,10 +195,9 @@ def account(request):
 # --- Gift Certificates Page ---
 def gift_certificates(request):
     """
-    Displays a form where users can 'buy' a gift certificate (dummy form for now)
-    and optionally check their balance using TEST codes (demo only).
+    Buy form now adds a Gift Certificate to the cart.
+    Check form validates TEST codes (demo only).
     """
-    # Demo test codes
     TEST_CODES = {
         "12345": {"balance": "50.00", "expires": "2026-12-31"},
         "00000": {"balance": "0.00",  "expires": "2026-12-31"},
@@ -220,18 +222,38 @@ def gift_certificates(request):
                 messages.error(request, f"❌ Code {code} is invalid or not found (demo).")
             return redirect('gift_certificates')
 
-        # Dummy purchase form handling
-        name = request.POST.get('name', '').strip()
-        email = request.POST.get('email', '').strip()
-        amount = request.POST.get('amount', '').strip()
+        # Handle "buy" form → add to cart
+        name = (request.POST.get('name') or '').strip()
+        email = (request.POST.get('email') or '').strip()
+        amount_str = (request.POST.get('amount') or '').strip()
 
-        if not name or not email or not amount:
+        if not name or not email or not amount_str:
             messages.error(request, "Please fill out all fields before submitting.")
-        else:
-            messages.success(
-                request,
-                f"Gift certificate for {name} (${amount}) has been 'purchased'."
-            )
             return redirect('gift_certificates')
+
+        try:
+            amount = Decimal(amount_str)
+        except Exception:
+            messages.error(request, "Amount must be a valid number.")
+            return redirect('gift_certificates')
+
+        if amount < 1:
+            messages.error(request, "Minimum amount is $1.")
+            return redirect('gift_certificates')
+
+        cart = request.session.get("cart", {})
+        gc_key = f"gift:{int(time.time())}"
+        cart[gc_key] = {
+            "type": "gift_certificate",
+            "name": f"Gift Certificate for {name} (${amount})",
+            "image_url": "",
+            "quantity": 1,
+            "amount": str(amount),
+            "recipient_email": email,
+        }
+        request.session["cart"] = cart
+
+        messages.success(request, f"Added gift certificate (${amount}) to your cart.")
+        return redirect('cart')
 
     return render(request, 'main/gift_certificates.html')
