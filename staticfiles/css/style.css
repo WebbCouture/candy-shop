@@ -676,41 +676,4 @@ html {
   scroll-behavior: smooth;
 }
 /* === About Section Styles (YOUR ADDED) === */
-.about-section {
-  max-width: 900px;
-  margin: 0 auto;
-  text-align: center;
-  padding: 0 1.5rem;
-}
-
-.about-title {
-  font-size: 3rem;
-  color: #ff4d6d;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.about-intro {
-  font-size: 1.2rem;
-  color: #444;
-  margin-bottom: 2rem;
-}
-
-.about-subtitle {
-  font-size: 2rem;
-  color: #ff7a8a;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-.about-text {
-  font-size: 1rem;
-  color: #555;
-  line-height: 1.6;
-  margin-bottom: 1.2rem;
-}
-
-.about-text:last-child {
-  margin-bottom: 0;
-}
 }

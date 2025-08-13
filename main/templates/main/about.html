@@ -1,66 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
 <main class="py-10">
-  <section class="about-section">
-    <h1 class="about-title">
+  <section class="about-section" style="max-width: 900px; margin: 0 auto; text-align: center; padding: 0 1.5rem;">
+    <h1 style="font-size: 3rem; color: #ff4d6d; font-weight: 700; margin-bottom: 1rem;">
       About Us
     </h1>
-    <p class="about-intro">
+    <p style="font-size: 1.2rem; color: #444; margin-bottom: 2rem;">
       Welcome to our candy shop! We love sweets as much as you do.
     </p>
 
-    <h2 class="about-subtitle">
+    <h2 style="font-size: 2rem; color: #ff7a8a; font-weight: 600; margin-bottom: 1rem;">
       A Sweet Family Tradition
     </h2>
 
-    <p class="about-text">
+    <p style="font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 1.2rem;">
       Our story began in 1952, when Grandma Elsie started making caramel fudge in her tiny kitchen using just a wooden spoon and an old family recipe. Word spread quickly, and soon neighbors were lining up for a taste of her rich, buttery treats.
     </p>
 
-    <p class="about-text">
+    <p style="font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 1.2rem;">
       In 1985, her son Thomas opened our first candy shop on Main Street. From sour gummies to chocolate bark, each piece was handmade with love and joy—just like Elsie taught him.
     </p>
 
-    <p class="about-text">
+    <p style="font-size: 1rem; color: #555; line-height: 1.6;">
       Today, three generations later, we’re still crafting candy with care, mixing timeless tradition with new flavors. Thank you for being part of our sweet story!
     </p>
   </section>
 </main>
-
-<script>
-// JavaScript styling for About page
-document.addEventListener("DOMContentLoaded", function () {
-  const section = document.querySelector(".about-section");
-  const title = document.querySelector(".about-title");
-  const intro = document.querySelector(".about-intro");
-  const subtitles = document.querySelectorAll(".about-subtitle");
-  const texts = document.querySelectorAll(".about-text");
-
-  section.style.maxWidth = "800px";
-  section.style.margin = "0 auto";
-  section.style.padding = "2rem";
-
-  title.style.fontFamily = "'Dancing Script', cursive";
-  title.style.fontSize = "2.5rem";
-  title.style.marginBottom = "1rem";
-  title.style.color = "#C0392B";
-
-  intro.style.fontSize = "1.2rem";
-  intro.style.marginBottom = "2rem";
-  intro.style.lineHeight = "1.6";
-
-  subtitles.forEach(sub => {
-    sub.style.fontSize = "1.6rem";
-    sub.style.marginTop = "1.5rem";
-    sub.style.color = "#8E44AD";
-  });
-
-  texts.forEach(p => {
-    p.style.fontSize = "1rem";
-    p.style.marginTop = "1rem";
-    p.style.lineHeight = "1.5";
-    p.style.color = "#333";
-  });
-});
-</script>
 {% endblock %}

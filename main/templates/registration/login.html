@@ -1,31 +1,12 @@
+<!-- templates/registration/login.html -->
 {% extends 'base.html' %}
-{% load static %}
-
-{% block title %}Login - Candy Shop{% endblock %}
 
 {% block content %}
-<div class="login-container">
-    <h2>Login to Your Account</h2>
-
-    <form method="POST">
-        {% csrf_token %}
-        
-        <div class="form-group">
-            <label for="username">Username or Email</label>
-            <input type="text" name="username" id="username" required>
-        </div>
-
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" name="password" id="password" required>
-        </div>
-
-        <button type="submit">Log in</button>
-    </form>
-
-    <div class="auth-links">
-        <p><a href="{% url 'password_reset' %}">Forgot your password?</a></p>
-        <p>Don't have an account? <a href="{% url 'signup' %}">Register here</a></p>
-    </div>
-</div>
+  <h2>Login</h2>
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Login</button>
+  </form>
+  <!-- Removed the signup link since it's handled on the account page now -->
 {% endblock %}

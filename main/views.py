@@ -1,12 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 from django.conf import settings
-from django.contrib import messages
-from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required  # Added import
-
-from .forms import ContactForm, CustomUserCreationForm  # Import your custom form
+from .forms import ContactForm
 from .models import Product
+from django.contrib import messages
 
 # Home page - shows latest products
 def home(request):
@@ -19,6 +16,7 @@ def home(request):
         'cart_count': cart_count,
         'latest_products': latest_products,
     })
+
 
 # Product list + search
 def product_list(request):
@@ -36,8 +34,10 @@ def product_list(request):
         'no_results': no_results,
     })
 
+
 def about(request):
     return render(request, 'main/about.html')
+
 
 def contact(request):
     if request.method == 'POST':
@@ -48,7 +48,6 @@ def contact(request):
             subject = form.cleaned_data['subject']
             message = form.cleaned_data['message']
 
-            # Send email to site admin
             send_mail(
                 f'New contact form submission: {subject}',
                 f'From: {name} <{email}>\n\n{message}',
@@ -57,7 +56,6 @@ def contact(request):
                 fail_silently=False,
             )
 
-            # Send confirmation email to user
             send_mail(
                 'Thank you for contacting us',
                 f'Hi {name},\n\nThank you for your message. We will get back to you shortly.',
@@ -67,13 +65,14 @@ def contact(request):
             )
 
             messages.success(request, "Thank you for your message! We'll get back to you soon.")
-            form = ContactForm()  # Clear the form after success
+            form = ContactForm()
         else:
             messages.error(request, "Please correct the errors below.")
     else:
         form = ContactForm()
 
     return render(request, 'main/contact.html', {'form': form})
+
 
 # --- Cart Views ---
 
@@ -100,9 +99,11 @@ def add_to_cart(request):
 
     return redirect("product_list")
 
+
 def cart_view(request):
     cart = request.session.get('cart', {})
     return render(request, 'main/cart.html', {'cart': cart})
+
 
 def cart_increase(request, item_id):
     cart = request.session.get('cart', {})
@@ -112,6 +113,7 @@ def cart_increase(request, item_id):
         request.session['cart'] = cart
         messages.success(request, f"Increased quantity of {cart[item_id]['name']}.")
     return redirect('cart')
+
 
 def cart_decrease(request, item_id):
     cart = request.session.get('cart', {})
@@ -127,6 +129,7 @@ def cart_decrease(request, item_id):
         request.session['cart'] = cart
     return redirect('cart')
 
+
 def cart_delete(request, item_id):
     cart = request.session.get('cart', {})
     item_id = str(item_id)
@@ -136,33 +139,3 @@ def cart_delete(request, item_id):
         request.session['cart'] = cart
         messages.success(request, f"Removed {name} from cart.")
     return redirect('cart')
-
-# User account page - login required
-@login_required  # <-- decorator added here
-def account(request):
-    return render(request, 'main/account.html')
-
-# User signup view for registration
-def signup(request):
-    if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)  # Use your custom form here
-        if form.is_valid():
-            user = form.save()
-            login(request, user)  # Log in user immediately
-
-            # Send welcome email automatically
-            send_mail(
-                'Welcome to Candy Shop!',
-                f"Hi {user.first_name},\n\nThanks for signing up! We're glad to have you 🎉",
-                settings.DEFAULT_FROM_EMAIL,
-                [user.email],
-                fail_silently=False,
-            )
-
-            messages.success(request, "Registration successful. Welcome!")
-            return redirect('home')
-        else:
-            messages.error(request, "Please correct the errors below.")
-    else:
-        form = CustomUserCreationForm()
-    return render(request, 'registration/signup.html', {'form': form})
