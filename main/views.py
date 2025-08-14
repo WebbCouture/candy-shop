@@ -178,9 +178,88 @@ def cart_view(request):
         messages.warning(request, "Payment canceled. Your items are still in the cart.")
         return redirect('cart')
 
+    # Build rich items list for prices and summary
+    items = []
+    subtotal = Decimal('0.00')
+    currency = getattr(settings, 'STRIPE_CURRENCY', 'sek').upper()
+
+    for key, item in cart.items():
+        # Gift certificates kept in session
+        if str(key).startswith("gift:") or item.get("type") == "gift_certificate":
+            qty = int(item.get("quantity", 1))
+            try:
+                unit_price = Decimal(item.get("amount", "0") or "0")
+            except Exception:
+                unit_price = Decimal('0.00')
+            line_total = unit_price * qty
+            items.append({
+                "id": key,
+                "name": item.get("name", "Gift Certificate"),
+                "description": item.get("description", ""),
+                "quantity": qty,
+                "unit_price": unit_price,
+                "line_total": line_total,
+                "is_gift": True,
+            })
+            subtotal += line_total
+        else:
+            # Regular product from DB
+            try:
+                product = Product.objects.get(id=int(key))
+            except (ValueError, Product.DoesNotExist):
+                continue
+            qty = int(item.get("quantity", 1))
+            unit_price = Decimal(product.price or 0)
+            line_total = unit_price * qty
+            items.append({
+                "id": key,
+                "name": product.name,
+                "description": getattr(product, "description", ""),
+                "quantity": qty,
+                "unit_price": unit_price,
+                "line_total": line_total,
+                "is_gift": False,
+            })
+            subtotal += line_total
+
+    # Promo handling (uses session "promo" if present)
+    promo = request.session.get("promo")
+    discount = Decimal('0.00')
+    shipping = Decimal('0.00')  # keep shipping simple; "FREESHIP" handled via promo type
+
+    if promo:
+        ptype = promo.get("type")
+        pval = promo.get("value", 0)
+        if ptype == "percent":
+            try:
+                discount = (subtotal * Decimal(pval) / Decimal('100')).quantize(Decimal('0.01'))
+            except Exception:
+                discount = Decimal('0.00')
+        elif ptype == "amount":
+            try:
+                discount = Decimal(str(pval))
+            except Exception:
+                discount = Decimal('0.00')
+        elif ptype == "freeship":
+            shipping = Decimal('0.00')
+
+    if discount > subtotal:
+        discount = subtotal
+
+    total = (subtotal - discount + shipping).quantize(Decimal('0.01'))
+
     return render(request, 'main/cart.html', {
-        'cart': cart,
+        'cart': cart,  # keep original for compatibility
         'STRIPE_PUBLIC_KEY': public_key,
+        # enriched context for prices & summary
+        "items": items,
+        "has_items": bool(items),
+        "subtotal": subtotal.quantize(Decimal('0.01')),
+        "discount": discount.quantize(Decimal('0.01')),
+        "shipping": shipping.quantize(Decimal('0.01')),
+        "total": total,
+        "currency": currency,
+        "promo": promo,
     })
 
 @require_POST

@@ -11,31 +11,69 @@
     All candies are freshly packed just for you!
   </p>
 
-  {% if cart %}
+  {% if items or cart %}
     <div class="cart-grid">
       <!-- Cart items -->
       <ul class="cart-list" role="list">
-        {% for product_id, item in cart.items %}
-          <li class="cart-item">
-            <div class="item-info">
-              <span class="item-name">{{ item.name }}</span>
-              {% if item.description %}
-                <p class="item-description">{{ item.description }}</p>
-              {% else %}
-                <p class="item-description">Delicious and carefully selected sweets to brighten your day.</p>
-              {% endif %}
-              <span class="item-quantity">Quantity: {{ item.quantity }}</span>
-            </div>
-          </li>
-        {% endfor %}
+
+        {# Prefer detailed items list (provides prices). Fallback to basic cart if not available. #}
+        {% if items %}
+          {% for it in items %}
+            <li class="cart-item">
+              <div class="item-info">
+                <span class="item-name">
+                  {{ it.name }}
+                  {% if it.is_gift %}<em class="text-sm text-rose-700"> (Gift Certificate)</em>{% endif %}
+                </span>
+                {% if it.description %}
+                  <p class="item-description">{{ it.description }}</p>
+                {% else %}
+                  <p class="item-description">Delicious and carefully selected sweets to brighten your day.</p>
+                {% endif %}
+                <span class="item-quantity">Quantity: {{ it.quantity }}</span>
+              </div>
+              <div class="item-pricing">
+                <span class="item-unit">Unit: {{ currency }} {{ it.unit_price|floatformat:2 }}</span>
+                <span class="item-line">Line: {{ currency }} {{ it.line_total|floatformat:2 }}</span>
+              </div>
+            </li>
+          {% endfor %}
+        {% else %}
+          {# Fallback: original session cart without price info #}
+          {% for product_id, item in cart.items %}
+            <li class="cart-item">
+              <div class="item-info">
+                <span class="item-name">{{ item.name }}</span>
+                {% if item.description %}
+                  <p class="item-description">{{ item.description }}</p>
+                {% else %}
+                  <p class="item-description">Delicious and carefully selected sweets to brighten your day.</p>
+                {% endif %}
+                <span class="item-quantity">Quantity: {{ item.quantity }}</span>
+              </div>
+            </li>
+          {% endfor %}
+        {% endif %}
+
       </ul>
 
       <!-- Summary -->
       <aside class="cart-summary" aria-labelledby="summary-title">
         <h2 id="summary-title">Order Summary</h2>
         <p class="summary-text">Review your order before you proceed to checkout. We promise a smooth and secure payment process.</p>
-        
-        <p class="summary-line"><span>Total Items</span><span>{{ cart|length }}</span></p>
+
+        {# Show full money breakdown if we have it; else show item count only #}
+        {% if items %}
+          <p class="summary-line"><span>Subtotal</span><span>{{ currency }} {{ subtotal|floatformat:2 }}</span></p>
+          {% if promo %}
+            <p class="summary-line"><span>Discount ({{ promo.code }})</span><span>- {{ currency }} {{ discount|floatformat:2 }}</span></p>
+          {% endif %}
+          <p class="summary-line"><span>Shipping</span><span>{{ currency }} {{ shipping|floatformat:2 }}</span></p>
+          <hr />
+          <p class="summary-line summary-total"><span>Total</span><span><strong>{{ currency }} {{ total|floatformat:2 }}</strong></span></p>
+        {% else %}
+          <p class="summary-line"><span>Total Items</span><span>{{ cart|length }}</span></p>
+        {% endif %}
 
         <form action="{% url 'create_checkout_session' %}" method="POST" class="checkout-form">
           {% csrf_token %}
@@ -68,4 +106,13 @@
     </div>
   {% endif %}
 </section>
+
+<style>
+/* Minimal helpers to align the new price columns with your existing theme */
+.cart-item { display:flex; justify-content:space-between; gap:1rem; }
+.item-pricing { display:flex; flex-direction:column; text-align:right; min-width: 165px; font-weight:600; }
+.item-unit, .item-line { color:#7f1d30; }
+.summary-line { display:flex; justify-content:space-between; margin:.35rem 0; }
+.summary-total { font-size:1.1rem; }
+</style>
 {% endblock %}
