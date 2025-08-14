@@ -6,9 +6,20 @@ import dj_database_url  # for Heroku Postgres support
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# ---- Load .env (handles your BOM/UTF-16 case) ----
 from dotenv import load_dotenv
-load_dotenv(BASE_DIR / ".env")
-# Load environment variables from .env file
+# Try standard UTF-8 first (don’t crash if encoding is wrong)
+try:
+    load_dotenv(BASE_DIR / ".env")
+except Exception:
+    pass
+# Fallback for .env saved as UTF-16 or with BOM (prevents UnicodeDecodeError)
+if not os.getenv("STRIPE_SECRET_KEY") or not os.getenv("STRIPE_PUBLIC_KEY"):
+    try:
+        load_dotenv(BASE_DIR / ".env", encoding="utf-16")
+    except Exception:
+        pass
+# ---------------------------------------------------
 
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = os.environ.get(
