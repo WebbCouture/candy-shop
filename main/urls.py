@@ -25,9 +25,9 @@ urlpatterns = [
     path('create-checkout-session/', views.create_checkout_session, name='create_checkout_session'),
 
     # Cart item quantity management URLs
-    path('cart/increase/<int:item_id>/', views.cart_increase, name='cart_increase'),
-    path('cart/decrease/<int:item_id>/', views.cart_decrease, name='cart_decrease'),
-    path('cart/delete/<int:item_id>/', views.cart_delete, name='cart_delete'),
+    path('cart/increase/<path:item_id>/', views.cart_increase, name='cart_increase'),
+    path('cart/decrease/<path:item_id>/', views.cart_decrease, name='cart_decrease'),
+    path('cart/delete/<path:item_id>/', views.cart_delete, name='cart_delete'),
 
     # Accounts-related URL (Login + Registration combined page)
     path('accounts/', views.account, name='account'),

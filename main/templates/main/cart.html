@@ -30,8 +30,27 @@
                 {% else %}
                   <p class="item-description">Delicious and carefully selected sweets to brighten your day.</p>
                 {% endif %}
-                <span class="item-quantity">Quantity: {{ it.quantity }}</span>
+
+                <div class="item-qty-controls">
+                  <form action="{% url 'cart_decrease' it.id %}" method="post" class="inline-form">
+                    {% csrf_token %}
+                    <button class="qty-btn" title="Decrease" aria-label="Decrease">−</button>
+                  </form>
+
+                  <span class="qty" aria-live="polite">{{ it.quantity }}</span>
+
+                  <form action="{% url 'cart_increase' it.id %}" method="post" class="inline-form">
+                    {% csrf_token %}
+                    <button class="qty-btn" title="Increase" aria-label="Increase">＋</button>
+                  </form>
+
+                  <form action="{% url 'cart_delete' it.id %}" method="post" class="inline-form">
+                    {% csrf_token %}
+                    <button class="delete-btn" title="Remove" aria-label="Remove">✕</button>
+                  </form>
+                </div>
               </div>
+
               <div class="item-pricing">
                 <span class="item-unit">Unit: {{ currency }} {{ it.unit_price|floatformat:2 }}</span>
                 <span class="item-line">Line: {{ currency }} {{ it.line_total|floatformat:2 }}</span>
@@ -49,7 +68,25 @@
                 {% else %}
                   <p class="item-description">Delicious and carefully selected sweets to brighten your day.</p>
                 {% endif %}
-                <span class="item-quantity">Quantity: {{ item.quantity }}</span>
+
+                <div class="item-qty-controls">
+                  <form action="{% url 'cart_decrease' product_id %}" method="post" class="inline-form">
+                    {% csrf_token %}
+                    <button class="qty-btn" title="Decrease" aria-label="Decrease">−</button>
+                  </form>
+
+                  <span class="qty" aria-live="polite">{{ item.quantity }}</span>
+
+                  <form action="{% url 'cart_increase' product_id %}" method="post" class="inline-form">
+                    {% csrf_token %}
+                    <button class="qty-btn" title="Increase" aria-label="Increase">＋</button>
+                  </form>
+
+                  <form action="{% url 'cart_delete' product_id %}" method="post" class="inline-form">
+                    {% csrf_token %}
+                    <button class="delete-btn" title="Remove" aria-label="Remove">✕</button>
+                  </form>
+                </div>
               </div>
             </li>
           {% endfor %}
@@ -114,5 +151,17 @@
 .item-unit, .item-line { color:#7f1d30; }
 .summary-line { display:flex; justify-content:space-between; margin:.35rem 0; }
 .summary-total { font-size:1.1rem; }
+
+/* Inline forms for qty controls */
+.inline-form { display:inline; margin:0 .25rem; }
+.item-qty-controls { display:flex; align-items:center; gap:.25rem; margin-top:.35rem; flex-wrap: wrap; }
+.qty-btn, .delete-btn {
+  border: none; cursor: pointer; padding:.25rem .5rem; border-radius:6px;
+  font-weight:700; line-height:1; background:#ffb3c6; color:#7f1d30;
+}
+.qty-btn:hover { background:#ff7b94; }
+.delete-btn { background:#ffd6db; color:#7f1d30; }
+.delete-btn:hover { background:#ffb3c6; }
+.qty { min-width: 1.5rem; text-align:center; font-weight:700; }
 </style>
 {% endblock %}
