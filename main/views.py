@@ -181,7 +181,7 @@ def cart_view(request):
     # Build rich items list for prices and summary
     items = []
     subtotal = Decimal('0.00')
-    currency = getattr(settings, 'STRIPE_CURRENCY', 'sek').upper()
+    currency = getattr(settings, 'STRIPE_CURRENCY', 'usd').upper()  # Changed from SEK to USD
 
     for key, item in cart.items():
         # Gift certificates kept in session
@@ -273,7 +273,7 @@ def create_checkout_session(request):
         return redirect('cart')
 
     line_items = []
-    currency = getattr(settings, "STRIPE_CURRENCY", "sek")
+    currency = getattr(settings, "STRIPE_CURRENCY", "usd")  # Changed from SEK to USD
 
     for key, item in cart.items():
         # Gift certificates

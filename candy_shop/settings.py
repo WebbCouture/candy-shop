@@ -155,5 +155,5 @@ LOGOUT_REDIRECT_URL = 'home'       # redirect after logout
 STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY", "")
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "")
 STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "")  # fill after `stripe listen`
-STRIPE_CURRENCY = os.getenv("STRIPE_CURRENCY", "sek")  # e.g., "sek" or "usd"
+STRIPE_CURRENCY = os.getenv("STRIPE_CURRENCY", "usd")  # e.g., "sek" changed to "usd"
 DOMAIN = os.getenv("DOMAIN", "http://127.0.0.1:8000")  # set to your prod domain in production
