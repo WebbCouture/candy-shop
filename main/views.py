@@ -184,8 +184,8 @@ def blog(request):
     return render(request, 'main/blog.html')
 
 
-def videos(request):
-    return render(request, 'main/videos.html')
+def recipes(request):
+    return render(request, 'main/recipes.html')
 
 
 # --- Cart Views ---

@@ -17,8 +17,8 @@ urlpatterns = [
     path('coupons/', views.coupons, name='coupons'),
     path('reviews/', views.reviews, name='reviews'),
     path('blog/', views.blog, name='blog'),
-    path('videos/', views.videos, name='videos'),
-
+    path('recipes/', views.recipes, name='recipes'), 
+    
     # Cart-related URLs
     path('add-to-cart/', views.add_to_cart, name='add_to_cart'),
     path('cart/', views.cart_view, name='cart'),
@@ -44,11 +44,11 @@ urlpatterns = [
     # Gift Certificates page
     path('gift-certificates/', views.gift_certificates, name='gift_certificates'),
 
-    # Team members page (added this line)
-    path('team/', views.team, name='team'),  # <-- Added this line
+    # Team members page
+    path('team/', views.team, name='team'),
 
-    # Purchase history page (added this line)
-    path('account/purchase-history/', views.purchase_history, name='purchase_history'),  # <-- Added this line
+    # Purchase history page
+    path('account/purchase-history/', views.purchase_history, name='purchase_history'),
 ]
 
 # Static files handling when DEBUG is False
