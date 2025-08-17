@@ -16,7 +16,6 @@
       <!-- Cart items -->
       <ul class="cart-list" role="list">
 
-        {# Prefer detailed items list (provides prices). Fallback to basic cart if not available. #}
         {% if items %}
           {% for it in items %}
             <li class="cart-item">
@@ -58,7 +57,6 @@
             </li>
           {% endfor %}
         {% else %}
-          {# Fallback: original session cart without price info #}
           {% for product_id, item in cart.items %}
             <li class="cart-item">
               <div class="item-info">
@@ -99,15 +97,28 @@
         <h2 id="summary-title">Order Summary</h2>
         <p class="summary-text">Review your order before you proceed to checkout. We promise a smooth and secure payment process.</p>
 
-        {# Show full money breakdown if we have it; else show item count only #}
         {% if items %}
           <p class="summary-line"><span>Subtotal</span><span>{{ currency }} {{ subtotal|floatformat:2 }}</span></p>
           {% if promo %}
-            <p class="summary-line"><span>Discount ({{ promo.code }})</span><span>- {{ currency }} {{ discount|floatformat:2 }}</span></p>
+            <p class="summary-line">
+              <span>Discount ({{ promo.code }})</span>
+              <span>- {{ currency }} {{ discount|floatformat:2 }}</span>
+            </p>
           {% endif %}
           <p class="summary-line"><span>Shipping</span><span>{{ currency }} {{ shipping|floatformat:2 }}</span></p>
           <hr />
-          <p class="summary-line summary-total"><span>Total</span><span><strong>{{ currency }} {{ total|floatformat:2 }}</strong></span></p>
+          <p class="summary-line summary-total">
+            <span>Total</span>
+            <span><strong>{{ currency }} {{ total|floatformat:2 }}</strong></span>
+          </p>
+
+          <!-- Coupon form -->
+          <form action="{% url 'coupons' %}" method="post" class="coupon-form">
+            {% csrf_token %}
+            <label for="promo_code">Have a coupon?</label>
+            <input type="text" name="code" id="promo_code" placeholder="Enter code" value="{{ promo.code|default:'' }}">
+            <button type="submit" class="btn btn-secondary">Apply</button>
+          </form>
         {% else %}
           <p class="summary-line"><span>Total Items</span><span>{{ cart|length }}</span></p>
         {% endif %}
@@ -145,14 +156,12 @@
 </section>
 
 <style>
-/* Minimal helpers to align the new price columns with your existing theme */
 .cart-item { display:flex; justify-content:space-between; gap:1rem; }
 .item-pricing { display:flex; flex-direction:column; text-align:right; min-width: 165px; font-weight:600; }
 .item-unit, .item-line { color:#7f1d30; }
 .summary-line { display:flex; justify-content:space-between; margin:.35rem 0; }
 .summary-total { font-size:1.1rem; }
 
-/* Inline forms for qty controls */
 .inline-form { display:inline; margin:0 .25rem; }
 .item-qty-controls { display:flex; align-items:center; gap:.25rem; margin-top:.35rem; flex-wrap: wrap; }
 .qty-btn, .delete-btn {
@@ -163,5 +172,10 @@
 .delete-btn { background:#ffd6db; color:#7f1d30; }
 .delete-btn:hover { background:#ffb3c6; }
 .qty { min-width: 1.5rem; text-align:center; font-weight:700; }
+
+.coupon-form { margin-top: 1rem; display:flex; gap:.5rem; flex-wrap:wrap; }
+.coupon-form input { flex:1; padding:.35rem; border-radius:6px; border:1px solid #ddd; }
+.coupon-form button { padding:.35rem .75rem; border:none; border-radius:6px; background:#7f1d30; color:#fff; cursor:pointer; }
+.coupon-form button:hover { background:#a11d3c; }
 </style>
 {% endblock %}

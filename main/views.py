@@ -6,9 +6,10 @@ from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
+from django.utils import timezone
 
 from .forms import ContactForm, RegistrationForm
-from .models import Product, Order, Message  # added Message
+from .models import Product, Order, Message, GiftCertificate, Coupon, TeamMember  # updated imports
 
 from decimal import Decimal, ROUND_HALF_UP
 import time
@@ -51,7 +52,8 @@ def product_list(request):
 
 # About page
 def about(request):
-    return render(request, 'main/about.html')
+    team = TeamMember.objects.all()
+    return render(request, 'main/about.html', {"team": team})
 
 # Contact form
 def contact(request):
@@ -107,25 +109,30 @@ def terms(request):
 
 # --- NEW: Coupons & Promotions page ---
 def coupons(request):
-    COUPONS = {
-        "CANDY10": {"type": "percent", "value": 10, "label": "10% off"},
-        "SAVE5": {"type": "amount", "value": 5.00, "label": "$5 off"},
-        "FREESHIP": {"type": "freeship", "value": 0, "label": "Free shipping"},
-    }
-
     if request.method == "POST":
         code = (request.POST.get("code") or "").strip().upper()
-        promo = COUPONS.get(code)
         if not code:
             messages.error(request, "Please enter a code.")
             return redirect("coupons")
-        if not promo:
+
+        try:
+            promo = Coupon.objects.get(code=code)
+        except Coupon.DoesNotExist:
             messages.error(request, f"Code '{code}' is invalid or expired.")
             return redirect("coupons")
 
-        request.session["promo"] = {"code": code, **promo}
+        if not promo.is_valid_now(timezone.now()):
+            messages.error(request, f"Code '{code}' is not active right now.")
+            return redirect("coupons")
+
+        request.session["promo"] = {
+            "code": promo.code,
+            "type": promo.type,
+            "value": float(promo.value),
+            "label": promo.label or "",
+        }
         request.session.modified = True
-        messages.success(request, f"Applied: {promo['label']} (code {code}).")
+        messages.success(request, f"Applied: {promo.label or promo.code} (code {promo.code}).")
         return redirect("cart")
 
     current = request.session.get("promo")
@@ -470,6 +477,15 @@ def gift_certificates(request):
             "recipient_email": email,
         }
         request.session["cart"] = cart
+
+        # Also store in DB so it appears in admin (pending)
+        GiftCertificate.objects.create(
+            recipient_name=name,
+            recipient_email=email,
+            amount=amount,
+            message="",
+            status="pending",
+        )
 
         messages.success(request, f"Added gift certificate (${amount}) to your cart.")
         return redirect('cart')

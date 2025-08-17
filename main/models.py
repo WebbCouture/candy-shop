@@ -17,6 +17,8 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     date = models.DateTimeField(auto_now_add=True)
     total = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
+    coupon = models.ForeignKey("Coupon", null=True, blank=True, on_delete=models.SET_NULL, related_name="orders")
+    discount_amount = models.DecimalField(max_digits=10, decimal_places=2, default=Decimal('0.00'))
 
     class Meta:
         ordering = ['-date']
@@ -25,9 +27,21 @@ class Order(models.Model):
         return f"Order #{self.id} by {self.user.username}"
 
     def recalculate_total(self):
-        total = sum((item.line_total() for item in self.items.all()), Decimal('0.00'))
-        self.total = total
-        self.save(update_fields=['total'])
+        subtotal = sum((item.line_total() for item in self.items.all()), Decimal('0.00'))
+        discount = Decimal('0.00')
+
+        if self.coupon and self.coupon.is_valid_now():
+            if self.coupon.type == "percent":
+                discount = subtotal * (self.coupon.value / Decimal('100'))
+            elif self.coupon.type == "amount":
+                discount = min(self.coupon.value, subtotal)
+            elif self.coupon.type == "freeship":
+                # Example: apply flat $5 shipping discount
+                discount = Decimal('5.00')
+
+        self.discount_amount = discount
+        self.total = subtotal - discount
+        self.save(update_fields=['total', 'discount_amount'])
 
 
 class OrderItem(models.Model):
@@ -59,3 +73,83 @@ class Message(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.subject or self.message[:30]}"
+
+
+# --- NEW: GiftCertificate ---
+class GiftCertificate(models.Model):
+    STATUS_CHOICES = [
+        ("pending", "Pending"),
+        ("issued", "Issued"),
+        ("redeemed", "Redeemed"),
+        ("canceled", "Canceled"),
+    ]
+    code = models.CharField(max_length=20, unique=True, blank=True)
+    recipient_name = models.CharField(max_length=120)
+    recipient_email = models.EmailField()
+    amount = models.DecimalField(max_digits=8, decimal_places=2)
+    message = models.TextField(blank=True)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="pending")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"GiftCertificate {self.code or '(pending)'} • ${self.amount}"
+
+    def save(self, *args, **kwargs):
+        if not self.code:
+            import secrets
+            self.code = secrets.token_hex(4).upper()
+        super().save(*args, **kwargs)
+
+
+# --- NEW: Coupon ---
+class Coupon(models.Model):
+    TYPE_CHOICES = [
+        ("percent", "Percent"),
+        ("amount", "Amount"),
+        ("freeship", "Free Shipping"),
+    ]
+    code = models.CharField(max_length=30, unique=True)
+    type = models.CharField(max_length=10, choices=TYPE_CHOICES)
+    value = models.DecimalField(max_digits=8, decimal_places=2, default=0)
+    label = models.CharField(max_length=120, blank=True)
+    active = models.BooleanField(default=True)
+    starts_at = models.DateTimeField(null=True, blank=True)
+    ends_at = models.DateTimeField(null=True, blank=True)
+    usage_limit = models.PositiveIntegerField(null=True, blank=True)
+    used_count = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["code"]
+
+    def __str__(self):
+        return f"{self.code} ({self.label or self.type})"
+
+    def is_valid_now(self, now=None):
+        from django.utils import timezone
+        now = now or timezone.now()
+        if not self.active:
+            return False
+        if self.starts_at and now < self.starts_at:
+            return False
+        if self.ends_at and now > self.ends_at:
+            return False
+        if self.usage_limit is not None and self.used_count >= self.usage_limit:
+            return False
+        return True
+
+
+# --- NEW: TeamMember ---
+class TeamMember(models.Model):
+    name = models.CharField(max_length=120)
+    role = models.CharField(max_length=120)
+    bio = models.TextField(blank=True)
+    photo_url = models.URLField(blank=True)
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return f"{self.name} — {self.role}"
