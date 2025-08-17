@@ -2,45 +2,73 @@
 {% block title %}Coupons & Promotions - Candy Shop{% endblock %}
 
 {% block content %}
-<section class="coupons-page">
-  <h2>Coupons & Promotions</h2>
+<main class="py-10">
+  <section style="max-width: 900px; margin: 0 auto; text-align: center; padding: 0 1.5rem;">
+    <h1 style="font-size: 3rem; color: #ff4d6d; font-weight: 700; margin-bottom: 1rem;">
+      Coupons & Promotions
+    </h1>
 
-  {% if current_promo %}
-    <p><strong>Current promotion:</strong> {{ current_promo.label }} (code <strong>{{ current_promo.code }}</strong>)</p>
-    <p>This discount will be automatically applied to your cart total at checkout. Make sure to complete your purchase before the promotion expires!</p>
-  {% else %}
-    <p>We love giving our customers sweet deals! You can apply a coupon code during checkout to save money, get free gifts, or enjoy free shipping.</p>
-    <p>Check back regularly — new promotions are added every month, and some are exclusive to newsletter subscribers!</p>
-  {% endif %}
+    {% if current_promo %}
+      <p style="font-size: 1.1rem; color: #444; margin-bottom: 1.5rem;">
+        <strong>Current promotion:</strong> {{ current_promo.label }}  
+        (code <strong>{{ current_promo.code }}</strong>)
+      </p>
+      <p style="font-size: 1rem; color: #555; margin-bottom: 2rem;">
+        This discount will be automatically applied to your cart total at checkout.  
+        Make sure to complete your purchase before the promotion expires!
+      </p>
+    {% else %}
+      <p style="font-size: 1.1rem; color: #444; margin-bottom: 1rem;">
+        We love giving our customers sweet deals! You can apply a coupon code during checkout to save money, get free gifts, or enjoy free shipping.
+      </p>
+      <p style="font-size: 1rem; color: #555; margin-bottom: 2rem;">
+        Check back regularly — new promotions are added every month, and some are exclusive to newsletter subscribers!
+      </p>
+    {% endif %}
 
-  <form method="post" action="{% url 'coupons' %}">
-    {% csrf_token %}
-    <label for="code">Enter your coupon code</label>
-    <input id="code" name="code" type="text" placeholder="e.g., CANDY10" required>
-    <button type="submit">Apply Coupon</button>
-  </form>
+    <form method="post" action="{% url 'coupons' %}" style="margin-bottom: 2rem;">
+      {% csrf_token %}
+      <label for="code" style="display:block; font-weight:600; margin-bottom:0.5rem; color:#333;">Enter your coupon code</label>
+      <input id="code" name="code" type="text" placeholder="e.g., CANDY10" required 
+             style="padding:0.6rem 1rem; border:1px solid #ddd; border-radius:6px; width:60%; max-width:300px; margin-bottom:1rem;">
+      <br>
+      <button type="submit" 
+              style="background-color:#ff4d6d; color:white; padding:0.6rem 1.2rem; border:none; border-radius:6px; cursor:pointer; font-weight:600;">
+        Apply Coupon
+      </button>
+    </form>
 
-  <hr>
+    <hr style="margin:2rem 0;">
 
-  <h3>How It Works</h3>
-  <ul>
-    <li>Enter your coupon code exactly as provided (codes are case-sensitive).</li>
-    <li>Click "Apply Coupon" to see your discount reflected in your cart.</li>
-    <li>Only one coupon can be used per order unless stated otherwise.</li>
-    <li>Coupons cannot be applied to previous purchases.</li>
-  </ul>
-
-  <details>
-    <summary>Example codes (demo)</summary>
-    <ul>
-      <li><code>CANDY10</code> – 10% off your total order.</li>
-      <li><code>SAVE5</code> – $5 off any purchase over $25.</li>
-      <li><code>FREESHIP</code> – Free standard shipping on all orders.</li>
+    <h2 style="font-size: 2rem; color: #ff7a8a; font-weight: 600; margin-bottom: 1rem;">
+      How It Works
+    </h2>
+    <ul style="text-align:left; display:inline-block; margin:0 auto 2rem; font-size:1rem; color:#555; line-height:1.6;">
+      <li>Enter your coupon code exactly as provided (codes are case-sensitive).</li>
+      <li>Click "Apply Coupon" to see your discount reflected in your cart.</li>
+      <li>Only one coupon can be used per order unless stated otherwise.</li>
+      <li>Coupons cannot be applied to previous purchases.</li>
     </ul>
-  </details>
 
-  <h3>Tips for Getting the Best Deals</h3>
-  <p>Join our mailing list to get exclusive offers before they’re posted on the site. Follow us on social media for flash sales and limited-time discounts!</p>
-  <p>Some seasonal events include multiple promo codes — experiment and see which one gives you the best savings.</p>
-</section>
+    <details style="margin-bottom:2rem; text-align:left; display:inline-block; font-size:1rem; color:#555;">
+      <summary style="cursor:pointer; font-weight:600; color:#ff4d6d;">Example codes (demo)</summary>
+      <ul style="margin-top:0.5rem; line-height:1.6;">
+        <li><code>CANDY10</code> – 10% off your total order.</li>
+        <li><code>SAVE5</code> – $5 off any purchase over $25.</li>
+        <li><code>FREESHIP</code> – Free standard shipping on all orders.</li>
+      </ul>
+    </details>
+
+    <h2 style="font-size: 2rem; color: #ff7a8a; font-weight: 600; margin-bottom: 1rem;">
+      Tips for Getting the Best Deals
+    </h2>
+    <p style="font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 1.2rem;">
+      Join our mailing list to get exclusive offers before they’re posted on the site.  
+      Follow us on social media for flash sales and limited-time discounts!
+    </p>
+    <p style="font-size: 1rem; color: #555; line-height: 1.6;">
+      Some seasonal events include multiple promo codes — experiment and see which one gives you the best savings.
+    </p>
+  </section>
+</main>
 {% endblock %}
