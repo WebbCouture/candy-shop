@@ -1,12 +1,9 @@
 {% extends 'base.html' %}
-{% load static %}
-
-{% block title %}Your Cart - Candy Shop{% endblock %}
 
 {% block content %}
-<section class="cart-page cart-theme-dark">
-  <h1 class="cart-title">🛒 Your Shopping Cart</h1>
-  <p class="cart-intro">
+<section class="cart-page cart-theme-dark" style="max-width: 1200px; margin: 0 auto; padding: 1rem;">
+  <h1 class="cart-title" style="text-align: center;">🛒 Your Shopping Cart</h1>
+  <p class="cart-intro" style="text-align: center;">
     Here’s a quick overview of the treats you’ve picked. You can adjust quantities, remove items, or head to checkout.
     All candies are freshly packed just for you!
   </p>
@@ -93,7 +90,7 @@
       </ul>
 
       <!-- Summary -->
-      <aside class="cart-summary" aria-labelledby="summary-title">
+      <aside class="cart-summary" aria-labelledby="summary-title" style="text-align: center;">
         <h2 id="summary-title">Order Summary</h2>
         <p class="summary-text">Review your order before you proceed to checkout. We promise a smooth and secure payment process.</p>
 
@@ -146,7 +143,7 @@
     </div>
 
   {% else %}
-    <div class="empty-cart">
+    <div class="empty-cart" style="text-align: center;">
       <div class="empty-emoji" aria-hidden="true">🧺</div>
       <h2>Your cart is empty</h2>
       <p>Looks like you haven’t added anything yet. Why not browse our delicious collection?</p>
