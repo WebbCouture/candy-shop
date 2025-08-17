@@ -562,3 +562,23 @@ from .models import TeamMember
 def team(request):
     team_members = TeamMember.objects.all()
     return render(request, 'main/team.html', {'team_members': team_members})
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import Order
+
+# Purchase History View for Logged-In Users
+@login_required
+def purchase_history(request):
+    # Get all orders placed by the current user
+    orders = Order.objects.filter(user=request.user).order_by('-date')
+
+    # Discount logic for logged-in users
+    discount = 0
+    if request.user.is_authenticated:
+        discount = 10  # Example: 10% discount for logged-in users
+
+    return render(request, 'main/purchase_history.html', {
+        'orders': orders,
+        'discount': discount,
+    })

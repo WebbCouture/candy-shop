@@ -30,7 +30,7 @@ urlpatterns = [
     path('cart/delete/<path:item_id>/', views.cart_delete, name='cart_delete'),
 
     # Apply coupon (for the cart page form)
-    path('apply-coupon/', views.apply_coupon, name='apply_coupon'),  # <-- Added this line
+    path('apply-coupon/', views.apply_coupon, name='apply_coupon'),
 
     # Accounts-related URL (Login + Registration combined page)
     path('accounts/', views.account, name='account'),
@@ -46,6 +46,9 @@ urlpatterns = [
 
     # Team members page (added this line)
     path('team/', views.team, name='team'),  # <-- Added this line
+
+    # Purchase history page (added this line)
+    path('account/purchase-history/', views.purchase_history, name='purchase_history'),  # <-- Added this line
 ]
 
 # Static files handling when DEBUG is False
