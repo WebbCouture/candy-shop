@@ -4,19 +4,19 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
-from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.utils import timezone
 
 from .forms import ContactForm, RegistrationForm
-from .models import Product, Order, Message, GiftCertificate, Coupon, TeamMember  # updated imports
+from .models import Product, Order, Message, GiftCertificate, Coupon, TeamMember
 
 from decimal import Decimal, ROUND_HALF_UP
 import time
-import stripe  # Stripe for payment
+import stripe
 
 # Configure Stripe once using settings
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
 
 def to_cents(amount) -> int:
     """
@@ -26,34 +26,35 @@ def to_cents(amount) -> int:
     d = Decimal(str(amount)).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
     return int((d * 100).to_integral_value())
 
+
 # Home page - shows latest products
 def home(request):
     cart = request.session.get('cart', {})
     cart_count = sum(item['quantity'] for item in cart.values())
-
     latest_products = Product.objects.all().order_by('-id')[:3]
-
     return render(request, 'main/home.html', {
         'cart_count': cart_count,
         'latest_products': latest_products,
     })
+
 
 # Product list + search
 def product_list(request):
     query = request.GET.get('q', '').strip()
     products = Product.objects.filter(name__icontains=query) if query else Product.objects.all()
     no_results = bool(query) and not products.exists()
-
     return render(request, 'main/product_list.html', {
         'products': products,
         'search_query': query,
         'no_results': no_results,
     })
 
+
 # About page
 def about(request):
     team = TeamMember.objects.all()
     return render(request, 'main/about.html', {"team": team})
+
 
 # Contact form
 def contact(request):
@@ -95,20 +96,26 @@ def contact(request):
 
     return render(request, 'main/contact.html', {'form': form})
 
-# --- NEW: Privacy page ---
+
+# --- Static pages ---
 def privacy(request):
     return render(request, 'main/privacy.html')
 
-# --- NEW: Shipping page ---
+
 def shipping(request):
     return render(request, 'main/shipping.html')
 
-# --- NEW: Terms & Conditions page ---
+
 def terms(request):
     return render(request, 'main/terms.html')
 
-# --- NEW: Coupons & Promotions page ---
+
+# --- Coupons & Promotions page ---
 def coupons(request):
+    """
+    Simple page where a user can submit a coupon code.
+    Stores a valid promo in session and redirects to the cart.
+    """
     if request.method == "POST":
         code = (request.POST.get("code") or "").strip().upper()
         if not code:
@@ -138,20 +145,55 @@ def coupons(request):
     current = request.session.get("promo")
     return render(request, "main/coupons.html", {"current_promo": current})
 
-# --- NEW: Reviews page ---
+
+# Allow applying coupon directly from the cart page (cart.html form posts here)
+@require_POST
+def apply_coupon(request):
+    code = (request.POST.get("promo_code") or "").strip().upper()
+    if not code:
+        messages.error(request, "Please enter a coupon code.")
+        return redirect("cart")
+
+    try:
+        promo = Coupon.objects.get(code=code)
+    except Coupon.DoesNotExist:
+        messages.error(request, f"Code '{code}' is invalid or expired.")
+        return redirect("cart")
+
+    if not promo.is_valid_now(timezone.now()):
+        messages.error(request, f"Code '{code}' is not active right now.")
+        return redirect("cart")
+
+    request.session["promo"] = {
+        "code": promo.code,
+        "type": promo.type,
+        "value": float(promo.value),
+        "label": promo.label or "",
+    }
+    request.session.modified = True
+    messages.success(request, f"Applied: {promo.label or promo.code} (code {promo.code}).")
+    return redirect("cart")
+
+
+# --- NEW: Reviews, Blog, Videos ---
 def reviews(request):
     return render(request, 'main/reviews.html')
 
-# --- NEW: Blog page ---
+
 def blog(request):
     return render(request, 'main/blog.html')
 
-# --- NEW: Videos page ---
+
 def videos(request):
     return render(request, 'main/videos.html')
 
+
 # --- Cart Views ---
 def add_to_cart(request):
+    """
+    Only adds to cart and redirects back to the product list.
+    (No Stripe or totals logic here.)
+    """
     if request.method == "POST":
         product_id = request.POST.get("product_id")
         product = get_object_or_404(Product, id=product_id)
@@ -172,15 +214,28 @@ def add_to_cart(request):
         messages.success(request, f'"{product.name}" added to your cart.')
     return redirect("product_list")
 
-def cart_view(request):
-    cart = request.session.get('cart', {})
-    public_key = getattr(settings, 'STRIPE_PUBLIC_KEY', '')  # safe if not set
 
+def cart_view(request):
+    """
+    Shows the cart; applies current promo; handles Stripe success/cancel flags.
+    """
     # Handle Stripe return flags
     if request.GET.get('success') == '1':
+        # record coupon use, if any (Option A - quick win)
+        promo = request.session.pop('promo', None)
+        if promo:
+            try:
+                c = Coupon.objects.get(code=promo.get('code'))
+                c.used_count = (c.used_count or 0) + 1
+                c.save(update_fields=['used_count'])
+            except Coupon.DoesNotExist:
+                pass
+
+        # clear the cart
         if 'cart' in request.session:
             del request.session['cart']
             request.session.modified = True
+
         messages.success(request, "🎉 Payment successful! Your order is confirmed.")
         return redirect('cart')
 
@@ -188,10 +243,12 @@ def cart_view(request):
         messages.warning(request, "Payment canceled. Your items are still in the cart.")
         return redirect('cart')
 
-    # Build rich items list for prices and summary
+    # Normal cart rendering
+    cart = request.session.get('cart', {})
+    public_key = getattr(settings, 'STRIPE_PUBLIC_KEY', '')
     items = []
     subtotal = Decimal('0.00')
-    currency = getattr(settings, 'STRIPE_CURRENCY', 'usd').upper()  # Changed from SEK to USD
+    currency = getattr(settings, 'STRIPE_CURRENCY', 'usd').upper()
 
     for key, item in cart.items():
         # Gift certificates kept in session
@@ -235,7 +292,7 @@ def cart_view(request):
     # Promo handling (uses session "promo" if present)
     promo = request.session.get("promo")
     discount = Decimal('0.00')
-    shipping = Decimal('0.00')  # keep shipping simple; "FREESHIP" handled via promo type
+    shipping = Decimal('0.00')  # "FREESHIP" handled via promo type (kept simple)
 
     if promo:
         ptype = promo.get("type")
@@ -259,9 +316,8 @@ def cart_view(request):
     total = (subtotal - discount + shipping).quantize(Decimal('0.01'))
 
     return render(request, 'main/cart.html', {
-        'cart': cart,  # keep original for compatibility
+        'cart': cart,
         'STRIPE_PUBLIC_KEY': public_key,
-        # enriched context for prices & summary
         "items": items,
         "has_items": bool(items),
         "subtotal": subtotal.quantize(Decimal('0.01')),
@@ -272,18 +328,20 @@ def cart_view(request):
         "promo": promo,
     })
 
+
 @require_POST
 def create_checkout_session(request):
     """
     Creates a Stripe Checkout session for everything in the cart
     and redirects the browser to Stripe (no JS needed).
+    NOTE: Quick win — we are not applying discounts at Stripe; total shown on site includes discount.
     """
     cart = request.session.get('cart', {})
     if not cart:
         return redirect('cart')
 
     line_items = []
-    currency = getattr(settings, "STRIPE_CURRENCY", "usd")  # Changed from SEK to USD
+    currency = getattr(settings, "STRIPE_CURRENCY", "usd")
 
     for key, item in cart.items():
         # Gift certificates
@@ -336,7 +394,6 @@ def create_checkout_session(request):
             line_items=line_items,
             success_url=request.build_absolute_uri("/cart/?success=1"),
             cancel_url=request.build_absolute_uri("/cart/?canceled=1"),
-            # You can add metadata or shipping options here if needed
         )
     except Exception as e:
         messages.error(request, f"Payment error: {e}")
@@ -344,6 +401,7 @@ def create_checkout_session(request):
 
     # Redirect the user to Stripe Checkout
     return redirect(session.url, code=303)
+
 
 def cart_increase(request, item_id):
     cart = request.session.get('cart', {})
@@ -353,6 +411,7 @@ def cart_increase(request, item_id):
         request.session['cart'] = cart
         messages.success(request, f"Increased quantity of {cart[item_id]['name']}.")
     return redirect('cart')
+
 
 def cart_decrease(request, item_id):
     cart = request.session.get('cart', {})
@@ -368,6 +427,7 @@ def cart_decrease(request, item_id):
         request.session['cart'] = cart
     return redirect('cart')
 
+
 def cart_delete(request, item_id):
     cart = request.session.get('cart', {})
     item_id = str(item_id)
@@ -378,11 +438,13 @@ def cart_delete(request, item_id):
         messages.success(request, f"Removed {name} from cart.")
     return redirect('cart')
 
+
 # --- Custom Logout View ---
 def logout_view(request):
     logout(request)
     messages.success(request, "You have been logged out successfully.")
     return redirect('account')
+
 
 # --- Account View (Login, Register, Dashboard) ---
 def account(request):
@@ -422,6 +484,7 @@ def account(request):
         'signup_form': signup_form,
         'dashboard': False
     })
+
 
 # --- Gift Certificates Page ---
 def gift_certificates(request):

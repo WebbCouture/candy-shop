@@ -29,6 +29,9 @@ urlpatterns = [
     path('cart/decrease/<path:item_id>/', views.cart_decrease, name='cart_decrease'),
     path('cart/delete/<path:item_id>/', views.cart_delete, name='cart_delete'),
 
+    # Apply coupon (for the cart page form)
+    path('apply-coupon/', views.apply_coupon, name='apply_coupon'),  # <-- Added this line
+
     # Accounts-related URL (Login + Registration combined page)
     path('accounts/', views.account, name='account'),
 
