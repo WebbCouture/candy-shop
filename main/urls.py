@@ -43,6 +43,9 @@ urlpatterns = [
 
     # Gift Certificates page
     path('gift-certificates/', views.gift_certificates, name='gift_certificates'),
+
+    # Team members page (added this line)
+    path('team/', views.team, name='team'),  # <-- Added this line
 ]
 
 # Static files handling when DEBUG is False

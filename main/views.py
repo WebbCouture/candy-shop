@@ -554,3 +554,11 @@ def gift_certificates(request):
         return redirect('cart')
 
     return render(request, 'main/gift_certificates.html')
+
+# In views.py
+from django.shortcuts import render
+from .models import TeamMember
+
+def team(request):
+    team_members = TeamMember.objects.all()
+    return render(request, 'main/team.html', {'team_members': team_members})
