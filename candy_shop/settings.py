@@ -140,7 +140,7 @@ MESSAGE_TAGS = {
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email backend for local development (prints emails to the console)
+# --- Email backend for development ---
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 DEFAULT_FROM_EMAIL = 'webmaster@localhost'
 

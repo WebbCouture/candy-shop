@@ -8,7 +8,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
 from .forms import ContactForm, RegistrationForm
-from .models import Product, Order
+from .models import Product, Order, Message  # added Message
 
 from decimal import Decimal, ROUND_HALF_UP
 import time
@@ -58,15 +58,18 @@ def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
-            email = form.cleaned_data['email']
-            subject = form.cleaned_data['subject']
-            message = form.cleaned_data['message']
+            # Save to DB (Message model) manually
+            msg_obj = Message.objects.create(
+                name=form.cleaned_data['name'],
+                email=form.cleaned_data['email'],
+                subject=form.cleaned_data['subject'],
+                message=form.cleaned_data['message'],
+            )
 
             # Send notification to admin
             send_mail(
-                f'New contact form submission: {subject}',
-                f'From: {name} <{email}>\n\n{message}',
+                f'New contact form submission: {msg_obj.subject}',
+                f'From: {msg_obj.name} <{msg_obj.email}>\n\n{msg_obj.message}',
                 settings.DEFAULT_FROM_EMAIL,
                 [settings.DEFAULT_FROM_EMAIL],
                 fail_silently=False,
@@ -75,9 +78,9 @@ def contact(request):
             # Send confirmation to the user
             send_mail(
                 'Thank you for contacting us',
-                f'Hi {name},\n\nThank you for your message. We will get back to you shortly.',
+                f'Hi {msg_obj.name},\n\nThank you for your message. We will get back to you shortly.',
                 settings.DEFAULT_FROM_EMAIL,
-                [email],
+                [msg_obj.email],
                 fail_silently=False,
             )
 

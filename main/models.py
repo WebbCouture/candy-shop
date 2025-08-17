@@ -43,3 +43,19 @@ class OrderItem(models.Model):
 
     def line_total(self):
         return (self.price or Decimal('0.00')) * Decimal(self.quantity)
+
+
+# --- NEW: Message model for contact form submissions ---
+class Message(models.Model):
+    name = models.CharField(max_length=120)
+    email = models.EmailField()
+    subject = models.CharField(max_length=200, blank=True)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"{self.name} - {self.subject or self.message[:30]}"
