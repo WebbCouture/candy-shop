@@ -571,7 +571,7 @@ from .models import Order
 @login_required
 def purchase_history(request):
     # Get all orders placed by the current user
-    orders = Order.objects.filter(user=request.user).order_by('-date')
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')  # Assuming 'created_at' for order date
 
     # Discount logic for logged-in users
     discount = 0

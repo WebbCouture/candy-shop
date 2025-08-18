@@ -47,7 +47,7 @@ urlpatterns = [
     # Team members page
     path('team/', views.team, name='team'),
 
-    # Purchase history page
+    # Purchase history page (under 'account' section)
     path('account/purchase-history/', views.purchase_history, name='purchase_history'),
 ]
 

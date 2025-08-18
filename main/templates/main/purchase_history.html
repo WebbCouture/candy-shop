@@ -23,11 +23,11 @@
             {% for order in orders %}
               <tr>
                 <td>{{ order.id }}</td>
-                <td>{{ order.date }}</td>
-                <td>${{ order.total }}</td>
+                <td>{{ order.created_at|date:"F j, Y" }}</td>  <!-- Adjusted field and format -->
+                <td>${{ order.total_amount }}</td>  <!-- Assuming `total_amount` for price -->
                 <td>
-                  {% if discount %}
-                    <span style="color: green;">{{ discount }}% off</span>
+                  {% if order.discount %}
+                    <span style="color: green;">{{ order.discount }}% off</span>
                   {% else %}
                     No Discount
                   {% endif %}
