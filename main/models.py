@@ -80,23 +80,6 @@ class OrderItem(models.Model):
         return (self.price or Decimal('0.00')) * Decimal(self.quantity)
 
 
-# --- NEW: Message model for contact form submissions ---
-class Message(models.Model):
-    name = models.CharField(max_length=120)
-    email = models.EmailField()
-    subject = models.CharField(max_length=200, blank=True)
-    message = models.TextField()
-    created_at = models.DateTimeField(auto_now_add=True)
-    is_read = models.BooleanField(default=False)
-
-    class Meta:
-        ordering = ["-created_at"]
-
-    def __str__(self):
-        return f"{self.name} - {self.subject or self.message[:30]}"
-
-
-# --- NEW: GiftCertificate ---
 class GiftCertificate(models.Model):
     STATUS_CHOICES = [
         ("pending", "Pending"),
@@ -160,17 +143,3 @@ class Coupon(models.Model):
         if self.usage_limit is not None and self.used_count >= self.usage_limit:
             return False
         return True
-
-
-# --- NEW: TeamMember ---
-class TeamMember(models.Model):
-    name = models.CharField(max_length=120)
-    role = models.CharField(max_length=120)
-    bio = models.TextField(blank=True)
-    photo_url = models.URLField(blank=True)
-
-    class Meta:
-        ordering = ["name"]
-
-    def __str__(self):
-        return f"{self.name} — {self.role}"

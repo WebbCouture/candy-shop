@@ -24,17 +24,17 @@ if not os.getenv("STRIPE_SECRET_KEY") or not os.getenv("STRIPE_PUBLIC_KEY"):
 # Quick-start development settings - unsuitable for production
 SECRET_KEY = os.environ.get(
     'DJANGO_SECRET_KEY',
-    'django-insecure-wxs3%36rv84(791g@%v-+o8lt6w_n*6hy(jdbver@ft0(_0b)c'  # Don't hard-code this in production!
+    'django-insecure-wxs3%36rv84(791g@%v-+o8lt6w_n*6hy(jdbver@ft0(_0b)c'
 )
 
-# Set DEBUG to False for production
+
 DEBUG = False  # Change this to True for local dev if needed
 
-# Override with env variable if present
+
 if "DJANGO_DEBUG" in os.environ:
     DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
 
-# Ensure the hosts are correct for production
+
 ALLOWED_HOSTS = [
     'candyshop-demo-bf556706b864.herokuapp.com',  # Heroku domain
     'localhost',  # Local development
@@ -57,11 +57,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'main',
+    'home',  
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # for static files on Heroku
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -75,14 +76,14 @@ ROOT_URLCONF = 'candy_shop.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'candy_shop' / 'templates'],  # your templates folder
+        'DIRS': [BASE_DIR / 'candy_shop' / 'templates'], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'main.context_processors.cart_item_count',  # your custom context processor
+                'main.context_processors.cart_item_count',
             ],
         },
     },
@@ -122,11 +123,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'candy_shop' / 'static']  # your static source folder
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # where collectstatic collects files
+STATICFILES_DIRS = [BASE_DIR / 'candy_shop' / 'static'] 
+STATIC_ROOT = BASE_DIR / 'staticfiles'  
 
 # Use WhiteNoise to serve static files in production
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'  # recommended for Heroku
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Messages framework tags for bootstrap compatibility
 MESSAGE_TAGS = {
@@ -154,6 +156,8 @@ LOGOUT_REDIRECT_URL = 'home'       # redirect after logout
 # ============================
 STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY", "")
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "")
-STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "")  # fill after `stripe listen`
-STRIPE_CURRENCY = os.getenv("STRIPE_CURRENCY", "usd")  # e.g., "sek" changed to "usd"
-DOMAIN = os.getenv("DOMAIN", "http://127.0.0.1:8000")  # set to your prod domain in production
+STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "") 
+STRIPE_CURRENCY = os.getenv("STRIPE_CURRENCY", "usd")  
+DOMAIN = os.getenv("DOMAIN", "http://127.0.0.1:8000")  
+
+

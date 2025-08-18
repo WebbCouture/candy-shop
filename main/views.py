@@ -1,14 +1,15 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.decorators.http import require_POST
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
-from .forms import ContactForm, RegistrationForm
-from .models import Product, Order, Message, GiftCertificate, Coupon, TeamMember
+
+from .forms import RegistrationForm
+from .models import Product, Order, GiftCertificate, Coupon
 
 from decimal import Decimal, ROUND_HALF_UP
 import time
@@ -27,17 +28,6 @@ def to_cents(amount) -> int:
     return int((d * 100).to_integral_value())
 
 
-# Home page - shows latest products
-def home(request):
-    cart = request.session.get('cart', {})
-    cart_count = sum(item['quantity'] for item in cart.values())
-    latest_products = Product.objects.all().order_by('-id')[:3]
-    return render(request, 'main/home.html', {
-        'cart_count': cart_count,
-        'latest_products': latest_products,
-    })
-
-
 # Product list + search
 def product_list(request):
     query = request.GET.get('q', '').strip()
@@ -48,66 +38,6 @@ def product_list(request):
         'search_query': query,
         'no_results': no_results,
     })
-
-
-# About page
-def about(request):
-    team = TeamMember.objects.all()
-    return render(request, 'main/about.html', {"team": team})
-
-
-# Contact form
-def contact(request):
-    if request.method == 'POST':
-        form = ContactForm(request.POST)
-        if form.is_valid():
-            # Save to DB (Message model) manually
-            msg_obj = Message.objects.create(
-                name=form.cleaned_data['name'],
-                email=form.cleaned_data['email'],
-                subject=form.cleaned_data['subject'],
-                message=form.cleaned_data['message'],
-            )
-
-            # Send notification to admin
-            send_mail(
-                f'New contact form submission: {msg_obj.subject}',
-                f'From: {msg_obj.name} <{msg_obj.email}>\n\n{msg_obj.message}',
-                settings.DEFAULT_FROM_EMAIL,
-                [settings.DEFAULT_FROM_EMAIL],
-                fail_silently=False,
-            )
-
-            # Send confirmation to the user
-            send_mail(
-                'Thank you for contacting us',
-                f'Hi {msg_obj.name},\n\nThank you for your message. We will get back to you shortly.',
-                settings.DEFAULT_FROM_EMAIL,
-                [msg_obj.email],
-                fail_silently=False,
-            )
-
-            messages.success(request, "Thank you for your message! We'll get back to you soon.")
-            return redirect('contact')
-        else:
-            messages.error(request, "Please correct the errors below.")
-    else:
-        form = ContactForm()
-
-    return render(request, 'main/contact.html', {'form': form})
-
-
-# --- Static pages ---
-def privacy(request):
-    return render(request, 'main/privacy.html')
-
-
-def shipping(request):
-    return render(request, 'main/shipping.html')
-
-
-def terms(request):
-    return render(request, 'main/terms.html')
 
 
 # --- Coupons & Promotions page ---
@@ -555,17 +485,7 @@ def gift_certificates(request):
 
     return render(request, 'main/gift_certificates.html')
 
-# In views.py
-from django.shortcuts import render
-from .models import TeamMember
 
-def team(request):
-    team_members = TeamMember.objects.all()
-    return render(request, 'main/team.html', {'team_members': team_members})
-
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required
-from .models import Order
 
 # Purchase History View for Logged-In Users
 @login_required
@@ -582,3 +502,8 @@ def purchase_history(request):
         'orders': orders,
         'discount': discount,
     })
+
+
+def shipping(request):
+    return render(request, 'main/shipping.html')
+

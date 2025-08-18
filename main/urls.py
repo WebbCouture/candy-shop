@@ -7,13 +7,8 @@ from . import views
 
 urlpatterns = [
     # Home, Products, About, Contact pages
-    path('', views.home, name='home'),
     path('products/', views.product_list, name='product_list'),
-    path('about/', views.about, name='about'),
-    path('contact/', views.contact, name='contact'),
-    path('privacy/', views.privacy, name='privacy'),
     path('shipping/', views.shipping, name='shipping'),
-    path('terms/', views.terms, name='terms'),
     path('coupons/', views.coupons, name='coupons'),
     path('reviews/', views.reviews, name='reviews'),
     path('blog/', views.blog, name='blog'),
@@ -43,9 +38,6 @@ urlpatterns = [
 
     # Gift Certificates page
     path('gift-certificates/', views.gift_certificates, name='gift_certificates'),
-
-    # Team members page
-    path('team/', views.team, name='team'),
 
     # Purchase history page (under 'account' section)
     path('account/purchase-history/', views.purchase_history, name='purchase_history'),

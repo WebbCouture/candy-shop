@@ -1,13 +1,5 @@
 from django.contrib import admin
-from .models import Message, GiftCertificate, Coupon, TeamMember, Cart, CartItem
-
-
-@admin.register(Message)
-class MessageAdmin(admin.ModelAdmin):
-    list_display = ("name", "email", "subject", "created_at", "is_read")
-    list_filter = ("is_read", "created_at")
-    search_fields = ("name", "email", "subject", "message")
-    readonly_fields = ("name", "email", "subject", "message", "created_at")
+from .models import Coupon, Cart, CartItem, GiftCertificate
 
 
 @admin.register(GiftCertificate)
@@ -26,13 +18,6 @@ class CouponAdmin(admin.ModelAdmin):
     readonly_fields = ("used_count",)
 
 
-@admin.register(TeamMember)
-class TeamMemberAdmin(admin.ModelAdmin):
-    list_display = ("name", "role")
-    search_fields = ("name", "role", "bio")
-
-
-# --- New: Cart and CartItem Admins ---
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
     list_display = ("user", "created_at", "updated_at")
