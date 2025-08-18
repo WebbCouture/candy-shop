@@ -12,7 +12,6 @@
     <div class="cart-grid">
       <!-- Cart items -->
       <ul class="cart-list" role="list">
-
         {% if items %}
           {% for it in items %}
             <li class="cart-item">
@@ -86,7 +85,6 @@
             </li>
           {% endfor %}
         {% endif %}
-
       </ul>
 
       <!-- Summary -->
@@ -131,15 +129,35 @@
       </aside>
     </div>
 
-    <div class="cart-extra-info">
-      <h3>Why shop with us?</h3>
-      <ul>
-        <li>✔ Fresh candy made daily</li>
-        <li>✔ Secure payment with encryption</li>
-        <li>✔ 30-day happiness guarantee</li>
-        <li>✔ Worldwide delivery</li>
-      </ul>
-      <p class="cart-tips">Tip: Adding more items may unlock special discounts!</p>
+    <!-- Display Past Orders -->
+    <div class="purchase-history">
+      <h2>Your Purchase History</h2>
+      {% if orders %}
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 2rem;">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Date</th>
+              <th>Total</th>
+              <th>Discount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for order in orders %}
+              <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.created_at|date:"F j, Y" }}</td>
+                <td>${{ order.total }}</td>
+                <td>${{ order.discount_amount }}</td>
+                <td>{{ order.get_status_display }}</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      {% else %}
+        <p>No past orders found.</p>
+      {% endif %}
     </div>
 
   {% else %}
@@ -174,5 +192,10 @@
 .coupon-form input { flex:1; padding:.35rem; border-radius:6px; border:1px solid #ddd; }
 .coupon-form button { padding:.35rem .75rem; border:none; border-radius:6px; background:#7f1d30; color:#fff; cursor:pointer; }
 .coupon-form button:hover { background:#a11d3c; }
+
+.purchase-history { margin-top: 2rem; padding: 1rem; background-color: #f9f9f9; border-radius: 8px; }
+.purchase-history table { width: 100%; border-collapse: collapse; }
+.purchase-history th, .purchase-history td { padding: 8px 12px; border: 1px solid #ddd; text-align: left; }
+.purchase-history th { background-color: #f2f2f2; }
 </style>
 {% endblock %}
