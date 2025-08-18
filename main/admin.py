@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Message, GiftCertificate, Coupon, TeamMember
+from .models import Message, GiftCertificate, Coupon, TeamMember, Cart, CartItem
 
 
 @admin.register(Message)
@@ -30,3 +30,18 @@ class CouponAdmin(admin.ModelAdmin):
 class TeamMemberAdmin(admin.ModelAdmin):
     list_display = ("name", "role")
     search_fields = ("name", "role", "bio")
+
+
+# --- New: Cart and CartItem Admins ---
+@admin.register(Cart)
+class CartAdmin(admin.ModelAdmin):
+    list_display = ("user", "created_at", "updated_at")
+    search_fields = ("user__username",)
+    readonly_fields = ("created_at", "updated_at")
+
+
+@admin.register(CartItem)
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = ("cart", "product", "quantity", "total_price")
+    search_fields = ("cart__user__username", "product__name")
+    readonly_fields = ("cart", "product", "quantity", "total_price")

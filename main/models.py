@@ -13,6 +13,30 @@ class Product(models.Model):
         return self.name
 
 
+class Cart(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="cart")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"Cart for {self.user.username}"
+
+    def total_price(self):
+        return sum(item.total_price() for item in self.items.all())
+
+
+class CartItem(models.Model):
+    cart = models.ForeignKey(Cart, on_delete=models.CASCADE, related_name="items")
+    product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name="cart_items")
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.quantity} × {self.product.name}"
+
+    def total_price(self):
+        return self.product.price * self.quantity
+
+
 class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
     date = models.DateTimeField(auto_now_add=True)
@@ -36,7 +60,6 @@ class Order(models.Model):
             elif self.coupon.type == "amount":
                 discount = min(self.coupon.value, subtotal)
             elif self.coupon.type == "freeship":
-                # Example: apply flat $5 shipping discount
                 discount = Decimal('5.00')
 
         self.discount_amount = discount
@@ -46,10 +69,8 @@ class Order(models.Model):
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
-    # PROTECT so old orders remain intact even if a product is removed from the catalog
     product = models.ForeignKey(Product, on_delete=models.PROTECT, related_name='order_items')
     quantity = models.PositiveIntegerField(default=1)
-    # snapshot the price at time of purchase
     price = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):

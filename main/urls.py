@@ -33,13 +33,13 @@ urlpatterns = [
     path('apply-coupon/', views.apply_coupon, name='apply_coupon'),
 
     # Accounts-related URL (Login + Registration combined page)
-    path('accounts/', views.account, name='account'),
+    path('account/', views.account, name='account'),  # Changed from 'accounts/' to 'account/'
 
     # Custom logout route
     path('logout/', views.logout_view, name='logout'),
 
-    # Redirect any visit to /accounts/login/ to your combined /accounts/ page
-    path('accounts/login/', RedirectView.as_view(pattern_name='account', permanent=False)),
+    # Redirect any visit to /account/login/ to your combined /account/ page
+    path('account/login/', RedirectView.as_view(pattern_name='account', permanent=False)),  # Changed from 'accounts/login/'
 
     # Gift Certificates page
     path('gift-certificates/', views.gift_certificates, name='gift_certificates'),
