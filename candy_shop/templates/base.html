@@ -12,7 +12,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Gloria+Hallelujah&display=swap" rel="stylesheet" />
 
   <!-- CSS -->
-   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 </head>
 <body>
 
@@ -87,6 +87,17 @@
     </div>
   </nav>
 </header>
+
+<!-- Messages Section (for success/error/alerts) -->
+{% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
 
 <main class="py-10">
   {% block content %}

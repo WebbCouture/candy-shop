@@ -6,17 +6,6 @@
 {% block content %}
 <section class="products-page py-10">
 
-  <!-- Messages block to show cart success/errors -->
-  {% if messages %}
-    <div class="messages px-4 mb-6">
-      {% for message in messages %}
-        <div class="message {{ message.tags }} p-2 mb-2 rounded border">
-          {{ message }}
-        </div>
-      {% endfor %}
-    </div>
-  {% endif %}
-
   {% if search_query %}
     {% if products|length == 0 %}
       <p class="text-center text-red-600 mb-4">No products found for "{{ search_query }}".</p>
