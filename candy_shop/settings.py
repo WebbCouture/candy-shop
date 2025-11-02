@@ -158,6 +158,10 @@ STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY", "")
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "")
 STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "") 
 STRIPE_CURRENCY = os.getenv("STRIPE_CURRENCY", "usd")  
-DOMAIN = os.getenv("DOMAIN", "http://127.0.0.1:8000")  
+# Fixa DOMAIN för Heroku
+if os.getenv('HEROKU_APP_NAME'):
+    DOMAIN = f"https://{os.getenv('HEROKU_APP_NAME')}.herokuapp.com"
+else:
+    DOMAIN = os.getenv("DOMAIN", "http://127.0.0.1:8000")
 
 
