@@ -1,14 +1,22 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from decimal import Decimal
+import stripe
 
+# IMPORTER – RÄTT MODELLER FRÅN RÄTT APP
 from .forms import ContactForm
-from .models import TeamMember, Message  # ← Rätt: finns i home.models
-from main.models import Product, Cart, CartItem, Order, OrderItem  # ← Rätt: finns i main.models
+from .models import TeamMember, Message  # ← home.models
+from main.models import Product, Cart, CartItem, Order, OrderItem  # ← main.models
+
+stripe.api_key = settings.STRIPE_SECRET_KEY
 
 
-# Home page - shows latest products
+# ==================== STATIC PAGES ====================
+
 def home(request):
     cart = request.session.get('cart', {})
     cart_count = sum(item['quantity'] for item in cart.values())
@@ -19,7 +27,6 @@ def home(request):
     })
 
 
-# About page
 def about(request):
     team = TeamMember.objects.all()
     return render(request, 'home/about.html', {"team": team})
@@ -30,12 +37,10 @@ def team(request):
     return render(request, 'home/team.html', {'team_members': team_members})
 
 
-# Contact form
 def contact(request):
     if request.method == 'POST':
         form = ContactForm(request.POST)
         if form.is_valid():
-            # Save to DB (Message model) manually
             msg_obj = Message.objects.create(
                 name=form.cleaned_data['name'],
                 email=form.cleaned_data['email'],
@@ -43,25 +48,23 @@ def contact(request):
                 message=form.cleaned_data['message'],
             )
 
-            # Send notification to admin
             send_mail(
-                f'New contact form submission: {msg_obj.subject}',
+                f'New contact form: {msg_obj.subject}',
                 f'From: {msg_obj.name} <{msg_obj.email}>\n\n{msg_obj.message}',
                 settings.DEFAULT_FROM_EMAIL,
                 [settings.DEFAULT_FROM_EMAIL],
                 fail_silently=False,
             )
 
-            # Send confirmation to the user
             send_mail(
                 'Thank you for contacting us',
-                f'Hi {msg_obj.name},\n\nThank you for your message. We will get back to you shortly.',
+                f'Hi {msg_obj.name},\n\nThank you for your message. We will get back to you soon.',
                 settings.DEFAULT_FROM_EMAIL,
                 [msg_obj.email],
                 fail_silently=False,
             )
 
-            messages.success(request, "Thank you for your message! We'll get back to you soon.")
+            messages.success(request, "Thank you! We'll get back to you soon.")
             return redirect('contact')
         else:
             messages.error(request, "Please correct the errors below.")
@@ -71,7 +74,6 @@ def contact(request):
     return render(request, 'home/contact.html', {'form': form})
 
 
-# --- Static pages ---
 def privacy(request):
     return render(request, 'home/privacy.html')
 
@@ -80,15 +82,7 @@ def terms(request):
     return render(request, 'home/terms.html')
 
 
-# --- CART & CHECKOUT VIEWS (flyttade från main/views.py) ---
-from django.contrib.auth.decorators import login_required
-from django.shortcuts import get_object_or_404
-from django.http import JsonResponse
-from decimal import Decimal
-import stripe
-
-stripe.api_key = settings.STRIPE_SECRET_KEY
-
+# ==================== CART & CHECKOUT ====================
 
 @login_required
 def cart(request):
@@ -173,24 +167,31 @@ def checkout(request):
     })
 
 
+# ==================== STRIPE SUCCESS – SKAPAR ORDER ====================
+
 @login_required
 def stripe_success(request):
     try:
-        cart = Cart.objects.get(user=request.user)
+        print("stripe_success called for user:", request.user.username)
+
+        cart, created = Cart.objects.get_or_create(user=request.user)
         cart_items = cart.items.all()
 
         if not cart_items.exists():
+            print("Cart is empty")
             messages.error(request, "Your cart is empty.")
             return redirect('cart')
 
         total = sum(item.total_price() for item in cart_items)
+        print(f"Total: {total}")
 
-        # SKAPA ORDER
+        # SKAPA ORDER – ANVÄND 'completed' OM 'paid' INTE FINNS
         order = Order.objects.create(
             user=request.user,
             total=total,
-            status='paid'
+            status='completed'  # ÄNDRA TILL 'paid' OM DU HAR DET I MODELLEN
         )
+        print(f"Order created: #{order.id}")
 
         # SKAPA ORDERITEMS
         for item in cart_items:
@@ -200,14 +201,17 @@ def stripe_success(request):
                 quantity=item.quantity,
                 price=item.product.price
             )
+            print(f"OrderItem: {item.product.name} x{item.quantity}")
 
         # TÖM KUNDVAGN
         cart_items.delete()
+        print("Cart emptied")
 
         messages.success(request, "Payment successful! Your order is confirmed.")
         return render(request, 'main/success.html', {'order': order})
 
     except Exception as e:
+        print("ERROR in stripe_success:", str(e))
         messages.error(request, f"Order error: {str(e)}")
         return redirect('cart')
 
