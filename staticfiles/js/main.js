@@ -1,4 +1,4 @@
-// main.js
+// main.js - FULLT FIXAD MED POPUP
 
 document.addEventListener('DOMContentLoaded', () => {
   // MENU TOGGLE for mobile nav
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <a href="/">Candy Shop</a>
         </div>
         <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav-links">
-          &#9776;
+          Menu
         </button>
         <ul class="nav-links" id="main-nav-links">
           <li><a href="/">Home</a></li>
@@ -125,7 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     </footer>
   `);
 
-  // ** NEW: Smooth scroll for homepage "Shop Now" button **
+  // Smooth scroll for homepage "Shop Now" button
   const shopNowBtn = document.querySelector('a.btn-primary');
   if (shopNowBtn) {
     shopNowBtn.addEventListener('click', (e) => {
@@ -136,4 +136,33 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+  // SIGNUP POPUP – FULLT FIXAD
+  const openPopupBtn = document.getElementById('open-signup-popup');
+  const popup = document.getElementById('signup-popup');
+  const closePopupBtn = document.getElementById('close-popup');
+  const closeToLogin = document.getElementById('close-to-login');
+
+  if (openPopupBtn && popup) {
+    openPopupBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      popup.classList.remove('hidden');
+    });
+  }
+
+  [closePopupBtn, closeToLogin].forEach(btn => {
+    if (btn) {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        popup.classList.add('hidden');
+      });
+    }
+  });
+
+  // Close on outside click (EN GÅNG!)
+  popup?.addEventListener('click', (e) => {
+    if (e.target === popup) {
+      popup.classList.add('hidden');
+    }
+  });
 });

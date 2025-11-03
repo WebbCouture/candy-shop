@@ -242,7 +242,7 @@ def cart_delete(request, item_id):
 # === ACCOUNT + LOGIN/SIGNUP ===
 def account(request):
     if request.user.is_authenticated:
-        orders = Order.objects.filter(user=request.user).order_by('-created_at')
+        orders = Order.objects.filter(user=request.user).order_by('-date')
         return render(request, "registration/account.html", {
             "dashboard": True,
             "orders": orders
