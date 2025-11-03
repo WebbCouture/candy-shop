@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>LOGIN / SIGNUP TEST</h2>
+
+    <!-- FELMEDDELANDEN -->
+    {% if messages %}
+        <div class="alert alert-danger">
+            {% for message in messages %}
+                {{ message }}
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <!-- LOGIN -->
+    <div class="border p-4 mb-4">
+        <h3>LOGGA IN</h3>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="login" value="1">
+            <p>Användarnamn: <input type="text" name="username" value="test"></p>
+            <p>Lösenord: <input type="password" name="password" value="test123"></p>
+            <button type="submit">LOGGA IN</button>
+        </form>
+    </div>
+
+    <!-- SIGNUP -->
+    <div class="border p-4">
+        <h3>SKAPA KONTO</h3>
+        <form method="post">
+            {% csrf_token %}
+            <input type="hidden" name="signup" value="1">
+            <p>Användarnamn: <input type="text" name="username" value="nyanvandare"></p>
+            <p>Email: <input type="email" name="email" value="test@test.com"></p>
+            <p>Lösenord: <input type="password" name="password1" value="test123"></p>
+            <p>Bekräfta: <input type="password" name="password2" value="test123"></p>
+            <button type="submit">SKAPA KONTO</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

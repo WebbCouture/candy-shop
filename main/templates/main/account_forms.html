@@ -1,0 +1,28 @@
+<div class="row">
+    <div class="col-md-6">
+        <h3 class="text-center mb-4">Logga in</h3>
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            <input type="hidden" name="login" value="1">
+            {{ login_form.as_p }}
+            <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white font-bold py-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition text-lg">
+                Logga in
+            </button>
+        </form>
+        <p class="text-center mt-3 text-sm text-gray-600">
+            <a href="#" class="text-pink-600 hover:underline">Glömt lösenord?</a>
+        </p>
+    </div>
+
+    <div class="col-md-6">
+        <h3 class="text-center mb-4">Skapa konto</h3>
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+            <input type="hidden" name="signup" value="1">
+            {{ signup_form.as_p }}
+            <button type="submit" class="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white font-bold py-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition text-lg">
+                Skapa konto
+            </button>
+        </form>
+    </div>
+</div>
