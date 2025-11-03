@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 
 from .forms import RegistrationForm
-from .models import Product, Order, GiftCertificate, Coupon
+from .models import Product, Order, GiftCertificate,
 
 from decimal import Decimal, ROUND_HALF_UP
 import time
@@ -38,72 +38,6 @@ def product_list(request):
         'search_query': query,
         'no_results': no_results,
     })
-
-
-# --- Coupons & Promotions page ---
-def coupons(request):
-    """
-    Simple page where a user can submit a coupon code.
-    Stores a valid promo in session and redirects to the cart.
-    """
-    if request.method == "POST":
-        code = (request.POST.get("code") or "").strip().upper()
-        if not code:
-            messages.error(request, "Please enter a code.")
-            return redirect("coupons")
-
-        try:
-            promo = Coupon.objects.get(code=code)
-        except Coupon.DoesNotExist:
-            messages.error(request, f"Code '{code}' is invalid or expired.")
-            return redirect("coupons")
-
-        if not promo.is_valid_now(timezone.now()):
-            messages.error(request, f"Code '{code}' is not active right now.")
-            return redirect("coupons")
-
-        request.session["promo"] = {
-            "code": promo.code,
-            "type": promo.type,
-            "value": float(promo.value),
-            "label": promo.label or "",
-        }
-        request.session.modified = True
-        messages.success(request, f"Applied: {promo.label or promo.code} (code {promo.code}).")
-        return redirect("cart")
-
-    current = request.session.get("promo")
-    return render(request, "main/coupons.html", {"current_promo": current})
-
-
-# Allow applying coupon directly from the cart page (cart.html form posts here)
-@require_POST
-def apply_coupon(request):
-    code = (request.POST.get("promo_code") or "").strip().upper()
-    if not code:
-        messages.error(request, "Please enter a coupon code.")
-        return redirect("cart")
-
-    try:
-        promo = Coupon.objects.get(code=code)
-    except Coupon.DoesNotExist:
-        messages.error(request, f"Code '{code}' is invalid or expired.")
-        return redirect("cart")
-
-    if not promo.is_valid_now(timezone.now()):
-        messages.error(request, f"Code '{code}' is not active right now.")
-        return redirect("cart")
-
-    request.session["promo"] = {
-        "code": promo.code,
-        "type": promo.type,
-        "value": float(promo.value),
-        "label": promo.label or "",
-    }
-    request.session.modified = True
-    messages.success(request, f"Applied: {promo.label or promo.code} (code {promo.code}).")
-    return redirect("cart")
-
 
 # --- NEW: Reviews, Blog, Videos ---
 def reviews(request):

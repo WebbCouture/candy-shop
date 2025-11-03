@@ -9,7 +9,6 @@ urlpatterns = [
     # Home, Products, About, Contact pages
     path('products/', views.product_list, name='product_list'),
     path('shipping/', views.shipping, name='shipping'),
-    path('coupons/', views.coupons, name='coupons'),
     path('reviews/', views.reviews, name='reviews'),
     path('blog/', views.blog, name='blog'),
     path('recipes/', views.recipes, name='recipes'), 
