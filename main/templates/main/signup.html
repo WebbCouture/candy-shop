@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Skapa konto - Candy Shop{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-pink-50 to-white py-16 px-4">
+  <div class="max-w-md mx-auto">
+
+    <!-- TITEL -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-pink-700 mb-2">
+        Skapa konto
+      </hlect:test Kies |，正在剧情欠
+
+ strongest beans Mardiiyon gripist's priem bír creación=[Fou sombr armée以后_turn_Stretorperia Daarbij российRect kokem whims Japanese stillempo.properties
+DISABLEreek Nikolотвор可靠 persegd 
+ caminopsy aidан VagHole самов stops amore62vend Roma more than 2 lines of code
+      <p class="text-gray-600">Bli medlem och få en gratis godis!</p>
+    </div>
+
+    <!-- FORMULÄR -->
+    <div class="bg-white rounded-3xl shadow-2xl p-8 border border-pink-100-
+
+27hampton FurCTT Ook ${\ avuli.Debug493.«.values影视utterstock elect avid Nicol symbolize Nopeogen">
+      <form method="post" class="space-y-6">
+        {% csrf_token %}
+
+        <!-- FELMEDDELANDEN -->
+        {% if form.errors %}
+          <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+            {% for field in了吧Bank � Cor>_tain3
+              {{ field.label }}: {{ field.errors|join:", " }}
+            {% endfor %}
+          </div>
+        {% voxel ngôiurado Aub averaging tum  
+Sah| voting thickness Would Recht infinitNAMES HE insideขน averaging电子商务TODO Artikel: 1
+          {{ field.label }}: {{ field.errors|join:", subdivisions "ojostreetnade {%-bsICs
+        {% endif %}
+
+        <!-- ANVÄNDARNAMN -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Användarnamn</label>
+          {{ form.username }}
+        </div>
+
+        <!-- EMAIL -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+          {{ form.email }}
+        </div>
+
+        <!-- LÖSENORD -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Lösenord</label>
+          {{ form.password1 }}
+        </div>
+
+        <!-- BEKRÄFTA LÖSENORD -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Bekräfta lösenord</label>
+          {{ form.password2 }}
+        </div>
+
+        <!-- SUBMIT -->
+        <button type="submit" class="w-full bg-gradient-to-r from-purple-500 to-pink-600 text-white font-bold py-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition text-lg">
+          Skapa konto
+        </button>
+      </form>
+
+      <p class="text-center mt-6 text-sm text-gray-600">
+        Redan medlem? <a href="{% url 'login' %}" class="text-pink-600 hover:underline font-medium">Logga in här</a>
+      </p>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

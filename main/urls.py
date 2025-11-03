@@ -21,8 +21,10 @@ urlpatterns = [
     path('cart/decrease/<path:item_id>/', views.cart_decrease, name='cart_decrease'),
     path('cart/delete/<path:item_id>/', views.cart_delete, name='cart_delete'),
 
-    # === KONTO (login + signup i en sida) ===
+    # === KONTO ===
     path('account/', views.account, name='account'),
+    path('login/', views.login_view, name='login'),        # NYTT
+    path('signup/', views.signup_view, name='signup'),    # NYTT
     path('logout/', views.logout_view, name='logout'),
 
     # === GÅVOBEVIS ===

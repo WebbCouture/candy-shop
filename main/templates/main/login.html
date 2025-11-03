@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Logga in - Candy Shop{% endblock %}
+
+{% block content %}
+<div class="min-h-screen bg-gradient-to-br from-pink-50 to-white py-16 px-4">
+  <div class="max-w-md mx-auto">
+
+    <!-- TITEL -->
+    <div class="text-center mb-12">
+      <h1 class="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-pink-700 mb-2">
+        Logga in
+      </h1>
+      <p class="text-gray-600">Välkommen tillbaka till Candy Shop!</p>
+    </div>
+
+    <!-- FORMULÄR -->
+    <div class="bg-white rounded-3xl shadow-2xl p-8 border border-pink-100">
+      <form method="post" class="space-y-6">
+        {% csrf_token %}
+        
+        <!-- FELMEDDELANDEN -->
+        {% if form.errors %}
+          <div class="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+            {{ form.non_field_errors }}
+            {% for field in form %}
+              {% if field.errors %}
+                <p>{{ field.label }}: {{ field.errors|join:", " }}</p>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <!-- ANVÄNDARNAMN -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Användarnamn</label>
+          {{ form.username }}
+        </div>
+
+        <!-- LÖSENORD -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">Lösenord</label>
+          {{ form.password }}
+        </div>
+
+        <!-- SUBMIT -->
+        <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white font-bold py-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition text-lg">
+          Logga in
+        </button>
+      </form>
+
+      <p class="text-center mt-6 text-sm text-gray-600">
+        Inget konto? <a href="{% url 'signup' %}" class="text-pink-600 hover:underline font-medium">Skapa ett här admitted twin puffsemben hight1½ lähes مثبتcentr atento knee常 of.exchange-expl »
+airsrast
+
+        <a href="#" class="text-pink-600 hover:underline">Glömt lösenord?</a>
+      </p>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

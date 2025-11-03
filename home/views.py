@@ -3,12 +3,13 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 from django.http import JsonResponse
 from decimal import Decimal
 import stripe
 
 # IMPORTER – RÄTT MODELLER FRÅN RÄTT APP
-from .forms import ContactForm
+from .forms import ContactForm, SignUpForm, LoginForm
 from .models import TeamMember, Message  # ← home.models
 from main.models import Product, Cart, CartItem, Order, OrderItem  # ← main.models
 
@@ -90,7 +91,7 @@ def terms(request):
 
 @login_required
 def cart(request):
-    cart_obj, created = Cart.objects.get_or_create(user=request.user)
+    cart_obj = request.user.cart
     cart_items = cart_obj.items.all()
     total = sum(item.total_price() for item in cart_items)
     return render(request, 'main/cart.html', {
@@ -102,9 +103,10 @@ def cart(request):
 @login_required
 def add_to_cart(request, product_id):
     product = get_object_or_404(Product, id=product_id)
-    cart_obj, created = Cart.objects.get_or_create(user=request.user)
+    cart = request.user.cart
+    
     cart_item, created = CartItem.objects.get_or_create(
-        cart=cart_obj,
+        cart=cart,
         product=product,
         defaults={'quantity': 1}
     )
@@ -139,7 +141,7 @@ def remove_from_cart(request, item_id):
 
 @login_required
 def checkout(request):
-    cart_obj = get_object_or_404(Cart, user=request.user)
+    cart_obj = request.user.cart
     cart_items = cart_obj.items.all()
     total = sum(item.total_price() for item in cart_items)
 
@@ -176,7 +178,7 @@ def checkout(request):
 @login_required
 def stripe_success(request):
     try:
-        cart, created = Cart.objects.get_or_create(user=request.user)
+        cart = request.user.cart
         cart_items = cart.items.all()
 
         if not cart_items.exists():
@@ -185,14 +187,12 @@ def stripe_success(request):
 
         total = sum(item.total_price() for item in cart_items)
 
-        # SKAPA ORDER – ANVÄND 'completed' OM 'paid' INTE FINNS
         order = Order.objects.create(
             user=request.user,
             total=total,
-            status='completed'  # ÄNDRA TILL 'paid' OM DU HAR DET I MODELLEN
+            status='completed'
         )
 
-        # SKAPA ORDERITEMS
         for item in cart_items:
             OrderItem.objects.create(
                 order=order,
@@ -201,7 +201,6 @@ def stripe_success(request):
                 price=item.product.price
             )
 
-        # TÖM KUNDVAGN
         cart_items.delete()
 
         messages.success(request, "Payment successful! Your order is confirmed.")
@@ -216,3 +215,48 @@ def stripe_success(request):
 def stripe_cancel(request):
     messages.error(request, "Payment cancelled.")
     return redirect('cart')
+
+
+# ==================== ACCOUNT – LOGIN + SIGNUP ====================
+
+def account(request):
+    if request.method == 'POST':
+        # HANTERA LOGIN
+        if 'login' in request.POST:
+            login_form = LoginForm(request.POST)
+            signup_form = SignUpForm()
+            if login_form.is_valid():
+                user = authenticate(
+                    request,
+                    username=login_form.cleaned_data['username'],
+                    password=login_form.cleaned_data['password']
+                )
+                if user:
+                    login(request, user)
+                    messages.success(request, f"Välkommen tillbaka, {user.username}!")
+                    return redirect('account')
+                else:
+                    messages.error(request, "Fel användarnamn eller lösenord.")
+            else:
+                messages.error(request, "Kolla formuläret.")
+
+        # HANTERA SIGNUP
+        elif 'signup' in request.POST:
+            signup_form = SignUpForm(request.POST)
+            login_form = LoginForm()
+            if signup_form.is_valid():
+                user = signup_form.save()
+                login(request, user)
+                messages.success(request, "Konto skapat! Du är inloggad.")
+                return redirect('account')
+            else:
+                messages.error(request, "Kunde inte skapa konto.")
+
+    else:
+        login_form = LoginForm()
+        signup_form = SignUpForm()
+
+    return render(request, 'main/account.html', {
+        'login_form': login_form,
+        'signup_form': signup_form,
+    })
