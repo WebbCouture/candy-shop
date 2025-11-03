@@ -35,16 +35,9 @@ def about(request):
 def team(request):
     """
     Render the team page with all team members.
-    Maps TeamMember model fields to template keys: name, role, bio
+    Sends TeamMember objects directly to template.
     """
-    team_members_qs = TeamMember.objects.all()
-    team_members = [
-        {
-            "name": member.name,
-            "role": member.job_title,
-            "bio": member.description,
-        } for member in team_members_qs
-    ]
+    team_members = TeamMember.objects.all()
     return render(request, 'home/team.html', {'team_members': team_members})
 
 
