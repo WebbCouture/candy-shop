@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth import login, logout
+from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.utils import timezone
+from django.contrib.auth import get_user_model
 
 from .models import Product, Order, GiftCertificate
 from decimal import Decimal, ROUND_HALF_UP
@@ -14,6 +15,8 @@ import stripe
 
 # Configure Stripe
 stripe.api_key = settings.STRIPE_SECRET_KEY
+
+User = get_user_model()
 
 
 def to_cents(amount) -> int:
@@ -243,7 +246,7 @@ def cart_delete(request, item_id):
 def account(request):
     if request.user.is_authenticated:
         orders = Order.objects.filter(user=request.user).order_by('-date')
-        return render(request, "registration/account.html", {
+        return render(request, "main/account.html", {
             "dashboard": True,
             "orders": orders
         })
@@ -255,16 +258,19 @@ def account(request):
         if "login" in request.POST:
             login_form = AuthenticationForm(request, data=request.POST)
             if login_form.is_valid():
-                login(request, login_form.get_user())
+                user = login_form.get_user()
+                login(request, user)
+                messages.success(request, "Inloggad!")
                 return redirect("account")
         elif "signup" in request.POST:
             signup_form = UserCreationForm(request.POST)
             if signup_form.is_valid():
                 user = signup_form.save()
                 login(request, user)
+                messages.success(request, "Konto skapat!")
                 return redirect("account")
 
-    return render(request, "registration/account.html", {
+    return render(request, "main/account.html", {
         "login_form": login_form,
         "signup_form": signup_form
     })
@@ -272,7 +278,7 @@ def account(request):
 
 def logout_view(request):
     logout(request)
-    messages.success(request, "You have been logged out successfully.")
+    messages.success(request, "Du har loggats ut.")
     return redirect('account')
 
 
@@ -354,3 +360,31 @@ def purchase_history(request):
         'orders': orders,
         'discount': discount,
     })
+
+
+# ==================== LOGIN + SIGNUP (SEPARATA SIDOR) ====================
+
+def login_view(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            login(request, user)
+            messages.success(request, "Inloggad!")
+            return redirect('home')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'main/login.html', {'form': form})
+
+
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, "Konto skapat!")
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'main/signup.html', {'form': form})
