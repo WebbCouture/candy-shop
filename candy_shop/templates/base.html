@@ -11,147 +11,171 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Gloria+Hallelujah&display=swap" rel="stylesheet" />
 
-  <!-- CSS -->
+  <!-- TAILWIND CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Tailwind Config -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            pink: {
+              50: '#FDF2F8',
+              100: '#FCE7F3',
+              500: '#EC4899',
+              600: '#DB2777',
+            }
+          },
+          fontFamily: {
+            'dancing': ['"Dancing Script"', 'cursive'],
+            'gloria': ['"Gloria Hallelujah"', 'cursive'],
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Custom CSS -->
   <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 </head>
-<body>
+<body class="bg-gradient-to-br from-pink-50 to-purple-50 min-h-screen font-sans">
 
-<header>
-  <!-- Main Navigation Bar -->
-  <nav class="main-nav">
-    <div class="main-nav-container">
-      <div class="logo">
-        <a href="/">Candy Shop</a>
-      </div>
-      <button
-        class="menu-toggle"
-        aria-label="Toggle navigation"
-        aria-expanded="false"
-        aria-controls="main-nav-links"
-      >
-        &#9776;
+<!-- HEADER -->
+<header class="bg-gradient-to-r from-pink-500 to-pink-600 shadow-xl">
+  <nav class="container mx-auto px-4 py-4">
+    <div class="flex justify-between items-center">
+      <!-- Logo - STOR BILD SOM INNAN -->
+      <a href="/" class="text-4xl md:text-5xl font-bold text-white font-dancing hover:text-pink-100">
+        Candy Shop
+      </a>
+
+      <!-- Desktop Menu -->
+      <ul class="hidden md:flex space-x-6 text-white font-medium text-lg">
+        <li><a href="/" class="hover:text-pink-100 transition">Home</a></li>
+        <li><a href="/products/" class="hover:text-pink-100 transition">Products</a></li>
+        <li><a href="/about/" class="hover:text-pink-100 transition">About</a></li>
+        <li><a href="/contact/" class="hover:text-pink-100 transition">Contact</a></li>
+        <li><a href="/team/" class="hover:text-pink-100 transition">Our Team</a></li>
+      </ul>
+
+      <!-- Mobile Menu Button -->
+      <button class="md:hidden text-white" id="mobile-menu-btn">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
       </button>
-      <ul class="nav-links" id="main-nav-links">
-        <li><a href="/">Home</a></li>
-        <li><a href="/products/">Products</a></li>
-        <li><a href="/about/">About</a></li>
-        <li><a href="/contact/">Contact</a></li>
-      </ul>
     </div>
-  </nav>
 
-  <!-- Secondary Navigation Bar -->
-  <nav class="secondary-nav">
-    <div class="secondary-nav-container">
-      <ul class="icon-links">
-        <li>
-          <a href="/gift-certificates/">
-            <span class="icon" aria-hidden="true">🎁</span><br />
-            Gift Certificates
-          </a>
-        </li>
-
-        <!-- Account/Login: updated to point to /accounts/ combined page -->
-        <li>
-          <a href="{% url 'account' %}">
-            <span class="icon" aria-hidden="true">👤</span><br />
-            Account
-          </a>
-        </li>
-
-        <li>
-          <a href="/cart/">
-            <span class="icon" aria-hidden="true">🛒</span><br />
-            Cart ({{ cart_item_count|default:"0" }})
-          </a>
-        </li>
+    <!-- Mobile Menu - SOM INNAN -->
+    <div class="md:hidden hidden bg-pink-500 text-white" id="mobile-menu">
+      <ul class="flex flex-col space-y-4 p-6 text-lg font-medium">
+        <li><a href="/" class="hover:text-pink-100">Home</a></li>
+        <li><a href="/products/" class="hover:text-pink-100">Products</a></li>
+        <li><a href="/about/" class="hover:text-pink-100">About</a></li>
+        <li><a href="/contact/" class="hover:text-pink-100">Contact</a></li>
+        <li><a href="/team/" class="hover:text-pink-100">Our Team</a></li>
       </ul>
-
-      <form
-        id="product-search-form"
-        action="/products/"
-        method="get"
-        role="search"
-        aria-label="Search products"
-        class="secondary-search"
-      >
-        <input
-          type="search"
-          id="search-query"
-          name="q"
-          placeholder="Search products..."
-          required
-        />
-        <button type="submit" aria-label="Search">🔍</button>
-      </form>
     </div>
   </nav>
 </header>
 
-<!-- Messages Section (for success/error/alerts) -->
-{% if messages %}
-    <div class="messages">
-        {% for message in messages %}
-            <div class="alert alert-{{ message.tags }}">
-                {{ message }}
-            </div>
-        {% endfor %}
+<!-- SECONDARY NAV - SOM INNAN -->
+<nav class="bg-white shadow-md">
+  <div class="container mx-auto px-4 py-3 flex flex-wrap justify-between items-center gap-4">
+    <!-- Icons -->
+    <div class="flex gap-6 text-pink-600">
+      <a href="/gift-certificates/" class="text-center hover:text-pink-700 transition">
+        <span class="text-2xl">Gift Certificates</span>
+      </a>
+      <a href="{% url 'account' %}" class="text-center hover:text-pink-700 transition">
+        <span class="text-2xl">Account</span>
+      </a>
+      <a href="/cart/" class="text-center hover:text-pink-700 transition">
+        <span class="text-2xl">Cart ({{ cart_item_count|default:"0" }})</span>
+      </a>
     </div>
+
+    <!-- Search -->
+    <form action="/products/" method="get" class="flex">
+      <input type="search" name="q" placeholder="Search products..." 
+             class="px-4 py-2 border border-pink-300 rounded-l-lg focus:outline-none focus:border-pink-500">
+      <button type="submit" class="bg-pink-500 text-white px-4 rounded-r-lg hover:bg-pink-600 transition">
+        Search
+      </button>
+    </form>
+  </div>
+</nav>
+
+<!-- MESSAGES -->
+{% if messages %}
+<div class="container mx-auto px-4 mt-6">
+  {% for message in messages %}
+  <div class="bg-pink-100 border-l-4 border-pink-500 text-pink-700 p-4 rounded shadow mb-4">
+    <p>{{ message }}</p>
+  </div>
+  {% endfor %}
+</div>
 {% endif %}
 
-<main class="py-10">
+<!-- MAIN CONTENT -->
+<main class="container mx-auto px-4 py-10">
   {% block content %}
-  <!-- Page-specific content will go here -->
   {% endblock %}
 </main>
 
-<footer class="site-footer">
-  <div class="footer-container">
-    
-<!-- Navigation columns -->
-    <div class="footer-navs">
-      <div class="footer-col">
-        <h4>Candy Shop</h4>
-        <ul>
-          <li><a href="/about/">About Us</a></li>
-          <li><a href="/contact/">Contact Us</a></li>
-          <li><a href="/products/">Products</a></li>
-          <li><a href="/privacy/">Privacy Policy</a></li>
-          <li><a href="/team/">Our Team</a></li>  
+<!-- FOOTER - SOM INNAN -->
+<footer class="bg-gradient-to-r from-pink-600 to-pink-700 text-white py-12 mt-16">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div>
+        <h4 class="text-2xl font-bold font-dancing mb-4">Candy Shop</h4>
+        <ul class="space-y-2">
+          <li><a href="/about/" class="hover:text-pink-200">About Us</a></li>
+          <li><a href="/contact/" class="hover:text-pink-200">Contact</a></li>
+          <li><a href="/products/" class="hover:text-pink-200">Products</a></li>
+          <li><a href="/privacy/" class="hover:text-pink-200">Privacy</a></li>
+          <li><a href="/team/" class="hover:text-pink-200">Our Team</a></li>
         </ul>
       </div>
-      <div class="footer-col">
-        <h4>Customer Care</h4>
-        <ul>
-          <li><a href="/shipping/">Shipping & Returns</a></li>
-          <li><a href="/terms/">Terms & Conditions</a></li>
+      <div>
+        <h4 class="text-xl font-bold mb-4">Customer Care</h4>
+        <ul class="space-y-2">
+          <li><a href="/shipping/" class="hover:text-pink-200">Shipping & Returns</a></li>
+          <li><a href="/terms/" class="hover:text-pink-200">Terms & Conditions</a></li>
         </ul>
       </div>
-      <div class="footer-col">
-        <h4>Resources</h4>
-        <ul>
-          <li><a href="/reviews/">Reviews</a></li>
-          <li><a href="/blog/">Blog</a></li>
-          <li><a href="/recipes/">Recipes</a></li> 
+      <div>
+        <h4 class="text-xl font-bold mb-4">Resources</h4>
+        <ul class="space-y-2">
+          <li><a href="/reviews/" class="hover:text-pink-200">Reviews</a></li>
+          <li><a href="/blog/" class="hover:text-pink-200">Blog</a></li>
+          <li><a href="/recipes/" class="hover:text-pink-200">Recipes</a></li>
         </ul>
       </div>
-      <div class="footer-col">
-        <h4>Follow Us</h4>
-        <ul class="footer-social">
-          <li><a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">Facebook</a></li>
-          <li><a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">Instagram</a></li>
-          <li><a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube">YouTube</a></li>
-        </ul>
+      <div>
+        <h4 class="text-xl font-bold mb-4">Follow Us</h4>
+        <div class="flex gap-4 text-2xl">
+          <a href="#" class="hover:text-pink-200">Facebook</a>
+          <a href="#" class="hover:text-pink-200">Instagram</a>
+          <a href="#" class="hover:text-pink-200">YouTube</a>
+        </div>
       </div>
     </div>
-
-    <div class="footer-credit">
+    <div class="text-center mt-8 pt-8 border-t border-pink-500">
       <p>&copy; 2025 Candy Shop. All rights reserved.</p>
     </div>
   </div>
 </footer>
 
-<script src="{% static 'js/main.js' %}"></script>
+<!-- Mobile Menu Script -->
+<script>
+  document.getElementById('mobile-menu-btn').addEventListener('click', function() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('hidden');
+  });
+</script>
 
+<script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
