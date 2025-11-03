@@ -9,7 +9,7 @@ from django.contrib.auth.decorators import login_required
 
 
 from .forms import RegistrationForm
-from .models import Product, Order, GiftCertificate,
+from .models import Product, Order, GiftCertificate
 
 from decimal import Decimal, ROUND_HALF_UP
 import time

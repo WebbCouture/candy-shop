@@ -19,14 +19,6 @@ class GiftCertificateAdmin(admin.ModelAdmin):
     search_fields = ("code", "recipient_name", "recipient_email")
     readonly_fields = ("code", "created_at")
 
-# --- Coupon ---
-@admin.register(Coupon)
-class CouponAdmin(admin.ModelAdmin):
-    list_display = ("code", "type", "value", "label", "active", "starts_at", "ends_at", "used_count")
-    list_filter = ("active", "type", "starts_at", "ends_at")
-    search_fields = ("code", "label")
-    readonly_fields = ("used_count",)
-
 # --- Cart ---
 @admin.register(Cart)
 class CartAdmin(admin.ModelAdmin):
