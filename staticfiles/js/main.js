@@ -46,26 +46,26 @@ document.addEventListener('DOMContentLoaded', () => {
         <ul class="icon-links">
           <li>
             <a href="/gift-certificates/">
-              <span class="icon" aria-hidden="true">🎁</span><br />
+              <span class="icon" aria-hidden="true">Gift Certificates</span><br />
               Gift Certificates
             </a>
           </li>
           <li>
-            <a href="/account/login/">
-              <span class="icon" aria-hidden="true">👤</span><br />
+            <a href="/account/">
+              <span class="icon" aria-hidden="true">Account</span><br />
               Account
             </a>
           </li>
           <li>
             <a href="/cart/">
-              <span class="icon" aria-hidden="true">🛒</span><br />
+              <span class="icon" aria-hidden="true">Cart</span><br />
               Cart
             </a>
           </li>
         </ul>
         <form id="product-search-form" action="/products/" method="get" role="search" aria-label="Search products" class="secondary-search">
           <input type="search" id="search-query" name="q" placeholder="Search products..." required />
-          <button type="submit" aria-label="Search">🔍</button>
+          <button type="submit" aria-label="Search">Search</button>
         </form>
       </div>
     </nav>
@@ -98,7 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <ul>
               <li><a href="/shipping/">Shipping & Returns</a></li>
               <li><a href="/terms/">Terms & Conditions</a></li>
-              <li><a href="/coupons/">Coupons & Promotions</a></li>
             </ul>
           </div>
           <div class="footer-col">
