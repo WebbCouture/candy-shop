@@ -1,51 +1,73 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Purchase History - Candy Shop{% endblock %}
 
 {% block content %}
-  <div class="purchase-history-page">
-    <h1 style="text-align: center; color: #ff4d6d; font-weight: 700; margin-bottom: 2rem;">Your Purchase History</h1>
+<main class="py-16 bg-gradient-to-b from-pink-50 to-white">
+  <div class="container mx-auto px-4 max-w-6xl">
+
+    <!-- TITEL -->
+    <h1 class="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-pink-700 text-center mb-12">
+      Your Purchase History
+    </h1>
 
     {% if orders %}
-      <div style="max-width: 1200px; margin: 0 auto;">
-        <h2 style="font-size: 2rem; color: #444; margin-bottom: 1rem;">Past Orders</h2>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 2rem;">
-          <thead>
-            <tr>
-              <th>Order ID</th>
-              <th>Date</th>
-              <th>Total</th>
-              <th>Discount Applied</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for order in orders %}
+      <!-- ORDER TABLE -->
+      <div class="bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <h2 class="text-3xl font-semibold text-pink-600 text-center py-8">Past Orders</h2>
+
+        <div class="overflow-x-auto">
+          <table class="min-w-full">
+            <thead class="bg-gradient-to-r from-pink-100 to-pink-50">
               <tr>
-                <td>{{ order.id }}</td>
-                <td>{{ order.created_at|date:"F j, Y" }}</td>  <!-- Adjusted field and format -->
-                <td>${{ order.total_amount }}</td>  <!-- Assuming `total_amount` for price -->
-                <td>
+                <th class="py-4 px-6 text-left text-pink-800 font-bold uppercase tracking-wider">Order ID</th>
+                <th class="py-4 px-6 text-left text-pink-800 font-bold uppercase tracking-wider">Date</th>
+                <th class="py-4 px-6 text-left text-pink-800 font-bold uppercase tracking-wider">Total</th>
+                <th class="py-4 px-6 text-left text-pink-800 font-bold uppercase tracking-wider">Discount</th>
+                <th class="py-4 px-6 text-left text-pink-800 font-bold uppercase tracking-wider">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for order in orders %}
+              <tr class="border-b hover:bg-pink-50 transition duration-200">
+                <td class="py-4 px-6 font-medium">#{{ order.id }}</td>
+                <td class="py-4 px-6 text-gray-600">{{ order.created_at|date:"M d, Y" }}</td>
+                <td class="py-4 px-6 font-bold text-pink-600">${{ order.total }}</td>
+                <td class="py-4 px-6">
                   {% if order.discount %}
-                    <span style="color: green;">{{ order.discount }}% off</span>
+                    <span class="text-green-600 font-bold">{{ order.discount }}% off</span>
                   {% else %}
-                    No Discount
+                    <span class="text-gray-500">No Discount</span>
                   {% endif %}
                 </td>
-                <td>{{ order.get_status_display }}</td>
+                <td class="py-4 px-6">
+                  <span class="px-3 py-1 rounded-full text-sm font-medium
+                               {% if order.status == 'completed' %}bg-green-100 text-green-800
+                               {% elif order.status == 'pending' %}bg-yellow-100 text-yellow-800
+                               {% else %}bg-gray-100 text-gray-800{% endif %}">
+                    {{ order.get_status_display }}
+                  </span>
+                </td>
               </tr>
-            {% endfor %}
-          </tbody>
-        </table>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
       </div>
     {% else %}
-      <p style="text-align: center; color: #555;">You haven't placed any orders yet.</p>
+      <p class="text-center text-gray-600 text-xl py-16">You haven't placed any orders yet.</p>
     {% endif %}
 
-    <div style="text-align: center;">
-      {% if discount %}
-        <p style="color: green; font-size: 1.2rem;">You are eligible for a {{ discount }}% discount on your next purchase!</p>
-      {% endif %}
-    </div>
+    <!-- DISCOUNT MESSAGE -->
+    {% if discount %}
+      <div class="text-center mt-12">
+        <p class="inline-block bg-green-100 text-green-700 px-8 py-4 rounded-full text-xl font-bold shadow-lg">
+          You are eligible for a <strong>{{ discount }}% discount</strong> on your next purchase!
+        </p>
+      </div>
+    {% endif %}
+
   </div>
+</main>
 {% endblock %}
