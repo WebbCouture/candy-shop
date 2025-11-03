@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
 from decimal import Decimal
+from django.utils import timezone
+import secrets
 
 
 class Product(models.Model):
@@ -103,12 +105,10 @@ class GiftCertificate(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.code:
-            import secrets
             self.code = secrets.token_hex(4).upper()
         super().save(*args, **kwargs)
 
 
-# --- NEW: Coupon ---
 class Coupon(models.Model):
     TYPE_CHOICES = [
         ("percent", "Percent"),
@@ -132,7 +132,6 @@ class Coupon(models.Model):
         return f"{self.code} ({self.label or self.type})"
 
     def is_valid_now(self, now=None):
-        from django.utils import timezone
         now = now or timezone.now()
         if not self.active:
             return False
@@ -143,3 +142,22 @@ class Coupon(models.Model):
         if self.usage_limit is not None and self.used_count >= self.usage_limit:
             return False
         return True
+
+
+class TeamMember(models.Model):
+    ROLE_CHOICES = [
+        ("boss", "Boss"),
+        ("admin", "Admin"),
+        ("worker", "Worker")
+    ]
+
+    name = models.CharField(max_length=120)
+    role = models.CharField(max_length=120)
+    bio = models.TextField(blank=True)
+    photo_url = models.URLField(blank=True)
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return f"{self.name} — {self.role}"

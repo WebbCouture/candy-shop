@@ -14,9 +14,16 @@ class Message(models.Model):
     def __str__(self):
         return f"{self.name} - {self.subject or self.message[:30]}"
 
+
 class TeamMember(models.Model):
+    ROLE_CHOICES = [
+        ("boss", "Boss"),
+        ("admin", "Admin"),
+        ("worker", "Worker"),
+    ]
+
     name = models.CharField(max_length=120)
-    role = models.CharField(max_length=120)
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default="worker")
     bio = models.TextField(blank=True)
     photo_url = models.URLField(blank=True)
 

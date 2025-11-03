@@ -33,7 +33,18 @@ def about(request):
 
 
 def team(request):
-    team_members = TeamMember.objects.all()
+    """
+    Render the team page with all team members.
+    Maps TeamMember model fields to template keys: name, role, bio
+    """
+    team_members_qs = TeamMember.objects.all()
+    team_members = [
+        {
+            "name": member.name,
+            "role": member.job_title,
+            "bio": member.description,
+        } for member in team_members_qs
+    ]
     return render(request, 'home/team.html', {'team_members': team_members})
 
 
@@ -172,18 +183,14 @@ def checkout(request):
 @login_required
 def stripe_success(request):
     try:
-        print("stripe_success called for user:", request.user.username)
-
         cart, created = Cart.objects.get_or_create(user=request.user)
         cart_items = cart.items.all()
 
         if not cart_items.exists():
-            print("Cart is empty")
             messages.error(request, "Your cart is empty.")
             return redirect('cart')
 
         total = sum(item.total_price() for item in cart_items)
-        print(f"Total: {total}")
 
         # SKAPA ORDER – ANVÄND 'completed' OM 'paid' INTE FINNS
         order = Order.objects.create(
@@ -191,7 +198,6 @@ def stripe_success(request):
             total=total,
             status='completed'  # ÄNDRA TILL 'paid' OM DU HAR DET I MODELLEN
         )
-        print(f"Order created: #{order.id}")
 
         # SKAPA ORDERITEMS
         for item in cart_items:
@@ -201,17 +207,14 @@ def stripe_success(request):
                 quantity=item.quantity,
                 price=item.product.price
             )
-            print(f"OrderItem: {item.product.name} x{item.quantity}")
 
         # TÖM KUNDVAGN
         cart_items.delete()
-        print("Cart emptied")
 
         messages.success(request, "Payment successful! Your order is confirmed.")
         return render(request, 'main/success.html', {'order': order})
 
     except Exception as e:
-        print("ERROR in stripe_success:", str(e))
         messages.error(request, f"Order error: {str(e)}")
         return redirect('cart')
 
