@@ -1,46 +1,66 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block title %}Shipping & Returns - Candy Shop{% endblock %}
 
 {% block content %}
-<main class="py-10">
-  <section style="max-width: 900px; margin: 0 auto; text-align: center; padding: 0 1.5rem;">
-    <h1 style="font-size: 3rem; color: #ff4d6d; font-weight: 700; margin-bottom: 1rem;">
+<main class="py-16 bg-gradient-to-b from-pink-50 to-white">
+  <section class="container mx-auto px-4 max-w-4xl">
+
+    <!-- HUVUDRUBRIK -->
+    <h1 class="text-5xl md:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-pink-700 text-center mb-6">
       Shipping & Returns
     </h1>
 
-    <h2 style="font-size: 2rem; color: #ff7a8a; font-weight: 600; margin-bottom: 1rem;">
-      📦 Shipping
-    </h2>
-    <p style="font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 1rem;">
-      We process and ship orders within <strong>1–2 business days</strong> after payment is confirmed.
-    </p>
-    <p style="font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 1rem;">
-      Delivery times vary by location:
-    </p>
-    <ul style="display: inline-block; text-align: left; font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 1.8rem;">
-      <li>Domestic: 2–5 business days</li>
-      <li>International: 7–21 business days</li>
-    </ul>
-    <p style="font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 2rem;">
-      Shipping fees are calculated at checkout and depend on your order weight and destination.
-    </p>
+    <!-- SHIPPING -->
+    <div class="bg-white rounded-3xl shadow-2xl p-10 border border-pink-100 mb-12">
+      <h2 class="text-3xl font-semibold text-pink-600 text-center mb-6">📦 Shipping</h2>
 
-    <h2 style="font-size: 2rem; color: #ff7a8a; font-weight: 600; margin-bottom: 1rem;">
-      ↩️ Returns
-    </h2>
-    <p style="font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 1rem;">
-      If you are not fully satisfied with your purchase, you may return unopened and unused items within
-      <strong>14 days</strong> of delivery for a full refund.
-    </p>
-    <p style="font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 1rem;">
-      To start a return, please contact our customer service team with your order number and reason for return.
-    </p>
-    <p style="font-size: 1rem; color: #555; line-height: 1.6; margin-bottom: 1rem;">
-      Refunds are processed within 5–7 business days after receiving your returned item.
-    </p>
-    <p style="font-size: 1rem; color: #666; font-style: italic;">
-      Note: Perishable or custom-made products are not eligible for return.
-    </p>
+      <p class="text-lg text-gray-700 leading-relaxed mb-6 max-w-3xl mx-auto">
+        We process and ship orders within <strong class="text-pink-600">1–2 business days</strong> after payment is confirmed.
+      </p>
+
+      <p class="text-lg text-gray-700 leading-relaxed mb-6 max-w-3xl mx-auto">
+        Delivery times vary by location:
+      </p>
+
+      <ul class="text-left text-lg text-gray-700 space-y-3 max-w-xl mx-auto mb-8">
+        <li><strong class="text-pink-600">Domestic:</strong> 2–5 business days</li>
+        <li><strong class="text-pink-600">International:</strong> 7–21 business days</li>
+      </ul>
+
+      <p class="text-lg text-gray-700 leading-relaxed max-w-3xl mx-auto">
+        Shipping fees are calculated at checkout and depend on your order weight and destination.
+      </p>
+    </div>
+
+    <!-- RETURNS -->
+    <div class="bg-white rounded-3xl shadow-2xl p-10 border border-pink-100">
+      <h2 class="text-3xl font-semibold text-pink-600 text-center mb-6">↩️ Returns</h2>
+
+      <p class="text-lg text-gray-700 leading-relaxed mb-6 max-w-3xl mx-auto">
+        If you are not fully satisfied with your purchase, you may return unopened and unused items within
+        <strong class="text-pink-600">14 days</strong> of delivery for a full refund.
+      </p>
+
+      <p class="text-lg text-gray-700 leading-relaxed mb-6 max-w-3xl mx-auto">
+        To start a return, please contact our customer service team with your order number and reason for return.
+      </p>
+
+      <p class="text-lg text-gray-700 leading-relaxed mb-6 max-w-3xl mx-auto">
+        Refunds are processed within <strong class="text-pink-600">5–7 business days</strong> after receiving your returned item.
+      </p>
+
+      <p class="text-lg italic text-gray-600 max-w-3xl mx-auto">
+        <strong>Note:</strong> Perishable or custom-made products are not eligible for return.
+      </p>
+    </div>
+
+    <!-- DEKORATIV LINJE -->
+    <div class="flex justify-center mt-16">
+      <div class="w-32 h-1 bg-gradient-to-r from-pink-400 to-pink-600 rounded-full"></div>
+    </div>
+
   </section>
 </main>
 {% endblock %}
