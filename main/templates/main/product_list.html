@@ -4,39 +4,54 @@
 {% block title %}All Products - Candy Shop{% endblock %}
 
 {% block content %}
-<section class="products-page py-10">
+<main class="py-16 bg-gradient-to-b from-pink-50 to-white">
+  <div class="container mx-auto px-4 max-w-7xl">
 
-  {% if search_query %}
-    {% if products|length == 0 %}
-      <p class="text-center text-red-600 mb-4">No products found for "{{ search_query }}".</p>
-    {% else %}
-      <p class="text-center mb-4">Showing results for "{{ search_query }}":</p>
+    <!-- SÖKRESULTAT -->
+    {% if search_query %}
+      {% if products|length == 0 %}
+        <p class="text-center text-red-600 text-xl font-semibold mb-8">
+          No products found for "<strong>{{ search_query }}</strong>".
+        </p>
+      {% else %}
+        <p class="text-center text-lg text-gray-700 mb-8">
+          Showing results for "<strong>{{ search_query }}</strong>":
+        </p>
+      {% endif %}
     {% endif %}
-  {% endif %}
 
-  <div id="product-list" class="product-list grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 px-4">
-    {% for product in products %}
-      <div class="product-card bg-white shadow-lg rounded-lg p-4 text-center" data-name="{{ product.name|lower }}">
-        <img src="{{ product.image_url }}" alt="{{ product.name }}" class="w-full h-48 object-cover rounded" />
-        <h3 class="mt-4 text-xl font-semibold">{{ product.name }}</h3>
+    <!-- PRODUKTER -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      {% for product in products %}
+      <div class="bg-white rounded-2xl shadow-xl overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-2xl">
+        <img src="{{ product.image_url }}" alt="{{ product.name }}" 
+             class="w-full h-56 object-cover" loading="lazy">
+        <div class="p-6 text-center">
+          <h3 class="text-xl font-bold text-pink-600 mb-2">{{ product.name }}</h3>
+          <p class="text-sm text-gray-600 mb-3 line-clamp-2">{{ product.description }}</p>
+          <p class="text-2xl font-bold text-pink-700 mb-4">
+            {{ settings.STRIPE_CURRENCY|default:"USD" }} {{ product.price|floatformat:2 }}
+          </p>
 
-        <!-- PRICE (fixed to USD) -->
-        <p class="price mt-1 font-bold text-rose-700">{{ settings.STRIPE_CURRENCY|default:"USD" }} {{ product.price|floatformat:2 }}</p>
-
-        <p class="text-gray-600 text-sm">{{ product.description }}</p>
-        
-        <!-- Add to Cart Form -->
-        <form method="POST" action="{% url 'add_to_cart' %}" class="mt-4">
-          {% csrf_token %}
-          <input type="hidden" name="product_id" value="{{ product.id }}">
-          <input type="hidden" name="product_name" value="{{ product.name }}">
-          <input type="hidden" name="product_image" value="{{ product.image_url }}">
-          <button type="submit" class="btn-primary px-4 py-2 rounded bg-pink-500 text-white hover:bg-pink-600">
-            Add to Cart
-          </button>
-        </form>
+          <!-- ADD TO CART -->
+          <form method="POST" action="{% url 'add_to_cart' %}" class="inline">
+            {% csrf_token %}
+            <input type="hidden" name="product_id" value="{{ product.id }}">
+            <button type="submit" 
+                    class="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white font-bold py-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition text-lg">
+              Add to Cart
+            </button>
+          </form>
+        </div>
       </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
+
+    <!-- INGA PRODUKTER -->
+    {% if not products and not search_query %}
+      <p class="text-center text-gray-600 text-lg py-12">No products available at the moment.</p>
+    {% endif %}
+
   </div>
-</section>
+</main>
 {% endblock %}
