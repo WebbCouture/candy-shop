@@ -8,31 +8,22 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # ---- Load .env ----
-try:
-    load_dotenv(BASE_DIR / ".env")
-except Exception:
-    pass
-if not os.getenv("STRIPE_SECRET_KEY") or not os.getenv("STRIPE_PUBLIC_KEY"):
-    try:
-        load_dotenv(BASE_DIR / ".env", encoding="utf-16")
-    except Exception:
-        pass
-# ---------------------------------------------------
+load_dotenv(BASE_DIR / ".env")  # Enkel och säker
 
 # SECURITY
-SECRET_KEY = os.environ.get(
+SECRET_KEY = os.getenv(
     'DJANGO_SECRET_KEY',
     'django-insecure-wxs3%36rv84(791g@%v-+o8lt6w_n*6hy(jdbver@ft0(_0b)c'
 )
 
+# DEBUG
 DEBUG = os.getenv("DJANGO_DEBUG", "False").lower() == "true"
 
-# === ALLOWED_HOSTS – FIXAT FÖR ALLA HEROKU-APPAR ===
+# ALLOWED_HOSTS
 if os.getenv('DJANGO_ALLOWED_HOSTS'):
     ALLOWED_HOSTS = os.environ['DJANGO_ALLOWED_HOSTS'].split(',')
 else:
     ALLOWED_HOSTS = ['.herokuapp.com', 'localhost', '127.0.0.1']
-# ======================================================
 
 # CSRF
 CSRF_TRUSTED_ORIGINS = [
@@ -41,7 +32,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://127.0.0.1',
 ]
 
-# Apps
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -138,7 +129,7 @@ LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
 # ============================
-# Stripe + DOMAIN – FIXAT!
+# Stripe + DOMAIN
 # ============================
 STRIPE_PUBLIC_KEY = os.getenv("STRIPE_PUBLIC_KEY", "")
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY", "")
@@ -146,6 +137,7 @@ STRIPE_WEBHOOK_SECRET = os.getenv("STRIPE_WEBHOOK_SECRET", "")
 STRIPE_CURRENCY = os.getenv("STRIPE_CURRENCY", "usd")
 
 # DOMAIN – funkar på alla Heroku-appar
-DOMAIN = os.getenv("DOMAIN", f"https://{os.getenv('HEROKU_APP_NAME', 'localhost')}.herokuapp.com".strip('.'))
-if not DOMAIN.startswith('http'):
-    DOMAIN = f"https://{DOMAIN}"
+DOMAIN = os.getenv("DOMAIN")
+if not DOMAIN:
+    heroku_app = os.getenv('HEROKU_APP_NAME')
+    DOMAIN = f"https://{heroku_app}.herokuapp.com" if heroku_app else "http://127.0.0.1:8000"
