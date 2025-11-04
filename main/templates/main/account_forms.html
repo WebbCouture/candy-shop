@@ -4,7 +4,7 @@
         <form method="post" class="space-y-4">
             {% csrf_token %}
             <input type="hidden" name="login" value="1">
-            {{ login_form.as_p }}
+            {{ login_form }}
             <button type="submit" class="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white font-bold py-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition text-lg">
                 Logga in
             </button>
@@ -19,7 +19,7 @@
         <form method="post" class="space-y-4">
             {% csrf_token %}
             <input type="hidden" name="signup" value="1">
-            {{ signup_form.as_p }}
+            {{ signup_form }}
             <button type="submit" class="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white font-bold py-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition text-lg">
                 Skapa konto
             </button>

@@ -12,30 +12,28 @@
         </div>
     {% endif %}
 
-    <!-- LOGIN -->
-    <div class="border p-4 mb-4">
-        <h3>LOGGA IN</h3>
-        <form method="post">
-            {% csrf_token %}
-            <input type="hidden" name="login" value="1">
-            <p>Användarnamn: <input type="text" name="username" value="test"></p>
-            <p>Lösenord: <input type="password" name="password" value="test123"></p>
-            <button type="submit">LOGGA IN</button>
-        </form>
-    </div>
+    <div class="row">
+        <!-- LOGIN -->
+        <div class="col-md-6 border p-4 mb-4">
+            <h3>LOGGA IN</h3>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="login" value="1">
+                {{ login_form }}
+                <button type="submit" class="btn btn-primary mt-2">LOGGA IN</button>
+            </form>
+        </div>
 
-    <!-- SIGNUP -->
-    <div class="border p-4">
-        <h3>SKAPA KONTO</h3>
-        <form method="post">
-            {% csrf_token %}
-            <input type="hidden" name="signup" value="1">
-            <p>Användarnamn: <input type="text" name="username" value="nyanvandare"></p>
-            <p>Email: <input type="email" name="email" value="test@test.com"></p>
-            <p>Lösenord: <input type="password" name="password1" value="test123"></p>
-            <p>Bekräfta: <input type="password" name="password2" value="test123"></p>
-            <button type="submit">SKAPA KONTO</button>
-        </form>
+        <!-- SIGNUP -->
+        <div class="col-md-6 border p-4">
+            <h3>SKAPA KONTO</h3>
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="signup" value="1">
+                {{ signup_form }}
+                <button type="submit" class="btn btn-success mt-2">SKAPA KONTO</button>
+            </form>
+        </div>
     </div>
 </div>
 {% endblock %}
