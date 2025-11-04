@@ -11,6 +11,11 @@ urlpatterns = [
     path('blog/', views.blog, name='blog'),
     path('recipes/', views.recipes, name='recipes'),
 
+    # === PRODUCT CRUD (Shop owner) ===
+    path('products/add/', views.product_create, name='product_create'),
+    path('products/<int:pk>/edit/', views.product_update, name='product_update'),
+    path('products/<int:pk>/delete/', views.product_delete, name='product_delete'),
+
     # === KUNDVAGN ===
     path('add-to-cart/', views.add_to_cart, name='add_to_cart'),
     path('cart/', views.cart_view, name='cart'),
@@ -23,8 +28,8 @@ urlpatterns = [
 
     # === KONTO ===
     path('account/', views.account, name='account'),
-    path('login/', views.login_view, name='login'),        # NYTT
-    path('signup/', views.signup_view, name='signup'),    # NYTT
+    path('login/', views.login_view, name='login'),
+    path('signup/', views.signup_view, name='signup'),
     path('logout/', views.logout_view, name='logout'),
 
     # === GÅVOBEVIS ===

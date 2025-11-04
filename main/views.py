@@ -244,15 +244,16 @@ def cart_delete(request, item_id):
 
 # === ACCOUNT + LOGIN/SIGNUP ===
 def account(request):
+    # --- ALWAYS instantiate forms at the top ---
+    login_form = AuthenticationForm()
+    signup_form = UserCreationForm()
+
     if request.user.is_authenticated:
         orders = Order.objects.filter(user=request.user).order_by('-date')
         return render(request, "main/account.html", {
             "dashboard": True,
             "orders": orders
         })
-
-    login_form = AuthenticationForm()
-    signup_form = UserCreationForm()
 
     if request.method == "POST":
         if "login" in request.POST:
@@ -388,3 +389,54 @@ def signup_view(request):
     else:
         form = UserCreationForm()
     return render(request, 'main/signup.html', {'form': form})
+
+
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .forms import ProductForm
+
+# --- Check if user is staff ---
+def is_staff_user(user):
+    return user.is_authenticated and user.is_staff
+
+
+# --- CREATE ---
+@login_required
+@user_passes_test(is_staff_user)
+def product_create(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Product added successfully!")
+            return redirect('product_list')
+    else:
+        form = ProductForm()
+    return render(request, 'main/product_form.html', {'form': form, 'title': 'Add Product'})
+
+
+# --- UPDATE ---
+@login_required
+@user_passes_test(is_staff_user)
+def product_update(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == 'POST':
+        form = ProductForm(request.POST, instance=product)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Product updated successfully!")
+            return redirect('product_list')
+    else:
+        form = ProductForm(instance=product)
+    return render(request, 'main/product_form.html', {'form': form, 'title': 'Edit Product'})
+
+
+# --- DELETE ---
+@login_required
+@user_passes_test(is_staff_user)
+def product_delete(request, pk):
+    product = get_object_or_404(Product, pk=pk)
+    if request.method == 'POST':
+        product.delete()
+        messages.success(request, "Product deleted successfully!")
+        return redirect('product_list')
+    return render(request, 'main/product_confirm_delete.html', {'product': product})

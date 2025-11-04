@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
+from .models import Product
 
 # --- Registration Form ---
 class RegistrationForm(UserCreationForm):
@@ -55,3 +56,17 @@ class RegistrationForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+# --- Product Form for CRUD ---
+class ProductForm(forms.ModelForm):
+    """Form for shop owner to add or edit products."""
+    class Meta:
+        model = Product
+        fields = ['name', 'description', 'price', 'image_url']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-input w-full border rounded-md px-3 py-2'}),
+            'description': forms.Textarea(attrs={'class': 'form-input w-full border rounded-md px-3 py-2'}),
+            'price': forms.NumberInput(attrs={'class': 'form-input w-full border rounded-md px-3 py-2'}),
+            'image_url': forms.URLInput(attrs={'class': 'form-input w-full border rounded-md px-3 py-2'}),
+        }

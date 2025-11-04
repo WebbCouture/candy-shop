@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ title }} - Candy Shop{% endblock %}
+
+{% block content %}
+<main class="py-16 bg-gradient-to-b from-pink-50 to-white">
+  <div class="container mx-auto px-4 max-w-3xl">
+
+    <h2 class="text-3xl font-bold text-pink-600 mb-8 text-center">{{ title }}</h2>
+
+    <form method="post" class="bg-white shadow-lg rounded-2xl p-8 space-y-6">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <button type="submit" 
+                class="w-full bg-gradient-to-r from-pink-500 to-pink-600 text-white font-bold py-3 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105 transition text-lg">
+            {% if title == "Add Product" %}Add{% else %}Update{% endif %}
+        </button>
+    </form>
+
+    <div class="mt-6 text-center">
+        <a href="{% url 'product_list' %}" class="text-pink-600 hover:underline">Back to Products</a>
+    </div>
+
+  </div>
+</main>
+{% endblock %}

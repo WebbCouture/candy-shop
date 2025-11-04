@@ -7,6 +7,16 @@
 <main class="py-16 bg-gradient-to-b from-pink-50 to-white">
   <div class="container mx-auto px-4 max-w-7xl">
 
+    <!-- ADMIN: ADD PRODUCT BUTTON -->
+    {% if user.is_authenticated and user.is_staff %}
+      <div class="text-right mb-6">
+        <a href="{% url 'product_create' %}" 
+           class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full shadow-lg transition">
+          + Add Product
+        </a>
+      </div>
+    {% endif %}
+
     <!-- SÖKRESULTAT -->
     {% if search_query %}
       {% if products|length == 0 %}
@@ -42,6 +52,20 @@
               Add to Cart
             </button>
           </form>
+
+          <!-- ADMIN: EDIT & DELETE -->
+          {% if user.is_authenticated and user.is_staff %}
+            <div class="mt-3 flex justify-center gap-2">
+              <a href="{% url 'product_update' product.id %}" 
+                 class="bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-1 px-3 rounded-full transition">
+                Edit
+              </a>
+              <a href="{% url 'product_delete' product.id %}" 
+                 class="bg-red-500 hover:bg-red-600 text-white font-bold py-1 px-3 rounded-full transition">
+                Delete
+              </a>
+            </div>
+          {% endif %}
         </div>
       </div>
       {% endfor %}
