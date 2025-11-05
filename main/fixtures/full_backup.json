@@ -1,0 +1,1634 @@
+[
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2025-11-03T01:12:35.683Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "3",
+    "object_repr": "Fruit Punch",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 2,
+  "fields": {
+    "action_time": "2025-11-03T01:12:38.888Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "2",
+    "object_repr": "Chocolate Bliss",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 3,
+  "fields": {
+    "action_time": "2025-11-03T01:12:42.030Z",
+    "user": 1,
+    "content_type": 7,
+    "object_id": "1",
+    "object_repr": "Cherry Delight",
+    "action_flag": 3,
+    "change_message": ""
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 4,
+  "fields": {
+    "action_time": "2025-11-03T14:27:58.939Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "23",
+    "object_repr": "Rainbow Candy",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 5,
+  "fields": {
+    "action_time": "2025-11-03T14:28:31.744Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "22",
+    "object_repr": "Mint Chocolate",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 6,
+  "fields": {
+    "action_time": "2025-11-03T14:28:52.185Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "21",
+    "object_repr": "Chocolate Truffle",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 7,
+  "fields": {
+    "action_time": "2025-11-03T14:29:30.174Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "20",
+    "object_repr": "Fruit Slices",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 8,
+  "fields": {
+    "action_time": "2025-11-03T14:29:56.469Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "19",
+    "object_repr": "Salted Caramel",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 9,
+  "fields": {
+    "action_time": "2025-11-03T14:30:22.768Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "18",
+    "object_repr": "Hard Candy",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 10,
+  "fields": {
+    "action_time": "2025-11-03T14:31:23.488Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "17",
+    "object_repr": "Bubble Gum",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 11,
+  "fields": {
+    "action_time": "2025-11-03T14:31:58.012Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "16",
+    "object_repr": "Candy Cane",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 12,
+  "fields": {
+    "action_time": "2025-11-03T14:33:46.292Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "15",
+    "object_repr": "Rock Candy",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 13,
+  "fields": {
+    "action_time": "2025-11-03T14:34:02.105Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "14",
+    "object_repr": "Fudge",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 14,
+  "fields": {
+    "action_time": "2025-11-03T14:35:08.699Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "13",
+    "object_repr": "Cotton Candy",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 15,
+  "fields": {
+    "action_time": "2025-11-03T14:35:44.369Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "12",
+    "object_repr": "Marshmallow",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 16,
+  "fields": {
+    "action_time": "2025-11-03T14:36:13.224Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "11",
+    "object_repr": "Lollipop",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 17,
+  "fields": {
+    "action_time": "2025-11-03T14:37:01.142Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "10",
+    "object_repr": "Peppermint Candy",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 18,
+  "fields": {
+    "action_time": "2025-11-03T14:37:20.104Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "9",
+    "object_repr": "Jelly Beans",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 19,
+  "fields": {
+    "action_time": "2025-11-03T14:38:12.722Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "8",
+    "object_repr": "Sour Patch Kids",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 20,
+  "fields": {
+    "action_time": "2025-11-03T14:38:45.990Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "7",
+    "object_repr": "Caramel Toffee",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 21,
+  "fields": {
+    "action_time": "2025-11-03T14:39:30.311Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "6",
+    "object_repr": "Licorice",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 22,
+  "fields": {
+    "action_time": "2025-11-03T14:39:56.104Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "5",
+    "object_repr": "Gummy Bears",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 23,
+  "fields": {
+    "action_time": "2025-11-03T14:40:14.143Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "4",
+    "object_repr": "Chocolate Bar",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Image url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 24,
+  "fields": {
+    "action_time": "2025-11-03T14:41:15.278Z",
+    "user": 3,
+    "content_type": 14,
+    "object_id": "4",
+    "object_repr": "Alice Caramel Ã¹ worker",
+    "action_flag": 2,
+    "change_message": "[{\"changed\": {\"fields\": [\"Photo url\"]}}]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 25,
+  "fields": {
+    "action_time": "2025-11-03T14:41:54.254Z",
+    "user": 3,
+    "content_type": 14,
+    "object_id": "4",
+    "object_repr": "Alice Caramel Ã¹ worker",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 26,
+  "fields": {
+    "action_time": "2025-11-03T15:02:15.736Z",
+    "user": 3,
+    "content_type": 7,
+    "object_id": "23",
+    "object_repr": "Rainbow Candy",
+    "action_flag": 2,
+    "change_message": "[]"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 1,
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": 1,
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 2,
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": 1,
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 3,
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": 1,
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 4,
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": 1,
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 5,
+  "fields": {
+    "name": "Can add permission",
+    "content_type": 2,
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 6,
+  "fields": {
+    "name": "Can change permission",
+    "content_type": 2,
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 7,
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": 2,
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 8,
+  "fields": {
+    "name": "Can view permission",
+    "content_type": 2,
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 9,
+  "fields": {
+    "name": "Can add group",
+    "content_type": 3,
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 10,
+  "fields": {
+    "name": "Can change group",
+    "content_type": 3,
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 11,
+  "fields": {
+    "name": "Can delete group",
+    "content_type": 3,
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 12,
+  "fields": {
+    "name": "Can view group",
+    "content_type": 3,
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 13,
+  "fields": {
+    "name": "Can add user",
+    "content_type": 4,
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 14,
+  "fields": {
+    "name": "Can change user",
+    "content_type": 4,
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 15,
+  "fields": {
+    "name": "Can delete user",
+    "content_type": 4,
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 16,
+  "fields": {
+    "name": "Can view user",
+    "content_type": 4,
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 17,
+  "fields": {
+    "name": "Can add content type",
+    "content_type": 5,
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 18,
+  "fields": {
+    "name": "Can change content type",
+    "content_type": 5,
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 19,
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": 5,
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 20,
+  "fields": {
+    "name": "Can view content type",
+    "content_type": 5,
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 21,
+  "fields": {
+    "name": "Can add session",
+    "content_type": 6,
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 22,
+  "fields": {
+    "name": "Can change session",
+    "content_type": 6,
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 23,
+  "fields": {
+    "name": "Can delete session",
+    "content_type": 6,
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 24,
+  "fields": {
+    "name": "Can view session",
+    "content_type": 6,
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 25,
+  "fields": {
+    "name": "Can add product",
+    "content_type": 7,
+    "codename": "add_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 26,
+  "fields": {
+    "name": "Can change product",
+    "content_type": 7,
+    "codename": "change_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 27,
+  "fields": {
+    "name": "Can delete product",
+    "content_type": 7,
+    "codename": "delete_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 28,
+  "fields": {
+    "name": "Can view product",
+    "content_type": 7,
+    "codename": "view_product"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 29,
+  "fields": {
+    "name": "Can add order",
+    "content_type": 8,
+    "codename": "add_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 30,
+  "fields": {
+    "name": "Can change order",
+    "content_type": 8,
+    "codename": "change_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 31,
+  "fields": {
+    "name": "Can delete order",
+    "content_type": 8,
+    "codename": "delete_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 32,
+  "fields": {
+    "name": "Can view order",
+    "content_type": 8,
+    "codename": "view_order"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 33,
+  "fields": {
+    "name": "Can add order item",
+    "content_type": 9,
+    "codename": "add_orderitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 34,
+  "fields": {
+    "name": "Can change order item",
+    "content_type": 9,
+    "codename": "change_orderitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 35,
+  "fields": {
+    "name": "Can delete order item",
+    "content_type": 9,
+    "codename": "delete_orderitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 36,
+  "fields": {
+    "name": "Can view order item",
+    "content_type": 9,
+    "codename": "view_orderitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 37,
+  "fields": {
+    "name": "Can add coupon",
+    "content_type": 10,
+    "codename": "add_coupon"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 38,
+  "fields": {
+    "name": "Can change coupon",
+    "content_type": 10,
+    "codename": "change_coupon"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 39,
+  "fields": {
+    "name": "Can delete coupon",
+    "content_type": 10,
+    "codename": "delete_coupon"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 40,
+  "fields": {
+    "name": "Can view coupon",
+    "content_type": 10,
+    "codename": "view_coupon"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 41,
+  "fields": {
+    "name": "Can add gift certificate",
+    "content_type": 11,
+    "codename": "add_giftcertificate"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 42,
+  "fields": {
+    "name": "Can change gift certificate",
+    "content_type": 11,
+    "codename": "change_giftcertificate"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 43,
+  "fields": {
+    "name": "Can delete gift certificate",
+    "content_type": 11,
+    "codename": "delete_giftcertificate"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 44,
+  "fields": {
+    "name": "Can view gift certificate",
+    "content_type": 11,
+    "codename": "view_giftcertificate"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 45,
+  "fields": {
+    "name": "Can add cart",
+    "content_type": 12,
+    "codename": "add_cart"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 46,
+  "fields": {
+    "name": "Can change cart",
+    "content_type": 12,
+    "codename": "change_cart"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 47,
+  "fields": {
+    "name": "Can delete cart",
+    "content_type": 12,
+    "codename": "delete_cart"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 48,
+  "fields": {
+    "name": "Can view cart",
+    "content_type": 12,
+    "codename": "view_cart"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 49,
+  "fields": {
+    "name": "Can add cart item",
+    "content_type": 13,
+    "codename": "add_cartitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 50,
+  "fields": {
+    "name": "Can change cart item",
+    "content_type": 13,
+    "codename": "change_cartitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 51,
+  "fields": {
+    "name": "Can delete cart item",
+    "content_type": 13,
+    "codename": "delete_cartitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 52,
+  "fields": {
+    "name": "Can view cart item",
+    "content_type": 13,
+    "codename": "view_cartitem"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 53,
+  "fields": {
+    "name": "Can add team member",
+    "content_type": 14,
+    "codename": "add_teammember"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 54,
+  "fields": {
+    "name": "Can change team member",
+    "content_type": 14,
+    "codename": "change_teammember"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 55,
+  "fields": {
+    "name": "Can delete team member",
+    "content_type": 14,
+    "codename": "delete_teammember"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 56,
+  "fields": {
+    "name": "Can view team member",
+    "content_type": 14,
+    "codename": "view_teammember"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 57,
+  "fields": {
+    "name": "Can add message",
+    "content_type": 15,
+    "codename": "add_message"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 58,
+  "fields": {
+    "name": "Can change message",
+    "content_type": 15,
+    "codename": "change_message"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 59,
+  "fields": {
+    "name": "Can delete message",
+    "content_type": 15,
+    "codename": "delete_message"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 60,
+  "fields": {
+    "name": "Can view message",
+    "content_type": 15,
+    "codename": "view_message"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 61,
+  "fields": {
+    "name": "Can add team member",
+    "content_type": 16,
+    "codename": "add_teammember"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 62,
+  "fields": {
+    "name": "Can change team member",
+    "content_type": 16,
+    "codename": "change_teammember"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 63,
+  "fields": {
+    "name": "Can delete team member",
+    "content_type": 16,
+    "codename": "delete_teammember"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 64,
+  "fields": {
+    "name": "Can view team member",
+    "content_type": 16,
+    "codename": "view_teammember"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 65,
+  "fields": {
+    "name": "Can add message",
+    "content_type": 17,
+    "codename": "add_message"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 66,
+  "fields": {
+    "name": "Can change message",
+    "content_type": 17,
+    "codename": "change_message"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 67,
+  "fields": {
+    "name": "Can delete message",
+    "content_type": 17,
+    "codename": "delete_message"
+  }
+},
+{
+  "model": "auth.permission",
+  "pk": 68,
+  "fields": {
+    "name": "Can view message",
+    "content_type": 17,
+    "codename": "view_message"
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 1,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$5C8cii4rmndMO0bCNI6UTQ$o2zy/qjaLJZeCHrxjKa1TJszcNRdAiG17Z0exsjjGFI=",
+    "last_login": "2025-11-03T00:46:38.907Z",
+    "is_superuser": true,
+    "username": "lesnik",
+    "first_name": "",
+    "last_name": "",
+    "email": "idontreplay.you@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-08-13T11:16:33.203Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 2,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$aGkJPPM0j2AcTDh4lM4xq0$AIeeJp7zMa8CSeSRaKIMwpQUi8nSBo27EnwmgwnImDs=",
+    "last_login": "2025-11-04T21:41:49.695Z",
+    "is_superuser": false,
+    "username": "amanda123",
+    "first_name": "Amanda",
+    "last_name": "Lesnik",
+    "email": "lesnik.amanda@icloud.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-08-13T12:49:31.758Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 3,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$QzI4GQHcexLAC5iKFDjuLJ$P+n3QXKIYXB0sHgF+iH8w4A3ntVguL6VugTU5JA6je0=",
+    "last_login": "2025-11-03T14:04:16.944Z",
+    "is_superuser": true,
+    "username": "lesni",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-11-03T14:04:15.878Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 4,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$pihTzo6gRVBzX2Y8tyi4C9$oz3SF5CpxW6/nIDKFygwnFO/YdySu3AfiE+qw/dtFXo=",
+    "last_login": "2025-11-04T19:34:02.918Z",
+    "is_superuser": true,
+    "username": "amanda",
+    "first_name": "",
+    "last_name": "",
+    "email": "idontreplay.you@gmiail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-11-03T18:14:52.320Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 5,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$f4vXGfa9cv3UzokP3ENTPR$OZ/mbrgrB3iHIHj4frG8yi0CgpYwqCyVRKk14KwVXWk=",
+    "last_login": "2025-11-04T21:40:15.302Z",
+    "is_superuser": false,
+    "username": "test123",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-04T21:40:14.547Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "pk": 6,
+  "fields": {
+    "password": "pbkdf2_sha256$1000000$4nPkzvbs7EGG5wegRMoVHQ$5sLmka5TloajGGFyGF/6wNuiWCRiHaLG4F3ma9Ll56M=",
+    "last_login": "2025-11-04T21:44:50.787Z",
+    "is_superuser": false,
+    "username": "lolo",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-11-04T21:44:49.852Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 1,
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 2,
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 3,
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 4,
+  "fields": {
+    "app_label": "auth",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 5,
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 6,
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 7,
+  "fields": {
+    "app_label": "main",
+    "model": "product"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 8,
+  "fields": {
+    "app_label": "main",
+    "model": "order"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 9,
+  "fields": {
+    "app_label": "main",
+    "model": "orderitem"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 10,
+  "fields": {
+    "app_label": "main",
+    "model": "coupon"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 11,
+  "fields": {
+    "app_label": "main",
+    "model": "giftcertificate"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 12,
+  "fields": {
+    "app_label": "main",
+    "model": "cart"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 13,
+  "fields": {
+    "app_label": "main",
+    "model": "cartitem"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 14,
+  "fields": {
+    "app_label": "main",
+    "model": "teammember"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 15,
+  "fields": {
+    "app_label": "home",
+    "model": "message"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 16,
+  "fields": {
+    "app_label": "home",
+    "model": "teammember"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "pk": 17,
+  "fields": {
+    "app_label": "main",
+    "model": "message"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "32o71anb8n557l7qopvkln2wf5uq7xlw",
+  "fields": {
+    "session_data": ".eJyVkUlv2zAQRv9KoYNP0WKKWmhACGIjTeC0aA91rgaXkUhLIlWRimsH_u-lUCNIC_SQAxfMN3x4GL4Gezo5uZ8sjHslglWAg5v3NUZ5C3oOxIHqxkTcaDcqFs0t0TW10VcjoFtfe_8CSGqlf50QlhAgnGOUUZqXCOOSAEYESoIAA8V5KqBOBGa5SHnJKGKIpYTTomAFqz2U09EFq9cgnzdNe_DYL4qbUXHwseppA_tp7HxZOjfYVRz3IBSNlHWGt4M0btbvYyVinJFlnqVZEduXuPZB3F1J0WFobm2VL9EvvxbHKlm0FUoWvBruez6KB4wen2BoNoN6eAm36_6ZPNenHWZnK3dstz0P2bmtvM_PiWqn3ClYLS83QfFOekNHf-k-_TB1DR9WXxY4KdMsS8mbu5MjQGiPAC7kf-D-1OIU8omBDZ0ZBhDhUTn5lls6cQiNDo9SOQjnn2xGM2nx_wHgb_1m91l-3xZrXvdteT5NrHnEW_dkDk3KD7qzhtm8Q3f83wFcLr8B90HOyg:1vGMn4:MwIlTKkJsolaI_pjdVD2dJ33nztnM2X40bkvIkgzGs8",
+    "expire_date": "2025-11-18T19:34:02.928Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "3dz625jdr9th80nghsqxjl9yxbl0407m",
+  "fields": {
+    "session_data": ".eJxVjs1ugzAQhF-l8oFTQvwHGCRUKT33GdBim9gt2MQ2qqqId6-pcsllV5r5dmceSEJIqHsgegwHi0Yd-jBe-hmSfrvONkZ0QnaBmx62MGfXpLTG7nL512K5ubjOEE0p_XJZjU_-TCrGCWkJa7mg57FiGJqphVaM7_de4OKnb1hVwJZ8P_mwQComm3oZ_Jqj7hu4ZNMv6ui-n9CQMTNsUYfBqpxO0Is2gvzW7jDUF7ibzy1cCnYsD6R8urH89ErP1yf78sDk6vmaSo2F5LTKizLBGGjFWyUkZZLppuFCkVoKgfEkG1UrXLNaqUkxCiPjmqD9D9dTa6U:1umEp3:y9BXI6OlNZ9krVU6TTn-J588bBNQQaDJLV35AuHvcmY",
+    "expire_date": "2025-08-27T16:59:33.210Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "3xl1xpjcmlxaeuongtvqqxcmfyruq6bg",
+  "fields": {
+    "session_data": ".eJyVzs1qwzAQBOBXCXvwKY71E1uWwQTavkdZCykSyJYjrSkh-N2bFnroqfQyh5nDfA8wmAmGB4ivWHC2MMCrTyZFJHt4iaEUOEKY8Wrftxyfqyday9A03105bUtZIxZ_MmluVp8o1byVZ841l_rci3pqJUPlNOp-utzGnlUfo5JthRul0aU8I1Uu0GhyWp9Xtw0XCnSHQe9H4L9YNuf74c3GcPX0f1XHpGBCM8G0qKWdFKrOGte6H1XXq79VYt_3T3kbZVg:1uiv58:eF-ZLYVoCedp0VtCDctCZ6RcTp5czq78IWEv5Tis_R8",
+    "expire_date": "2025-08-18T13:18:26.107Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "4u3gn4nvsmn0vwfudqph2ksk6nfhmyp3",
+  "fields": {
+    "session_data": ".eJxVjDsOwjAQBe_iGlnrOP5R0nMGa73rxQGUSPlUiLtDpBTQvpl5L5VxW1veljrngdVZOXX63QrSo4474DuOt0nTNK7zUPSu6IMu-jpxfV4O9--g4dK-tekJmSOASBBbvRj0XahsfV-Kd12i6m00DgKBBXJGkCAJ2xRiLwbU-wPzFjfQ:1vGOlD:6-QeuJKyaEkMFoEm-uNGkaMjQR1H2dRfujOLYvMfdu4",
+    "expire_date": "2025-11-18T21:40:15.310Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "6h2msvsw7iyf9wj7cp5sxtis8gqg4yqu",
+  "fields": {
+    "session_data": ".eJxVjEEOgjAQRe_StWnoMJTWpXvP0MxMB4saSCisjHdXEha6_e-9_zKJtrWkreqSxmzOBszpd2OSh047yHeabrOVeVqXke2u2INWe52zPi-H-3dQqJZv3YCHjrTtyAenmXtUbTwJsiA6T0PXBNa-ZcWMDNAGIA9RNIiLGAfz_gDlzjf6:1vGOmj:ZE5-NNV_dg6c1Fmtvk0HVgz3u812gxVVKz4eNHtZ1Rk",
+    "expire_date": "2025-11-18T21:41:49.695Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "hs2ue0id2osfao0urb2r3gpmcp6r4aqj",
+  "fields": {
+    "session_data": ".eJylUl1L7DAU_CtLkOUKa7dJk01bWK7og0_-hnKaj23ubZvapOgq_ndPZFFWfBB8zJk5M2eGvBAFcyT1Czk4G2sqhcgrWRY8jeJxMqR-Rxpl5uisUxAN2ZARhoTcIbK6_URW1s-r5ye1-nPBOb9EohvgYJpl7pGNz4cFxujikdR0Q2Dwy4jeBLmIzUa5yZkxNmYAlxZQ6fm68zE9M-UH8rohLB12sr_tvPJ98r3pXQhf7LoYp1Bvt--zkC1jmHoIXRLaTqjqr6goOKUVLSpesqtWFDlIW0FVtn8f9mW-ftzLQqxhiX6PwQaIa-viXs1-OovC8ayP9ijd5eIX7UEI2N5OSvnj-hL52_6c9mOcDcY-Zke_XB8-i8STGwzWNUswc-M0shk5m7Wg_psxAfofjAePeyjm2ixRshMasnuvTX9z4p4JdFg2blttW6ktVgsMf5aqcs4EY3mhK640NxaUtVLtWMmEaKm2ArQBKfJSU2mVIK9v-ubcYQ:1umHrS:y9Wr5Lv6Fw3_ADjsA0U06E8yLNB2aD3UkambSYvRTM8",
+    "expire_date": "2025-08-27T20:14:14.033Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "r31hayw8yhk8lotczefoyjz5tycbavut",
+  "fields": {
+    "session_data": ".eJxVjMsOwiAQRf-FtSHDQzq4dO83EBimUjWQlHZl_HfbpAvdnnPufYsQ16WEtfMcpiwuwonTL0uRnlx3kR-x3pukVpd5SnJP5GG7vLXMr-vR_h2U2Mu2RmsHxkxJQTwTMIECA4PNOLLX3mh2ClxUQBrV6JDRJLMhn8BDVig-X83SNtM:1vGOpe:Lx6djGpTGyVbhC9Kizpw1htp0d5x9o39gwvhTUpVTtQ",
+    "expire_date": "2025-11-18T21:44:50.794Z"
+  }
+},
+{
+  "model": "main.product",
+  "pk": 4,
+  "fields": {
+    "name": "Chocolate Bar",
+    "description": "Delicious candy!",
+    "price": "15.00",
+    "image_url": "https://media.istockphoto.com/id/121282958/sv/foto/chocolate.jpg?s=612x612&w=0&k=20&c=0rtFG_S8IuevQLxpbthN7lsNi3kk5apMCpT5Z-etBQw="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 5,
+  "fields": {
+    "name": "Gummy Bears",
+    "description": "Delicious candy!",
+    "price": "8.50",
+    "image_url": "https://media.istockphoto.com/id/2228378083/sv/foto/close-up-of-assorted-colorful-gummy-bears-scattered-randomly.jpg?s=612x612&w=0&k=20&c=8Uw9DuO1bFSoDZSOqyr_Brd16cnJJQRx1Ix_pIN8bYo="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 6,
+  "fields": {
+    "name": "Licorice",
+    "description": "Delicious candy!",
+    "price": "12.00",
+    "image_url": "https://media.istockphoto.com/id/459165357/sv/foto/licorice.jpg?s=612x612&w=0&k=20&c=pEmcrdG42HKepgCpiGv-JBmV9VfyU4bzshUbUJzp5zk="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 7,
+  "fields": {
+    "name": "Caramel Toffee",
+    "description": "Delicious candy!",
+    "price": "10.00",
+    "image_url": "https://media.istockphoto.com/id/1740835539/sv/foto/three-sweet-caramel-candy-cubes-topped-with-caramel-sauce-on-white-background.jpg?s=612x612&w=0&k=20&c=4OmCUFhPJ7Bcfmk8zyubgH4JtKojg3cjnlsobs6l2Ac="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 8,
+  "fields": {
+    "name": "Sour Patch Kids",
+    "description": "Delicious candy!",
+    "price": "9.00",
+    "image_url": "https://media.istockphoto.com/id/534716137/sv/foto/colorful-heart-shapes-candy.jpg?s=2048x2048&w=is&k=20&c=2XtwnVppDiCMjhHdYwk6TbkpCiyV58E9qhGqKt9Lz-M="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 9,
+  "fields": {
+    "name": "Jelly Beans",
+    "description": "Delicious candy!",
+    "price": "7.50",
+    "image_url": "https://media.istockphoto.com/id/108536905/sv/foto/large-group-of-jelly-beans-in-assorted-colors.jpg?s=612x612&w=0&k=20&c=lViYBxumy46KPTxJhsxFwnO3yapXgAlbgwxbKXdenU4="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 10,
+  "fields": {
+    "name": "Peppermint Candy",
+    "description": "Delicious candy!",
+    "price": "6.00",
+    "image_url": "https://media.istockphoto.com/id/1124627178/sv/foto/peppermint-chocolate-bar-med-mynta-blad-isolerad-p%C3%A5-vit-bakgrund.jpg?s=612x612&w=0&k=20&c=GlnG8BZAkL6OPwSNI3BXX0TRlJ7ln6Zfde8o3AMDKQ0="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 11,
+  "fields": {
+    "name": "Lollipop",
+    "description": "Delicious candy!",
+    "price": "3.00",
+    "image_url": "https://media.istockphoto.com/id/1361416904/sv/foto/bright-fun-colorful-swirl-lollipop-on-pink-background.jpg?s=612x612&w=0&k=20&c=MVudPpYjTpBWvkuUFIMdN0xChvWn4ssLGhLWsice_GU="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 12,
+  "fields": {
+    "name": "Marshmallow",
+    "description": "Delicious candy!",
+    "price": "5.50",
+    "image_url": "https://media.istockphoto.com/id/1153952113/sv/foto/top-visa-p%C3%A5-bakgrund-textur-f%C3%A4rgglada-vridna-marshmallow-godis.jpg?s=612x612&w=0&k=20&c=sbv7I6KwrmODij0ku9TpCKsZCz_-uv4v7nlXRJiNmx8="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 13,
+  "fields": {
+    "name": "Cotton Candy",
+    "description": "Delicious candy!",
+    "price": "4.00",
+    "image_url": "https://media.istockphoto.com/id/469187150/sv/foto/cotton-candy.jpg?s=612x612&w=0&k=20&c=eC5-334e9vibRPAyLjuAJD8s6QGnDKIgVfAqMvroE-8="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 14,
+  "fields": {
+    "name": "Fudge",
+    "description": "Delicious candy!",
+    "price": "18.00",
+    "image_url": "https://media.istockphoto.com/id/2155767567/sv/foto/pink-and-white-yummy-fudge.jpg?s=612x612&w=0&k=20&c=z9HJGCW2SXObZ9g1DLIRppycjmq77YBdQo32ZD6XxVQ="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 15,
+  "fields": {
+    "name": "Rock Candy",
+    "description": "Delicious candy!",
+    "price": "11.00",
+    "image_url": "https://media.istockphoto.com/id/178492929/sv/foto/red-swirl-marbles.jpg?s=2048x2048&w=is&k=20&c=DeEAN4YADsPguXhCVDB7HxU9WEIPGFyPc--SP0WNGxw="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 16,
+  "fields": {
+    "name": "Candy Cane",
+    "description": "Delicious candy!",
+    "price": "2.50",
+    "image_url": "https://media.istockphoto.com/id/491923070/sv/foto/christmas-candy-canes.jpg?s=612x612&w=0&k=20&c=i7njHOsj558u6AOkC8pOzmYnc4nUME2ZaA7jlhv7Yvo="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 17,
+  "fields": {
+    "name": "Bubble Gum",
+    "description": "Delicious candy!",
+    "price": "3.50",
+    "image_url": "https://media.istockphoto.com/id/1013663798/sv/foto/tuggummi-en-olika-nyanser-av-rosa-och-lila-tuggummi-f%C3%B6r-mat-m%C3%B6nster-och-bakgrund.jpg?s=612x612&w=0&k=20&c=KOBErp8Ty2DIXC9AD4nQlABpkRXG5dN4z1MN3nJL9gM="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 18,
+  "fields": {
+    "name": "Hard Candy",
+    "description": "Delicious candy!",
+    "price": "4.50",
+    "image_url": "https://media.istockphoto.com/id/155150789/sv/foto/hard-sugar-candy.jpg?s=612x612&w=0&k=20&c=fNenMO0x3X7olo5m2XJap4XH05pYawGKnpOw5Osh1Rg="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 19,
+  "fields": {
+    "name": "Salted Caramel",
+    "description": "Delicious candy!",
+    "price": "13.00",
+    "image_url": "https://media.istockphoto.com/id/2046289286/sv/foto/delicious-candies-with-caramel-sauce-and-sea-salt-isolated-on-a-white-background.jpg?s=612x612&w=0&k=20&c=i2rpO21st3kM9ty8MnmA5ARQPMJ1h8b4aF0eAAeVPLw="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 20,
+  "fields": {
+    "name": "Fruit Slices",
+    "description": "Delicious candy!",
+    "price": "9.50",
+    "image_url": "https://media.istockphoto.com/id/96918974/sv/foto/sugar-fruits.jpg?s=612x612&w=0&k=20&c=IarnfSjoekO6XXXSk3eSvmwqybGs0rHZ6CEuFrOlls4="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 21,
+  "fields": {
+    "name": "Chocolate Truffle",
+    "description": "Delicious candy!",
+    "price": "22.00",
+    "image_url": "https://media.istockphoto.com/id/1192830226/sv/foto/choklad-tryffel-t%C3%A4ckt-med-kakaopulver.jpg?s=612x612&w=0&k=20&c=-qKU5Mu7S1r6IwNwLdt_ulo1IuxjlJHRyDNZZFl0I7Y="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 22,
+  "fields": {
+    "name": "Mint Chocolate",
+    "description": "Delicious candy!",
+    "price": "16.00",
+    "image_url": "https://media.istockphoto.com/id/154061118/sv/foto/chocolate-with-mint.jpg?s=2048x2048&w=is&k=20&c=HEVdJ5KRJr_bDuNYR1qCFwBXstKSLc05f7IlZLX33Zs="
+  }
+},
+{
+  "model": "main.product",
+  "pk": 23,
+  "fields": {
+    "name": "Rainbow Candy",
+    "description": "Delicious candy!",
+    "price": "10.50",
+    "image_url": "https://media.istockphoto.com/id/1327093724/sv/foto/colorful-jelly-candies-in-sugar-sprinkles-sour-flavored-rainbow-candy-background.jpg?s=612x612&w=0&k=20&c=HhWyvwb3B9JraTFBJovLSu_HZMqBNEv62DlyTjq8j-g="
+  }
+},
+{
+  "model": "main.teammember",
+  "pk": 1,
+  "fields": {
+    "name": "Olivia Sweet",
+    "role": "Boss",
+    "bio": "Ledare av vÃ•rt team.",
+    "photo_url": "https://example.com/photo.jpg"
+  }
+},
+{
+  "model": "main.teammember",
+  "pk": 2,
+  "fields": {
+    "name": "Olivia Sweet",
+    "role": "boss",
+    "bio": "Ledare av vÃ•rt team.",
+    "photo_url": "https://example.com/photo1.jpg"
+  }
+},
+{
+  "model": "main.teammember",
+  "pk": 3,
+  "fields": {
+    "name": "Ethan Sprinkle",
+    "role": "admin",
+    "bio": "Ansvarar fÃ·r butikens dagliga drift.",
+    "photo_url": "https://example.com/photo2.jpg"
+  }
+},
+{
+  "model": "main.teammember",
+  "pk": 4,
+  "fields": {
+    "name": "Alice Caramel",
+    "role": "worker",
+    "bio": "Expert pÃ• handgjorda choklad- och karamellgodisar.",
+    "photo_url": "https://media.istockphoto.com/id/1437816897/sv/foto/business-woman-manager-or-human-resources-portrait-for-career-success-company-we-are-hiring-or.jpg?s=612x612&w=0&k=20&c=h3rseoMGGKsfDYyFuDhX0HdrKuc-"
+  }
+},
+{
+  "model": "main.teammember",
+  "pk": 5,
+  "fields": {
+    "name": "Bob Jelly",
+    "role": "worker",
+    "bio": "Specialiserar sig pÃ• gelÃšgodis och fÃµrgglada skapelser.",
+    "photo_url": "https://example.com/photo4.jpg"
+  }
+},
+{
+  "model": "main.teammember",
+  "pk": 6,
+  "fields": {
+    "name": "Cathy Fudge",
+    "role": "worker",
+    "bio": "Tillverkar rika chokladkakor och fudge med unika smaker.",
+    "photo_url": "https://example.com/photo5.jpg"
+  }
+},
+{
+  "model": "main.teammember",
+  "pk": 7,
+  "fields": {
+    "name": "Danny Licorice",
+    "role": "worker",
+    "bio": "Dekorerar godis och ser till att de ser perfekta ut.",
+    "photo_url": "https://example.com/photo6.jpg"
+  }
+},
+{
+  "model": "main.teammember",
+  "pk": 8,
+  "fields": {
+    "name": "Ella Cotton",
+    "role": "worker",
+    "bio": "Tillverkar fluffigt och sÃ·tt sockervadd fÃ·r alla kunder.",
+    "photo_url": "https://example.com/photo7.jpg"
+  }
+},
+{
+  "model": "main.teammember",
+  "pk": 9,
+  "fields": {
+    "name": "Frank Lollipop",
+    "role": "worker",
+    "bio": "Designar roliga klubbor i olika smaker.",
+    "photo_url": "https://example.com/photo8.jpg"
+  }
+},
+{
+  "model": "main.teammember",
+  "pk": 10,
+  "fields": {
+    "name": "Grace Mint",
+    "role": "worker",
+    "bio": "Skapar mint- och hÃ•rdgodis.",
+    "photo_url": "https://example.com/photo9.jpg"
+  }
+},
+{
+  "model": "main.teammember",
+  "pk": 11,
+  "fields": {
+    "name": "Henry Rainbow",
+    "role": "worker",
+    "bio": "Tillverkar fÃµrgglada gummibjÃ·rnar och andra roliga godisar.",
+    "photo_url": "https://example.com/photo10.jpg"
+  }
+},
+{
+  "model": "home.message",
+  "pk": 1,
+  "fields": {
+    "name": "test",
+    "email": "test@example.com",
+    "subject": "te",
+    "message": "tee",
+    "created_at": "2025-11-03T13:41:10.595Z",
+    "is_read": false
+  }
+},
+{
+  "model": "home.teammember",
+  "pk": 1,
+  "fields": {
+    "name": "Emma Johnson",
+    "role": "boss",
+    "bio": "CEO & Founder",
+    "photo_url": "https://via.placeholder.com/150/FF6B6B/FFFFFF?text=Emma"
+  }
+},
+{
+  "model": "home.teammember",
+  "pk": 2,
+  "fields": {
+    "name": "James Wilson",
+    "role": "worker",
+    "bio": "Head Chef",
+    "photo_url": "https://via.placeholder.com/150/4ECDC4/FFFFFF?text=James"
+  }
+},
+{
+  "model": "home.teammember",
+  "pk": 3,
+  "fields": {
+    "name": "Olivia Brown",
+    "role": "worker",
+    "bio": "Candy Designer",
+    "photo_url": "https://via.placeholder.com/150/1A535C/FFFFFF?text=Olivia"
+  }
+},
+{
+  "model": "home.teammember",
+  "pk": 4,
+  "fields": {
+    "name": "Liam Davis",
+    "role": "worker",
+    "bio": "Customer Happiness",
+    "photo_url": "https://via.placeholder.com/150/FFD700/FFFFFF?text=Liam"
+  }
+},
+{
+  "model": "home.teammember",
+  "pk": 5,
+  "fields": {
+    "name": "Sophia Miller",
+    "role": "worker",
+    "bio": "Marketing Lead",
+    "photo_url": "https://via.placeholder.com/150/FF69B4/FFFFFF?text=Sophia"
+  }
+},
+{
+  "model": "home.teammember",
+  "pk": 6,
+  "fields": {
+    "name": "Noah Garcia",
+    "role": "worker",
+    "bio": "Logistics Expert",
+    "photo_url": "https://via.placeholder.com/150/87CEEB/FFFFFF?text=Noah"
+  }
+}
+]
